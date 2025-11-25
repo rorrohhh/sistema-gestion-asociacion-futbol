@@ -51,28 +51,72 @@
 
         <div class="card main-card overflow-hidden">
             <div class="card-header bg-white p-4 border-bottom-0">
-                <form action="/" method="GET" class="row g-3 align-items-center">
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-funnel-fill text-muted"></i></span>
-                            <select name="club" class="form-select border-start-0 bg-light" onchange="this.form.submit()">
-                                <option value="">Todos los Clubes</option>
-                                <% if(clubes && clubes.length > 0) { %>
-                                    <% clubes.forEach(function(c) { %>
-                                        <option value="<%= c.id %>" <%= filtro == c.id ? 'selected' : '' %>><%= c.nombre %></option>
-                                    <% }); %>
-                                <% } %>
-                            </select>
-                            <button class="btn btn-primary px-4" type="submit">Filtrar</button>
+                <form action="/" method="GET">
+                    <div class="row g-2 align-items-end">
+                        
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted fw-bold">Club</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-flag-fill text-muted"></i></span>
+                                <select name="club" class="form-select border-start-0 bg-light">
+                                    <option value="">Todos los Clubes</option>
+                                    <% if(clubes && clubes.length > 0) { %>
+                                        <% clubes.forEach(function(c) { %>
+                                            <option value="<%= c.id %>" <%= filtroClub == c.id ? 'selected' : '' %>>
+                                                <%= c.nombre %>
+                                            </option>
+                                        <% }); %>
+                                    <% } %>
+                                </select>
+                            </div>
                         </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted fw-bold">Nombre / Apellido</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-person-fill text-muted"></i></span>
+                                <input type="text" name="nombre" class="form-control border-start-0 bg-light" 
+                                    placeholder="Buscar nombre..." 
+                                    value="<%= filtroNombre || '' %>">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label small text-muted fw-bold">RUT</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-postcard text-muted"></i></span>
+                                <input type="text" name="rut" class="form-control border-start-0 bg-light" 
+                                    placeholder="12345678" 
+                                    value="<%= filtroRut || '' %>">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label small text-muted fw-bold">ROL</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-hash text-muted"></i></span>
+                                <input type="text" name="rol" class="form-control border-start-0 bg-light" 
+                                    placeholder="9328" 
+                                    value="<%= filtroRol || '' %>">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 d-flex gap-2">
+                            <button class="btn btn-primary w-100 fw-bold" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                            
+                            <% if(filtroClub || filtroRut || filtroRol || filtroNombre) { %>
+                                <a href="/" class="btn btn-outline-danger" title="Limpiar">
+                                    <i class="bi bi-x-lg"></i>
+                                </a>
+                            <% } %>
+                        </div>
+
                     </div>
-                    <% if(filtro) { %>
-                        <div class="col-auto">
-                            <a href="/" class="btn btn-outline-danger btn-sm"><i class="bi bi-x-circle me-1"></i> Borrar filtro</a>
-                        </div>
-                    <% } %>
-                    <div class="col text-end text-muted d-none d-md-block">
-                        <small>Mostrando <strong><%= jugadores ? jugadores.length : 0 %></strong> jugadores</small>
+                    
+                    <div class="text-end mt-2 text-muted">
+                        <small>Encontrados: <strong><%= jugadores ? jugadores.length : 0 %></strong> registros</small>
                     </div>
                 </form>
             </div>
@@ -90,62 +134,8 @@
                             <th class="py-3">Club</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white">
-                        <% if (jugadores && jugadores.length > 0) { %>
-                            <% jugadores.forEach(function(jugador) { %>
-                                
-                                <% 
-                                    let edad = "--";
-                                    if (jugador.fecha_nacimiento) {
-                                        const hoy = new Date();
-                                        const nacimiento = new Date(jugador.fecha_nacimiento);
-                                        let anios = hoy.getFullYear() - nacimiento.getFullYear();
-                                        const mes = hoy.getMonth() - nacimiento.getMonth();
-                                        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-                                            anios--;
-                                        }
-                                        edad = anios;
-                                    }
-                                %>
-
-                                <tr>
-                                    <td class="ps-4"><span class="numero-camiseta"><%= jugador.numero %></span></td>
-                                    <td>
-                                        <div class="fw-bold text-dark"><%= jugador.apellido_paterno %> <%= jugador.apellido_materno %></div>
-                                        <div class="text-muted small text-uppercase"><%= jugador.nombres %></div>
-                                    </td>
-                                    <td>
-                                        <% if(jugador.rut_num) { %>
-                                            <span class="rut-font"><%= jugador.rut_num.toLocaleString('es-CL') %>-<%= jugador.rut_dv %></span>
-                                        <% } else { %>
-                                            <span class="text-muted">--</span>
-                                        <% } %>
-                                    </td>
-                                    <td class="text-center"><span class="rol-badge border"><%= jugador.rol_asociacion %></span></td>
-                                    
-                                    <td class="text-center text-muted">
-                                        <% if(jugador.fecha_nacimiento) { %>
-                                            <i class="bi bi-calendar3 me-1"></i>
-                                            <%= new Date(jugador.fecha_nacimiento).toLocaleDateString('es-CL') %>
-                                        <% } else { %>
-                                            --
-                                        <% } %>
-                                    </td>
-
-                                    <td class="text-center">
-                                        <% if(edad !== "--") { %>
-                                            <span class="edad-badge"><%= edad %> años</span>
-                                        <% } else { %>
-                                            <span>--</span>
-                                        <% } %>
-                                    </td>
-
-                                    <td><span class="badge rounded-pill text-bg-secondary club-tag px-3 py-2"><%= jugador.nombre_club %></span></td>
-                                </tr>
-                            <% }); %>
-                        <% } else { %>
-                            <tr><td colspan="7" class="text-center py-5">No se encontraron jugadores.</td></tr>
-                        <% } %>
+                    <tbody class="bg-white" id="tablaJugadores">
+                        <%- include('partials/tabla_resultados') %>
                     </tbody>
                 </table>
             </div>
@@ -153,5 +143,6 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/buscador.js"></script>
 </body>
 </html>
