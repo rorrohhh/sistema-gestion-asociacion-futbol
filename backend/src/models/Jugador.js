@@ -19,6 +19,16 @@ const Jugador = sequelize.define('Jugador', {
         type: DataTypes.STRING(1),
         allowNull: false
     },
+    pasaporte: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    
+    tipoIdentificacion: {
+        type: DataTypes.STRING(10), // 'RUT' o 'PASSPORT'
+        allowNull: false, // Debe existir en ambos casos
+        defaultValue: 'RUT' // Valor por defecto
+    },
     rol: DataTypes.STRING,
     nacimiento: DataTypes.DATEONLY,
     inscripcion: DataTypes.DATEONLY,

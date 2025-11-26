@@ -39,6 +39,10 @@ export interface CreateJugadorDTO {
     club_id: number;
 }
 
+export interface CreateClubDTO {
+    nombre: string;
+}
+
 export interface ApiResponse<T> {
     success?: boolean;
     data?: T;
