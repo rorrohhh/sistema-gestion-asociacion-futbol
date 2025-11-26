@@ -2045,7 +2045,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$skeleton$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/skeleton.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$differenceInYears$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/date-fns/differenceInYears.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$parseISO$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/date-fns/parseISO.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$pencil$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Pencil$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/pencil.js [app-client] (ecmascript) <export default as Pencil>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/trash-2.js [app-client] (ecmascript) <export default as Trash2>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-client] (ecmascript)");
 'use client';
+;
+;
 ;
 ;
 ;
@@ -2068,11 +2073,11 @@ function formatearRUT(rut, dv) {
 }
 function LoadingSkeleton() {
     const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(2);
-    if ($[0] !== "972a4e6b7b909554a478f175fea182259b490effc668d44c5546b63361fdad0c") {
+    if ($[0] !== "36c832a63bb29cc736d4f000b48a9f11fc8d3ed971b9fa46b8c60d11b348d340") {
         for(let $i = 0; $i < 2; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "972a4e6b7b909554a478f175fea182259b490effc668d44c5546b63361fdad0c";
+        $[0] = "36c832a63bb29cc736d4f000b48a9f11fc8d3ed971b9fa46b8c60d11b348d340";
     }
     let t0;
     if ($[1] === Symbol.for("react.memo_cache_sentinel")) {
@@ -2096,12 +2101,12 @@ function _LoadingSkeletonAnonymous(_, i) {
                     className: "h-4 w-16"
                 }, void 0, false, {
                     fileName: "[project]/components/jugadores-table.tsx",
-                    lineNumber: 45,
+                    lineNumber: 49,
                     columnNumber: 39
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 45,
+                lineNumber: 49,
                 columnNumber: 28
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -2109,12 +2114,12 @@ function _LoadingSkeletonAnonymous(_, i) {
                     className: "h-4 w-full"
                 }, void 0, false, {
                     fileName: "[project]/components/jugadores-table.tsx",
-                    lineNumber: 45,
+                    lineNumber: 49,
                     columnNumber: 95
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 45,
+                lineNumber: 49,
                 columnNumber: 84
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -2122,12 +2127,12 @@ function _LoadingSkeletonAnonymous(_, i) {
                     className: "h-4 w-24"
                 }, void 0, false, {
                     fileName: "[project]/components/jugadores-table.tsx",
-                    lineNumber: 45,
+                    lineNumber: 49,
                     columnNumber: 153
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 45,
+                lineNumber: 49,
                 columnNumber: 142
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -2135,12 +2140,12 @@ function _LoadingSkeletonAnonymous(_, i) {
                     className: "h-6 w-32"
                 }, void 0, false, {
                     fileName: "[project]/components/jugadores-table.tsx",
-                    lineNumber: 45,
+                    lineNumber: 49,
                     columnNumber: 209
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 45,
+                lineNumber: 49,
                 columnNumber: 198
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -2148,12 +2153,12 @@ function _LoadingSkeletonAnonymous(_, i) {
                     className: "h-4 w-16"
                 }, void 0, false, {
                     fileName: "[project]/components/jugadores-table.tsx",
-                    lineNumber: 45,
+                    lineNumber: 49,
                     columnNumber: 265
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 45,
+                lineNumber: 49,
                 columnNumber: 254
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -2161,12 +2166,12 @@ function _LoadingSkeletonAnonymous(_, i) {
                     className: "h-4 w-20"
                 }, void 0, false, {
                     fileName: "[project]/components/jugadores-table.tsx",
-                    lineNumber: 45,
+                    lineNumber: 49,
                     columnNumber: 321
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 45,
+                lineNumber: 49,
                 columnNumber: 310
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -2174,30 +2179,43 @@ function _LoadingSkeletonAnonymous(_, i) {
                     className: "h-6 w-20"
                 }, void 0, false, {
                     fileName: "[project]/components/jugadores-table.tsx",
-                    lineNumber: 45,
+                    lineNumber: 49,
                     columnNumber: 377
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 45,
+                lineNumber: 49,
                 columnNumber: 366
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$skeleton$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Skeleton"], {
+                    className: "h-6 w-12"
+                }, void 0, false, {
+                    fileName: "[project]/components/jugadores-table.tsx",
+                    lineNumber: 49,
+                    columnNumber: 433
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/components/jugadores-table.tsx",
+                lineNumber: 49,
+                columnNumber: 422
             }, this)
         ]
     }, i, true, {
         fileName: "[project]/components/jugadores-table.tsx",
-        lineNumber: 45,
+        lineNumber: 49,
         columnNumber: 10
     }, this);
 }
 function JugadoresTable(t0) {
-    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(9);
-    if ($[0] !== "972a4e6b7b909554a478f175fea182259b490effc668d44c5546b63361fdad0c") {
-        for(let $i = 0; $i < 9; $i += 1){
+    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(14);
+    if ($[0] !== "36c832a63bb29cc736d4f000b48a9f11fc8d3ed971b9fa46b8c60d11b348d340") {
+        for(let $i = 0; $i < 14; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "972a4e6b7b909554a478f175fea182259b490effc668d44c5546b63361fdad0c";
+        $[0] = "36c832a63bb29cc736d4f000b48a9f11fc8d3ed971b9fa46b8c60d11b348d340";
     }
-    const { jugadores, isLoading: t1 } = t0;
+    const { jugadores, isLoading: t1, onEliminar, onEditar } = t0;
     const isLoading = t1 === undefined ? false : t1;
     if (isLoading) {
         let t2;
@@ -2212,7 +2230,7 @@ function JugadoresTable(t0) {
                             children: "Número"
                         }, void 0, false, {
                             fileName: "[project]/components/jugadores-table.tsx",
-                            lineNumber: 63,
+                            lineNumber: 69,
                             columnNumber: 113
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -2220,7 +2238,7 @@ function JugadoresTable(t0) {
                             children: "Nombre Completo"
                         }, void 0, false, {
                             fileName: "[project]/components/jugadores-table.tsx",
-                            lineNumber: 63,
+                            lineNumber: 69,
                             columnNumber: 203
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -2228,7 +2246,7 @@ function JugadoresTable(t0) {
                             children: "RUT"
                         }, void 0, false, {
                             fileName: "[project]/components/jugadores-table.tsx",
-                            lineNumber: 63,
+                            lineNumber: 69,
                             columnNumber: 302
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -2236,7 +2254,7 @@ function JugadoresTable(t0) {
                             children: "Club"
                         }, void 0, false, {
                             fileName: "[project]/components/jugadores-table.tsx",
-                            lineNumber: 63,
+                            lineNumber: 69,
                             columnNumber: 389
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -2244,7 +2262,7 @@ function JugadoresTable(t0) {
                             children: "Edad"
                         }, void 0, false, {
                             fileName: "[project]/components/jugadores-table.tsx",
-                            lineNumber: 63,
+                            lineNumber: 69,
                             columnNumber: 477
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -2252,7 +2270,7 @@ function JugadoresTable(t0) {
                             children: "Inscripción"
                         }, void 0, false, {
                             fileName: "[project]/components/jugadores-table.tsx",
-                            lineNumber: 63,
+                            lineNumber: 69,
                             columnNumber: 565
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -2260,18 +2278,26 @@ function JugadoresTable(t0) {
                             children: "ROL"
                         }, void 0, false, {
                             fileName: "[project]/components/jugadores-table.tsx",
-                            lineNumber: 63,
+                            lineNumber: 69,
                             columnNumber: 660
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
+                            className: "text-slate-700 dark:text-slate-300 font-semibold",
+                            children: "Acciones"
+                        }, void 0, false, {
+                            fileName: "[project]/components/jugadores-table.tsx",
+                            lineNumber: 69,
+                            columnNumber: 747
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/jugadores-table.tsx",
-                    lineNumber: 63,
+                    lineNumber: 69,
                     columnNumber: 70
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 63,
+                lineNumber: 69,
                 columnNumber: 12
             }, this);
             $[1] = t2;
@@ -2288,23 +2314,23 @@ function JugadoresTable(t0) {
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableBody"], {
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(LoadingSkeleton, {}, void 0, false, {
                                 fileName: "[project]/components/jugadores-table.tsx",
-                                lineNumber: 70,
+                                lineNumber: 76,
                                 columnNumber: 108
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/jugadores-table.tsx",
-                            lineNumber: 70,
+                            lineNumber: 76,
                             columnNumber: 97
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/jugadores-table.tsx",
-                    lineNumber: 70,
+                    lineNumber: 76,
                     columnNumber: 86
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 70,
+                lineNumber: 76,
                 columnNumber: 12
             }, this);
             $[2] = t3;
@@ -2321,7 +2347,7 @@ function JugadoresTable(t0) {
                 children: "No se encontraron jugadores con los filtros aplicados."
             }, void 0, false, {
                 fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 80,
+                lineNumber: 86,
                 columnNumber: 12
             }, this);
             $[3] = t2;
@@ -2342,7 +2368,7 @@ function JugadoresTable(t0) {
                         children: "Número"
                     }, void 0, false, {
                         fileName: "[project]/components/jugadores-table.tsx",
-                        lineNumber: 89,
+                        lineNumber: 95,
                         columnNumber: 111
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -2350,7 +2376,7 @@ function JugadoresTable(t0) {
                         children: "Nombre Completo"
                     }, void 0, false, {
                         fileName: "[project]/components/jugadores-table.tsx",
-                        lineNumber: 89,
+                        lineNumber: 95,
                         columnNumber: 201
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -2358,7 +2384,7 @@ function JugadoresTable(t0) {
                         children: "RUT"
                     }, void 0, false, {
                         fileName: "[project]/components/jugadores-table.tsx",
-                        lineNumber: 89,
+                        lineNumber: 95,
                         columnNumber: 300
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -2366,7 +2392,7 @@ function JugadoresTable(t0) {
                         children: "Club"
                     }, void 0, false, {
                         fileName: "[project]/components/jugadores-table.tsx",
-                        lineNumber: 89,
+                        lineNumber: 95,
                         columnNumber: 387
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -2374,7 +2400,7 @@ function JugadoresTable(t0) {
                         children: "Edad"
                     }, void 0, false, {
                         fileName: "[project]/components/jugadores-table.tsx",
-                        lineNumber: 89,
+                        lineNumber: 95,
                         columnNumber: 475
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -2382,7 +2408,7 @@ function JugadoresTable(t0) {
                         children: "Inscripción"
                     }, void 0, false, {
                         fileName: "[project]/components/jugadores-table.tsx",
-                        lineNumber: 89,
+                        lineNumber: 95,
                         columnNumber: 563
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -2390,18 +2416,26 @@ function JugadoresTable(t0) {
                         children: "ROL"
                     }, void 0, false, {
                         fileName: "[project]/components/jugadores-table.tsx",
-                        lineNumber: 89,
+                        lineNumber: 95,
                         columnNumber: 658
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
+                        className: "text-slate-700 dark:text-slate-300 font-semibold",
+                        children: "Acciones"
+                    }, void 0, false, {
+                        fileName: "[project]/components/jugadores-table.tsx",
+                        lineNumber: 95,
+                        columnNumber: 745
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 89,
+                lineNumber: 95,
                 columnNumber: 68
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/jugadores-table.tsx",
-            lineNumber: 89,
+            lineNumber: 95,
             columnNumber: 10
         }, this);
         $[4] = t2;
@@ -2409,15 +2443,165 @@ function JugadoresTable(t0) {
         t2 = $[4];
     }
     let t3;
-    if ($[5] !== jugadores) {
-        t3 = jugadores.map(_JugadoresTableJugadoresMap);
+    if ($[5] !== jugadores || $[6] !== onEditar || $[7] !== onEliminar) {
+        let t4;
+        if ($[9] !== onEditar || $[10] !== onEliminar) {
+            t4 = ({
+                "JugadoresTable[jugadores.map()]": (jugador)=>{
+                    const edad = calcularEdad(jugador.nacimiento);
+                    const nombreCompleto = `${jugador.nombres} ${jugador.paterno} ${jugador.materno}`;
+                    const rutFormateado = formatearRUT(jugador.rut, jugador.dv);
+                    const fechaInscripcion = new Date(jugador.inscripcion).toLocaleDateString("es-CL");
+                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableRow"], {
+                        className: "hover:bg-muted/50 transition-colors",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
+                                className: "font-medium",
+                                children: jugador.numero
+                            }, void 0, false, {
+                                fileName: "[project]/components/jugadores-table.tsx",
+                                lineNumber: 110,
+                                columnNumber: 93
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
+                                children: nombreCompleto
+                            }, void 0, false, {
+                                fileName: "[project]/components/jugadores-table.tsx",
+                                lineNumber: 110,
+                                columnNumber: 156
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
+                                className: "font-mono",
+                                children: rutFormateado
+                            }, void 0, false, {
+                                fileName: "[project]/components/jugadores-table.tsx",
+                                lineNumber: 110,
+                                columnNumber: 195
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
+                                    variant: "secondary",
+                                    children: jugador.Club?.nombre || "Sin Club"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/jugadores-table.tsx",
+                                    lineNumber: 110,
+                                    columnNumber: 266
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/components/jugadores-table.tsx",
+                                lineNumber: 110,
+                                columnNumber: 255
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
+                                children: [
+                                    edad,
+                                    " años"
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/jugadores-table.tsx",
+                                lineNumber: 110,
+                                columnNumber: 349
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
+                                children: fechaInscripcion
+                            }, void 0, false, {
+                                fileName: "[project]/components/jugadores-table.tsx",
+                                lineNumber: 110,
+                                columnNumber: 383
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
+                                    children: jugador.rol
+                                }, void 0, false, {
+                                    fileName: "[project]/components/jugadores-table.tsx",
+                                    lineNumber: 110,
+                                    columnNumber: 435
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/components/jugadores-table.tsx",
+                                lineNumber: 110,
+                                columnNumber: 424
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
+                                className: "w-1/12 min-w-[100px]",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex items-center space-x-2",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                            variant: "ghost",
+                                            size: "icon",
+                                            onClick: {
+                                                "JugadoresTable[jugadores.map() > <Button>.onClick]": ()=>onEditar(jugador.id.toString())
+                                            }["JugadoresTable[jugadores.map() > <Button>.onClick]"],
+                                            title: "Editar Jugador",
+                                            className: "hover:text-blue-600 dark:hover:text-blue-400",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$pencil$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Pencil$3e$__["Pencil"], {
+                                                className: "h-4 w-4"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/jugadores-table.tsx",
+                                                lineNumber: 112,
+                                                columnNumber: 154
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/jugadores-table.tsx",
+                                            lineNumber: 110,
+                                            columnNumber: 564
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                            variant: "ghost",
+                                            size: "icon",
+                                            onClick: {
+                                                "JugadoresTable[jugadores.map() > <Button>.onClick]": ()=>onEliminar(jugador.id.toString())
+                                            }["JugadoresTable[jugadores.map() > <Button>.onClick]"],
+                                            title: "Eliminar Jugador",
+                                            className: "hover:text-red-600 dark:hover:text-red-400",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__["Trash2"], {
+                                                className: "h-4 w-4"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/jugadores-table.tsx",
+                                                lineNumber: 114,
+                                                columnNumber: 154
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/jugadores-table.tsx",
+                                            lineNumber: 112,
+                                            columnNumber: 193
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/jugadores-table.tsx",
+                                    lineNumber: 110,
+                                    columnNumber: 519
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/components/jugadores-table.tsx",
+                                lineNumber: 110,
+                                columnNumber: 475
+                            }, this)
+                        ]
+                    }, jugador.id, true, {
+                        fileName: "[project]/components/jugadores-table.tsx",
+                        lineNumber: 110,
+                        columnNumber: 18
+                    }, this);
+                }
+            })["JugadoresTable[jugadores.map()]"];
+            $[9] = onEditar;
+            $[10] = onEliminar;
+            $[11] = t4;
+        } else {
+            t4 = $[11];
+        }
+        t3 = jugadores.map(t4);
         $[5] = jugadores;
-        $[6] = t3;
+        $[6] = onEditar;
+        $[7] = onEliminar;
+        $[8] = t3;
     } else {
-        t3 = $[6];
+        t3 = $[8];
     }
     let t4;
-    if ($[7] !== t3) {
+    if ($[12] !== t3) {
         t4 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "rounded-md border border-slate-200 dark:border-slate-800",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Table"], {
@@ -2427,110 +2611,28 @@ function JugadoresTable(t0) {
                         children: t3
                     }, void 0, false, {
                         fileName: "[project]/components/jugadores-table.tsx",
-                        lineNumber: 104,
+                        lineNumber: 133,
                         columnNumber: 95
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 104,
+                lineNumber: 133,
                 columnNumber: 84
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/jugadores-table.tsx",
-            lineNumber: 104,
+            lineNumber: 133,
             columnNumber: 10
         }, this);
-        $[7] = t3;
-        $[8] = t4;
+        $[12] = t3;
+        $[13] = t4;
     } else {
-        t4 = $[8];
+        t4 = $[13];
     }
     return t4;
 }
 _c1 = JugadoresTable;
-function _JugadoresTableJugadoresMap(jugador) {
-    const edad = calcularEdad(jugador.nacimiento);
-    const nombreCompleto = `${jugador.nombres} ${jugador.paterno} ${jugador.materno}`;
-    const rutFormateado = formatearRUT(jugador.rut, jugador.dv);
-    const fechaInscripcion = new Date(jugador.inscripcion).toLocaleDateString("es-CL");
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableRow"], {
-        className: "hover:bg-muted/50 transition-colors",
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
-                className: "font-medium",
-                children: jugador.numero
-            }, void 0, false, {
-                fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 117,
-                columnNumber: 85
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
-                children: nombreCompleto
-            }, void 0, false, {
-                fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 117,
-                columnNumber: 148
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
-                className: "font-mono",
-                children: rutFormateado
-            }, void 0, false, {
-                fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 117,
-                columnNumber: 187
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
-                    variant: "secondary",
-                    children: jugador.Club?.nombre || "Sin Club"
-                }, void 0, false, {
-                    fileName: "[project]/components/jugadores-table.tsx",
-                    lineNumber: 117,
-                    columnNumber: 258
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 117,
-                columnNumber: 247
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
-                children: [
-                    edad,
-                    " años"
-                ]
-            }, void 0, true, {
-                fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 117,
-                columnNumber: 341
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
-                children: fechaInscripcion
-            }, void 0, false, {
-                fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 117,
-                columnNumber: 375
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
-                    children: jugador.rol
-                }, void 0, false, {
-                    fileName: "[project]/components/jugadores-table.tsx",
-                    lineNumber: 117,
-                    columnNumber: 427
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/components/jugadores-table.tsx",
-                lineNumber: 117,
-                columnNumber: 416
-            }, this)
-        ]
-    }, jugador.id, true, {
-        fileName: "[project]/components/jugadores-table.tsx",
-        lineNumber: 117,
-        columnNumber: 10
-    }, this);
-}
 var _c, _c1;
 __turbopack_context__.k.register(_c, "LoadingSkeleton");
 __turbopack_context__.k.register(_c1, "JugadoresTable");
@@ -3017,6 +3119,10 @@ const api = {
         const response = await apiClient.get(`/api/jugadores${queryString}`);
         return response.data;
     },
+    async getJugadorPorId (id) {
+        const response = await apiClient.get(`/api/jugadores/${id}`);
+        return response.data;
+    },
     /**
      * Crea un nuevo jugador
      * Documentación 2.2: POST /api/jugadores
@@ -3038,6 +3144,28 @@ const api = {
             rol_input: data.rol
         };
         await apiClient.post('/api/jugadores', payloadBackend);
+    },
+    async updateJugador (id, data) {
+        // TRADUCCIÓN DE DATOS (Frontend -> Backend)
+        const payloadBackend = {
+            numero: data.numero,
+            paterno: data.paterno,
+            materno: data.materno,
+            nombres: data.nombres,
+            nacimiento: data.nacimiento,
+            inscripcion: data.inscripcion,
+            club_id: data.club_id,
+            run_input: data.rut,
+            rol_input: data.rol
+        };
+        // Realizamos la petición PUT, incluyendo el ID en la URL
+        await apiClient.put(`/api/jugadores/${id}`, payloadBackend);
+    // Puedes cambiar Promise<void> a Promise<Jugador> si el backend devuelve el objeto actualizado
+    },
+    async deleteJugador (id) {
+        // El ID se pasa como parte de la URL
+        await apiClient.delete(`/api/jugadores/${id}`);
+    // No esperamos data, solo la respuesta exitosa (200 o 204)
     },
     // ------------------------------------------------------------------
     // CLUBES (Base Endpoint: /api/clubes)
@@ -3114,25 +3242,44 @@ function HomePage() {
         }
     }["HomePage.useEffect"], []);
     // Cargar jugadores cuando cambian los filtros
+    const loadJugadores = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "HomePage.useCallback[loadJugadores]": async ()=>{
+            setIsLoading(true);
+            try {
+                const data_0 = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getJugadores(debouncedFilters);
+                setJugadores(data_0);
+            } catch (error_0) {
+                console.error('Error cargando jugadores:', error_0);
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error('Error al cargar jugadores');
+            } finally{
+                setIsLoading(false);
+            }
+        }
+    }["HomePage.useCallback[loadJugadores]"], [
+        debouncedFilters
+    ]);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "HomePage.useEffect": ()=>{
-            async function loadJugadores() {
-                setIsLoading(true);
-                try {
-                    const data_0 = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getJugadores(debouncedFilters);
-                    setJugadores(data_0);
-                } catch (error_0) {
-                    console.error('Error cargando jugadores:', error_0);
-                    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error('Error al cargar jugadores');
-                } finally{
-                    setIsLoading(false);
-                }
-            }
             loadJugadores();
         }
     }["HomePage.useEffect"], [
-        debouncedFilters
+        loadJugadores
     ]);
+    const handleEliminarJugador = async (jugadorId)=>{
+        if (window.confirm("¿Estás seguro de que deseas eliminar este jugador? Esta acción es irreversible.")) {
+            try {
+                await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].deleteJugador(jugadorId); // Llama a tu función ya creada en api.ts
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success('Jugador eliminado con éxito.');
+                await loadJugadores(); // Actualiza la UI
+            } catch (error_1) {
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error('Error al eliminar jugador. Inténtalo de nuevo.');
+            }
+        }
+    };
+    const handleEditarJugador = (jugadorId_0)=>{
+        // Lógica simple de UI: Redirigir
+        window.location.href = `/editar-jugador/${jugadorId_0}`;
+    };
     const handleFilterChange = (newFilters)=>{
         setFilters(newFilters);
     };
@@ -3157,12 +3304,12 @@ function HomePage() {
                                         className: "h-5 w-5 text-white"
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 66,
+                                        lineNumber: 81,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 65,
+                                    lineNumber: 80,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -3170,13 +3317,13 @@ function HomePage() {
                                     children: "Gestión Fútbol"
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 68,
+                                    lineNumber: 83,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 64,
+                            lineNumber: 79,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3190,14 +3337,14 @@ function HomePage() {
                                             children: clubes.length
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.tsx",
-                                            lineNumber: 75,
+                                            lineNumber: 90,
                                             columnNumber: 15
                                         }, this),
                                         " Clubes Registrados"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 74,
+                                    lineNumber: 89,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -3209,36 +3356,36 @@ function HomePage() {
                                                 className: "mr-2 h-4 w-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 79,
+                                                lineNumber: 94,
                                                 columnNumber: 17
                                             }, this),
                                             "Inscribir Jugador"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 78,
+                                        lineNumber: 93,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 77,
+                                    lineNumber: 92,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 73,
+                            lineNumber: 88,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/page.tsx",
-                    lineNumber: 63,
+                    lineNumber: 78,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 62,
+                lineNumber: 77,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -3259,7 +3406,7 @@ function HomePage() {
                                                     children: "Total Jugadores"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/page.tsx",
-                                                    lineNumber: 94,
+                                                    lineNumber: 109,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -3267,13 +3414,13 @@ function HomePage() {
                                                     children: isLoading ? '...' : totalResultados
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/page.tsx",
-                                                    lineNumber: 95,
+                                                    lineNumber: 110,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/page.tsx",
-                                            lineNumber: 93,
+                                            lineNumber: 108,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3282,23 +3429,23 @@ function HomePage() {
                                                 className: "h-6 w-6 text-blue-600 dark:text-blue-400"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 100,
+                                                lineNumber: 115,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.tsx",
-                                            lineNumber: 99,
+                                            lineNumber: 114,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 92,
+                                    lineNumber: 107,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 91,
+                                lineNumber: 106,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -3313,7 +3460,7 @@ function HomePage() {
                                                     children: "Clubes Activos"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/page.tsx",
-                                                    lineNumber: 108,
+                                                    lineNumber: 123,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -3321,13 +3468,13 @@ function HomePage() {
                                                     children: clubes.length
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/page.tsx",
-                                                    lineNumber: 109,
+                                                    lineNumber: 124,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/page.tsx",
-                                            lineNumber: 107,
+                                            lineNumber: 122,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3336,23 +3483,23 @@ function HomePage() {
                                                 className: "h-6 w-6 text-indigo-600 dark:text-indigo-400"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 114,
+                                                lineNumber: 129,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.tsx",
-                                            lineNumber: 113,
+                                            lineNumber: 128,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 106,
+                                    lineNumber: 121,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 105,
+                                lineNumber: 120,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -3367,7 +3514,7 @@ function HomePage() {
                                                     children: "Estado del Sistema"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/page.tsx",
-                                                    lineNumber: 122,
+                                                    lineNumber: 137,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -3375,13 +3522,13 @@ function HomePage() {
                                                     children: "En Línea"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/page.tsx",
-                                                    lineNumber: 123,
+                                                    lineNumber: 138,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/page.tsx",
-                                            lineNumber: 121,
+                                            lineNumber: 136,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3390,29 +3537,29 @@ function HomePage() {
                                                 className: "h-6 w-6 text-green-600 dark:text-green-400"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 128,
+                                                lineNumber: 143,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.tsx",
-                                            lineNumber: 127,
+                                            lineNumber: 142,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 120,
+                                    lineNumber: 135,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 119,
+                                lineNumber: 134,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 90,
+                        lineNumber: 105,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3430,20 +3577,20 @@ function HomePage() {
                                                     className: "h-5 w-5"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/page.tsx",
-                                                    lineNumber: 139,
+                                                    lineNumber: 154,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                                     children: "Filtros de Búsqueda"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/page.tsx",
-                                                    lineNumber: 140,
+                                                    lineNumber: 155,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/page.tsx",
-                                            lineNumber: 138,
+                                            lineNumber: 153,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$filtros$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Filtros"], {
@@ -3453,18 +3600,18 @@ function HomePage() {
                                             onClear: handleClearFilters
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.tsx",
-                                            lineNumber: 142,
+                                            lineNumber: 157,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 137,
+                                    lineNumber: 152,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 136,
+                                lineNumber: 151,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3480,14 +3627,14 @@ function HomePage() {
                                                         className: "h-5 w-5 text-slate-500"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 150,
+                                                        lineNumber: 165,
                                                         columnNumber: 17
                                                     }, this),
                                                     "Listado de Jugadores"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 149,
+                                                lineNumber: 164,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3495,56 +3642,58 @@ function HomePage() {
                                                 children: isLoading ? 'Cargando...' : `${totalResultados} resultados`
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 153,
+                                                lineNumber: 168,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 148,
+                                        lineNumber: 163,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$jugadores$2d$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["JugadoresTable"], {
                                             jugadores: jugadores,
-                                            isLoading: isLoading
+                                            isLoading: isLoading,
+                                            onEliminar: handleEliminarJugador,
+                                            onEditar: handleEditarJugador
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.tsx",
-                                            lineNumber: 159,
+                                            lineNumber: 174,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 158,
+                                        lineNumber: 173,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 147,
+                                lineNumber: 162,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 134,
+                        lineNumber: 149,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 87,
+                lineNumber: 102,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/page.tsx",
-        lineNumber: 60,
+        lineNumber: 75,
         columnNumber: 10
     }, this);
 }
-_s(HomePage, "r36y6Igj+wFnyvk1ru0XNb1Phes=", false, function() {
+_s(HomePage, "f813NmvGXa1h7dXjimul0NGcYp4=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$debounce$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useDebounce"]
     ];

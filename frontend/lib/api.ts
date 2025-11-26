@@ -36,6 +36,11 @@ export const api = {
         return response.data;
     },
 
+    async getJugadorPorId(id: string): Promise<Jugador> {
+        const response = await apiClient.get<Jugador>(`/api/jugadores/${id}`);
+        return response.data;
+    },
+
     /**
      * Crea un nuevo jugador
      * Documentación 2.2: POST /api/jugadores
@@ -61,6 +66,31 @@ export const api = {
         };
 
         await apiClient.post('/api/jugadores', payloadBackend);
+    },
+
+    async updateJugador(id: string, data: CreateJugadorDTO): Promise<void> {
+        // TRADUCCIÓN DE DATOS (Frontend -> Backend)
+        const payloadBackend = {
+            numero: data.numero,
+            paterno: data.paterno,
+            materno: data.materno,
+            nombres: data.nombres,
+            nacimiento: data.nacimiento,
+            inscripcion: data.inscripcion,
+            club_id: data.club_id,
+            run_input: data.rut,
+            rol_input: data.rol,
+        };
+
+        // Realizamos la petición PUT, incluyendo el ID en la URL
+        await apiClient.put(`/api/jugadores/${id}`, payloadBackend);
+        // Puedes cambiar Promise<void> a Promise<Jugador> si el backend devuelve el objeto actualizado
+    },
+
+    async deleteJugador(id: string): Promise<void> {
+        // El ID se pasa como parte de la URL
+        await apiClient.delete(`/api/jugadores/${id}`);
+        // No esperamos data, solo la respuesta exitosa (200 o 204)
     },
 
     // ------------------------------------------------------------------

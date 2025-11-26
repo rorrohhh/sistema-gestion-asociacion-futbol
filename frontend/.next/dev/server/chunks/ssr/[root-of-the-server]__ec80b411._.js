@@ -660,6 +660,10 @@ const api = {
         const response = await apiClient.get(`/api/jugadores${queryString}`);
         return response.data;
     },
+    async getJugadorPorId (id) {
+        const response = await apiClient.get(`/api/jugadores/${id}`);
+        return response.data;
+    },
     /**
      * Crea un nuevo jugador
      * Documentación 2.2: POST /api/jugadores
@@ -681,6 +685,28 @@ const api = {
             rol_input: data.rol
         };
         await apiClient.post('/api/jugadores', payloadBackend);
+    },
+    async updateJugador (id, data) {
+        // TRADUCCIÓN DE DATOS (Frontend -> Backend)
+        const payloadBackend = {
+            numero: data.numero,
+            paterno: data.paterno,
+            materno: data.materno,
+            nombres: data.nombres,
+            nacimiento: data.nacimiento,
+            inscripcion: data.inscripcion,
+            club_id: data.club_id,
+            run_input: data.rut,
+            rol_input: data.rol
+        };
+        // Realizamos la petición PUT, incluyendo el ID en la URL
+        await apiClient.put(`/api/jugadores/${id}`, payloadBackend);
+    // Puedes cambiar Promise<void> a Promise<Jugador> si el backend devuelve el objeto actualizado
+    },
+    async deleteJugador (id) {
+        // El ID se pasa como parte de la URL
+        await apiClient.delete(`/api/jugadores/${id}`);
+    // No esperamos data, solo la respuesta exitosa (200 o 204)
     },
     // ------------------------------------------------------------------
     // CLUBES (Base Endpoint: /api/clubes)
@@ -784,7 +810,8 @@ function InscribirPage() {
                 paterno: data.paterno.toUpperCase(),
                 materno: data.materno.toUpperCase(),
                 nombres: data.nombres.toUpperCase(),
-                rol_input: data.rol_input.toUpperCase()
+                rol: data.rol_input.toUpperCase(),
+                rut: data.run_input.toUpperCase()
             };
             await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["api"].createJugador(dataToSend);
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toast"].success('Jugador inscrito exitosamente');
@@ -812,12 +839,12 @@ function InscribirPage() {
                                     className: "h-5 w-5 text-white"
                                 }, void 0, false, {
                                     fileName: "[project]/app/inscribir/page.tsx",
-                                    lineNumber: 101,
+                                    lineNumber: 102,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/inscribir/page.tsx",
-                                lineNumber: 100,
+                                lineNumber: 101,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -825,23 +852,23 @@ function InscribirPage() {
                                 children: "Gestión Fútbol"
                             }, void 0, false, {
                                 fileName: "[project]/app/inscribir/page.tsx",
-                                lineNumber: 103,
+                                lineNumber: 104,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/inscribir/page.tsx",
-                        lineNumber: 99,
+                        lineNumber: 100,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/inscribir/page.tsx",
-                    lineNumber: 98,
+                    lineNumber: 99,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/inscribir/page.tsx",
-                lineNumber: 97,
+                lineNumber: 98,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -857,19 +884,19 @@ function InscribirPage() {
                                     className: "mr-2 h-4 w-4"
                                 }, void 0, false, {
                                     fileName: "[project]/app/inscribir/page.tsx",
-                                    lineNumber: 114,
+                                    lineNumber: 115,
                                     columnNumber: 25
                                 }, this),
                                 "Volver al Dashboard"
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/inscribir/page.tsx",
-                            lineNumber: 113,
+                            lineNumber: 114,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/inscribir/page.tsx",
-                        lineNumber: 112,
+                        lineNumber: 113,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -888,7 +915,7 @@ function InscribirPage() {
                                                     children: "Inscribir Jugador"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/inscribir/page.tsx",
-                                                    lineNumber: 124,
+                                                    lineNumber: 125,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -896,13 +923,13 @@ function InscribirPage() {
                                                     children: "Complete la información requerida para dar de alta un nuevo jugador en la asociación."
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/inscribir/page.tsx",
-                                                    lineNumber: 127,
+                                                    lineNumber: 128,
                                                     columnNumber: 33
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/inscribir/page.tsx",
-                                            lineNumber: 123,
+                                            lineNumber: 124,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Card"], {
@@ -916,12 +943,12 @@ function InscribirPage() {
                                                             className: "h-5 w-5 text-blue-600 dark:text-blue-400"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/inscribir/page.tsx",
-                                                            lineNumber: 135,
+                                                            lineNumber: 136,
                                                             columnNumber: 41
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                        lineNumber: 134,
+                                                        lineNumber: 135,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -932,7 +959,7 @@ function InscribirPage() {
                                                                 children: "Información Importante"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                lineNumber: 138,
+                                                                lineNumber: 139,
                                                                 columnNumber: 41
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -940,35 +967,35 @@ function InscribirPage() {
                                                                 children: "Asegúrese de verificar el RUT y la fecha de nacimiento antes de guardar. Los campos marcados son obligatorios."
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                lineNumber: 139,
+                                                                lineNumber: 140,
                                                                 columnNumber: 41
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                        lineNumber: 137,
+                                                        lineNumber: 138,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                lineNumber: 133,
+                                                lineNumber: 134,
                                                 columnNumber: 33
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/inscribir/page.tsx",
-                                            lineNumber: 132,
+                                            lineNumber: 133,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/inscribir/page.tsx",
-                                    lineNumber: 122,
+                                    lineNumber: 123,
                                     columnNumber: 25
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/inscribir/page.tsx",
-                                lineNumber: 121,
+                                lineNumber: 122,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -988,27 +1015,27 @@ function InscribirPage() {
                                                                 className: "h-5 w-5 text-slate-500"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                lineNumber: 154,
+                                                                lineNumber: 155,
                                                                 columnNumber: 41
                                                             }, this),
                                                             "Ficha Técnica"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                        lineNumber: 153,
+                                                        lineNumber: 154,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardDescription"], {
                                                         children: "Información personal y deportiva del jugador"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                        lineNumber: 157,
+                                                        lineNumber: 158,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                lineNumber: 152,
+                                                lineNumber: 153,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1022,7 +1049,7 @@ function InscribirPage() {
                                                                 children: "Datos Personales"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                lineNumber: 165,
+                                                                lineNumber: 166,
                                                                 columnNumber: 41
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1036,7 +1063,7 @@ function InscribirPage() {
                                                                                 children: "RUT"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 171,
+                                                                                lineNumber: 172,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1046,7 +1073,7 @@ function InscribirPage() {
                                                                                         className: "absolute left-3 top-2.5 h-4 w-4 text-slate-400"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                                        lineNumber: 173,
+                                                                                        lineNumber: 174,
                                                                                         columnNumber: 53
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1056,13 +1083,13 @@ function InscribirPage() {
                                                                                         ...register('run_input')
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                                        lineNumber: 174,
+                                                                                        lineNumber: 175,
                                                                                         columnNumber: 53
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 172,
+                                                                                lineNumber: 173,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             errors.run_input && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1070,13 +1097,13 @@ function InscribirPage() {
                                                                                 children: errors.run_input.message
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 181,
+                                                                                lineNumber: 182,
                                                                                 columnNumber: 70
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                        lineNumber: 170,
+                                                                        lineNumber: 171,
                                                                         columnNumber: 45
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1087,7 +1114,7 @@ function InscribirPage() {
                                                                                 children: "Nombres"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 185,
+                                                                                lineNumber: 186,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1097,7 +1124,7 @@ function InscribirPage() {
                                                                                         className: "absolute left-3 top-2.5 h-4 w-4 text-slate-400"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                                        lineNumber: 187,
+                                                                                        lineNumber: 188,
                                                                                         columnNumber: 53
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1108,13 +1135,13 @@ function InscribirPage() {
                                                                                         onChange: (e)=>setValue('nombres', e.target.value.toUpperCase())
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                                        lineNumber: 188,
+                                                                                        lineNumber: 189,
                                                                                         columnNumber: 53
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 186,
+                                                                                lineNumber: 187,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             errors.nombres && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1122,13 +1149,13 @@ function InscribirPage() {
                                                                                 children: errors.nombres.message
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 196,
+                                                                                lineNumber: 197,
                                                                                 columnNumber: 68
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                        lineNumber: 184,
+                                                                        lineNumber: 185,
                                                                         columnNumber: 45
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1139,7 +1166,7 @@ function InscribirPage() {
                                                                                 children: "Apellido Paterno"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 200,
+                                                                                lineNumber: 201,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1149,7 +1176,7 @@ function InscribirPage() {
                                                                                 onChange: (e)=>setValue('paterno', e.target.value.toUpperCase())
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 201,
+                                                                                lineNumber: 202,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             errors.paterno && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1157,13 +1184,13 @@ function InscribirPage() {
                                                                                 children: errors.paterno.message
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 207,
+                                                                                lineNumber: 208,
                                                                                 columnNumber: 68
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                        lineNumber: 199,
+                                                                        lineNumber: 200,
                                                                         columnNumber: 45
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1174,7 +1201,7 @@ function InscribirPage() {
                                                                                 children: "Apellido Materno"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 211,
+                                                                                lineNumber: 212,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1184,7 +1211,7 @@ function InscribirPage() {
                                                                                 onChange: (e)=>setValue('materno', e.target.value.toUpperCase())
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 212,
+                                                                                lineNumber: 213,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             errors.materno && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1192,13 +1219,13 @@ function InscribirPage() {
                                                                                 children: errors.materno.message
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 218,
+                                                                                lineNumber: 219,
                                                                                 columnNumber: 68
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                        lineNumber: 210,
+                                                                        lineNumber: 211,
                                                                         columnNumber: 45
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1209,7 +1236,7 @@ function InscribirPage() {
                                                                                 children: "Fecha de Nacimiento"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 222,
+                                                                                lineNumber: 223,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1219,7 +1246,7 @@ function InscribirPage() {
                                                                                         className: "absolute left-3 top-2.5 h-4 w-4 text-slate-400"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                                        lineNumber: 224,
+                                                                                        lineNumber: 225,
                                                                                         columnNumber: 53
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1229,13 +1256,13 @@ function InscribirPage() {
                                                                                         ...register('nacimiento')
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                                        lineNumber: 225,
+                                                                                        lineNumber: 226,
                                                                                         columnNumber: 53
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 223,
+                                                                                lineNumber: 224,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             errors.nacimiento && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1243,32 +1270,32 @@ function InscribirPage() {
                                                                                 children: errors.nacimiento.message
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 232,
+                                                                                lineNumber: 233,
                                                                                 columnNumber: 71
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                        lineNumber: 221,
+                                                                        lineNumber: 222,
                                                                         columnNumber: 45
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                lineNumber: 169,
+                                                                lineNumber: 170,
                                                                 columnNumber: 41
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                        lineNumber: 164,
+                                                        lineNumber: 165,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "h-px bg-slate-100 dark:bg-slate-800"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                        lineNumber: 237,
+                                                        lineNumber: 238,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1279,7 +1306,7 @@ function InscribirPage() {
                                                                 children: "Datos Deportivos"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                lineNumber: 241,
+                                                                lineNumber: 242,
                                                                 columnNumber: 41
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1293,7 +1320,7 @@ function InscribirPage() {
                                                                                 children: "Club"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 247,
+                                                                                lineNumber: 248,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1303,7 +1330,7 @@ function InscribirPage() {
                                                                                         className: "absolute left-3 top-3 h-4 w-4 text-slate-400 z-10"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                                        lineNumber: 249,
+                                                                                        lineNumber: 250,
                                                                                         columnNumber: 53
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Select"], {
@@ -1316,12 +1343,12 @@ function InscribirPage() {
                                                                                                     placeholder: "Seleccione un club"
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/app/inscribir/page.tsx",
-                                                                                                    lineNumber: 252,
+                                                                                                    lineNumber: 253,
                                                                                                     columnNumber: 61
                                                                                                 }, this)
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                                lineNumber: 251,
+                                                                                                lineNumber: 252,
                                                                                                 columnNumber: 57
                                                                                             }, this),
                                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -1330,24 +1357,24 @@ function InscribirPage() {
                                                                                                         children: club.nombre
                                                                                                     }, club.id, false, {
                                                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                                                        lineNumber: 256,
+                                                                                                        lineNumber: 257,
                                                                                                         columnNumber: 65
                                                                                                     }, this))
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                                lineNumber: 254,
+                                                                                                lineNumber: 255,
                                                                                                 columnNumber: 57
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                                        lineNumber: 250,
+                                                                                        lineNumber: 251,
                                                                                         columnNumber: 53
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 248,
+                                                                                lineNumber: 249,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             errors.club_id && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1355,13 +1382,13 @@ function InscribirPage() {
                                                                                 children: errors.club_id.message
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 263,
+                                                                                lineNumber: 264,
                                                                                 columnNumber: 68
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                        lineNumber: 246,
+                                                                        lineNumber: 247,
                                                                         columnNumber: 45
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1372,7 +1399,7 @@ function InscribirPage() {
                                                                                 children: "Número Camiseta"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 267,
+                                                                                lineNumber: 268,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1382,7 +1409,7 @@ function InscribirPage() {
                                                                                         className: "absolute left-3 top-2.5 h-4 w-4 text-slate-400"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                                        lineNumber: 269,
+                                                                                        lineNumber: 270,
                                                                                         columnNumber: 53
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1392,13 +1419,13 @@ function InscribirPage() {
                                                                                         ...register('numero')
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                                        lineNumber: 270,
+                                                                                        lineNumber: 271,
                                                                                         columnNumber: 53
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 268,
+                                                                                lineNumber: 269,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             errors.numero && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1406,13 +1433,13 @@ function InscribirPage() {
                                                                                 children: errors.numero.message
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 277,
+                                                                                lineNumber: 278,
                                                                                 columnNumber: 67
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                        lineNumber: 266,
+                                                                        lineNumber: 267,
                                                                         columnNumber: 45
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1423,7 +1450,7 @@ function InscribirPage() {
                                                                                 children: "ROL"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 281,
+                                                                                lineNumber: 282,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1433,7 +1460,7 @@ function InscribirPage() {
                                                                                         className: "absolute left-3 top-2.5 h-4 w-4 text-slate-400"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                                        lineNumber: 283,
+                                                                                        lineNumber: 284,
                                                                                         columnNumber: 53
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1444,13 +1471,13 @@ function InscribirPage() {
                                                                                         onChange: (e)=>setValue('rol_input', e.target.value.toUpperCase())
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                                        lineNumber: 284,
+                                                                                        lineNumber: 285,
                                                                                         columnNumber: 53
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 282,
+                                                                                lineNumber: 283,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             errors.rol_input && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1458,13 +1485,13 @@ function InscribirPage() {
                                                                                 children: errors.rol_input.message
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 292,
+                                                                                lineNumber: 293,
                                                                                 columnNumber: 70
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                        lineNumber: 280,
+                                                                        lineNumber: 281,
                                                                         columnNumber: 45
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1475,7 +1502,7 @@ function InscribirPage() {
                                                                                 children: "Fecha Inscripción"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 296,
+                                                                                lineNumber: 297,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1485,7 +1512,7 @@ function InscribirPage() {
                                                                                         className: "absolute left-3 top-2.5 h-4 w-4 text-slate-400"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                                        lineNumber: 298,
+                                                                                        lineNumber: 299,
                                                                                         columnNumber: 53
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1495,13 +1522,13 @@ function InscribirPage() {
                                                                                         ...register('inscripcion')
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                                        lineNumber: 299,
+                                                                                        lineNumber: 300,
                                                                                         columnNumber: 53
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 297,
+                                                                                lineNumber: 298,
                                                                                 columnNumber: 49
                                                                             }, this),
                                                                             errors.inscripcion && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1509,31 +1536,31 @@ function InscribirPage() {
                                                                                 children: errors.inscripcion.message
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                                lineNumber: 306,
+                                                                                lineNumber: 307,
                                                                                 columnNumber: 72
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                                        lineNumber: 295,
+                                                                        lineNumber: 296,
                                                                         columnNumber: 45
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                                lineNumber: 245,
+                                                                lineNumber: 246,
                                                                 columnNumber: 41
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                        lineNumber: 240,
+                                                        lineNumber: 241,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                lineNumber: 162,
+                                                lineNumber: 163,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardFooter"], {
@@ -1549,7 +1576,7 @@ function InscribirPage() {
                                                                     className: "mr-2 h-4 w-4 animate-spin"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/inscribir/page.tsx",
-                                                                    lineNumber: 320,
+                                                                    lineNumber: 321,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 "Guardando..."
@@ -1560,7 +1587,7 @@ function InscribirPage() {
                                                                     className: "mr-2 h-4 w-4"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/inscribir/page.tsx",
-                                                                    lineNumber: 325,
+                                                                    lineNumber: 326,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 "Guardar Ficha"
@@ -1568,7 +1595,7 @@ function InscribirPage() {
                                                         }, void 0, true)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                        lineNumber: 313,
+                                                        lineNumber: 314,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -1584,59 +1611,59 @@ function InscribirPage() {
                                                                     className: "mr-2 h-4 w-4"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/inscribir/page.tsx",
-                                                                    lineNumber: 338,
+                                                                    lineNumber: 339,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 "Cancelar"
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/inscribir/page.tsx",
-                                                            lineNumber: 332,
+                                                            lineNumber: 333,
                                                             columnNumber: 41
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/inscribir/page.tsx",
-                                                        lineNumber: 331,
+                                                        lineNumber: 332,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/inscribir/page.tsx",
-                                                lineNumber: 312,
+                                                lineNumber: 313,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/inscribir/page.tsx",
-                                        lineNumber: 151,
+                                        lineNumber: 152,
                                         columnNumber: 29
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/inscribir/page.tsx",
-                                    lineNumber: 150,
+                                    lineNumber: 151,
                                     columnNumber: 25
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/inscribir/page.tsx",
-                                lineNumber: 149,
+                                lineNumber: 150,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/inscribir/page.tsx",
-                        lineNumber: 119,
+                        lineNumber: 120,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/inscribir/page.tsx",
-                lineNumber: 110,
+                lineNumber: 111,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/inscribir/page.tsx",
-        lineNumber: 96,
+        lineNumber: 97,
         columnNumber: 9
     }, this);
 }

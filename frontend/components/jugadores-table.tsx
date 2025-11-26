@@ -5,10 +5,14 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { differenceInYears, parseISO } from 'date-fns';
 import type { Jugador } from '@/types';
+import { IdCard, Pencil, Trash2 } from 'lucide-react';
+import { Button } from './ui/button';
 
 interface JugadoresTableProps {
     jugadores: Jugador[];
     isLoading?: boolean;
+    onEliminar: (id: string) => void;
+    onEditar: (id: string) => void;
 }
 
 function calcularEdad(fechaNacimiento: string): number {
@@ -39,13 +43,14 @@ function LoadingSkeleton() {
                     <TableCell><Skeleton className="h-4 w-16" /></TableCell>
                     <TableCell><Skeleton className="h-4 w-20" /></TableCell>
                     <TableCell><Skeleton className="h-6 w-20" /></TableCell>
+                    <TableCell><Skeleton className="h-6 w-12" /></TableCell>
                 </TableRow>
             ))}
         </>
     );
 }
 
-export function JugadoresTable({ jugadores, isLoading = false }: JugadoresTableProps) {
+export function JugadoresTable({ jugadores, isLoading = false, onEliminar, onEditar }: JugadoresTableProps) {
     if (isLoading) {
         return (
             <div className="rounded-md border border-slate-200 dark:border-slate-800">
@@ -59,6 +64,7 @@ export function JugadoresTable({ jugadores, isLoading = false }: JugadoresTableP
                             <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Edad</TableHead>
                             <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Inscripción</TableHead>
                             <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">ROL</TableHead>
+                            <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Acciones</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -89,6 +95,7 @@ export function JugadoresTable({ jugadores, isLoading = false }: JugadoresTableP
                         <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Edad</TableHead>
                         <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Inscripción</TableHead>
                         <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">ROL</TableHead>
+                        <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Acciones</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -114,6 +121,32 @@ export function JugadoresTable({ jugadores, isLoading = false }: JugadoresTableP
                                 <TableCell>
                                     <Badge>{jugador.rol}</Badge>
                                 </TableCell>
+                                <TableCell className="w-1/12 min-w-[100px]">
+                                    <div className="flex items-center space-x-2">
+                                        {/* Botón Editar */}
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            onClick={() => onEditar(jugador.id.toString())} // Llama a la función onEditar con el ID
+                                            title="Editar Jugador"
+                                            className="hover:text-blue-600 dark:hover:text-blue-400"
+                                        >
+                                            <Pencil className="h-4 w-4" />
+                                        </Button>
+
+                                        {/* Botón Eliminar */}
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            onClick={() => onEliminar(jugador.id.toString())} // Llama a la función onEliminar con el ID
+                                            title="Eliminar Jugador"
+                                            className="hover:text-red-600 dark:hover:text-red-400"
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                </TableCell>
+
                             </TableRow>
                         );
                     })}

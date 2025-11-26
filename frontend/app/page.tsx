@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Filtros } from '@/components/filtros';
 import { JugadoresTable } from '@/components/jugadores-table';
@@ -43,21 +43,39 @@ export default function HomePage() {
   }, []);
 
   // Cargar jugadores cuando cambian los filtros
+  const loadJugadores = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const data = await api.getJugadores(debouncedFilters);
+      setJugadores(data);
+    } catch (error) {
+      console.error('Error cargando jugadores:', error);
+      toast.error('Error al cargar jugadores');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [debouncedFilters]);
+
   useEffect(() => {
-    async function loadJugadores() {
-      setIsLoading(true);
+    loadJugadores();
+  }, [loadJugadores]);
+
+  const handleEliminarJugador = async (jugadorId: string) => {
+    if (window.confirm("¿Estás seguro de que deseas eliminar este jugador? Esta acción es irreversible.")) {
       try {
-        const data = await api.getJugadores(debouncedFilters);
-        setJugadores(data);
+        await api.deleteJugador(jugadorId); // Llama a tu función ya creada en api.ts
+        toast.success('Jugador eliminado con éxito.');
+        await loadJugadores(); // Actualiza la UI
       } catch (error) {
-        console.error('Error cargando jugadores:', error);
-        toast.error('Error al cargar jugadores');
-      } finally {
-        setIsLoading(false);
+        toast.error('Error al eliminar jugador. Inténtalo de nuevo.');
       }
     }
-    loadJugadores();
-  }, [debouncedFilters]);
+  };
+
+  const handleEditarJugador = (jugadorId: string) => {
+    // Lógica simple de UI: Redirigir
+    window.location.href = `/editar-jugador/${jugadorId}`;
+  };
 
   const handleFilterChange = (newFilters: FilterParams) => {
     setFilters(newFilters);
@@ -174,7 +192,7 @@ export default function HomePage() {
             </div>
 
             <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
-              <JugadoresTable jugadores={jugadores} isLoading={isLoading} />
+              <JugadoresTable jugadores={jugadores} isLoading={isLoading} onEliminar={handleEliminarJugador} onEditar={handleEditarJugador} />
             </div>
           </div>
         </div>
