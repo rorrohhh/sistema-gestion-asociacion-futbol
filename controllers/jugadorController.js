@@ -11,9 +11,14 @@ jugadorController.listarJugadores = async (req, res) => {
 
         // Filtros
         const filtroClubId = req.query.club || null;
-        const filtroRut = req.query.rut || null;
+        let filtroRut = req.query.rut || null;
         const filtroRol = req.query.rol || null;
         const filtroNombre = req.query.nombre || null;
+
+        if (filtroRut) {
+            // Solo quitamos puntos y guiones. Mantenemos el número completo con DV.
+            filtroRut = filtroRut.toString().replace(/[^0-9kK]/g, '');
+        }
 
         // Consultar BD
         const [rows] = await db.query('CALL sp_listar_jugadores(?, ?, ?, ?)', [
