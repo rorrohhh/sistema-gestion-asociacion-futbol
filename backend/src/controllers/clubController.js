@@ -18,7 +18,7 @@ controller.guardar = async (req, res) => {
     console.log("2. Datos recibidos:", req.body); // <--- Y ESTO
     try {
         const { nombre } = req.body;
-        const nuevo = await Club.create({ nombre: nombre.toUpperCase() });
+        const nuevo = await Club.create({ nombre: nombre });
         res.status(201).json(nuevo);
     } catch (error) {
         res.status(400).json({ error: "Error al guardar (posible duplicado)" });

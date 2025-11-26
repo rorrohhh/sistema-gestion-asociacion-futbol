@@ -1,21 +1,28 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, UserPlus, Settings, Trophy, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, Settings, Trophy, LogOut } from "lucide-react"; // Importamos Users
 import { cn } from "@/lib/utils";
+
 const sidebarItems = [
     {
-        title: "Dashboard",
+        title: "Dashboard", // Apunta a / (Métricas)
         href: "/",
         icon: LayoutDashboard,
     },
     {
-        title: "Inscribir Jugador",
-        href: "/inscribir",
-        icon: UserPlus,
+        title: "Jugadores", // Apunta a /jugadores (Filtros y Tabla)
+        href: "/jugadores",
+        icon: Users,
     },
-    // Add more items as needed
+    {
+        title: "Clubes", // Apunta a /clubes (Gestión de clubes)
+        href: "/clubes",
+        icon: Settings,
+    },
+    // Eliminado "Inscribir Jugador" del menú principal
 ];
+// ... (El resto del componente Sidebar permanece igual)
 export function Sidebar() {
     const pathname = usePathname();
     return (
@@ -27,7 +34,8 @@ export function Sidebar() {
             <div className="flex-1 overflow-y-auto py-4">
                 <nav className="space-y-1 px-2">
                     {sidebarItems.map((item) => {
-                        const isActive = pathname === item.href;
+                        // Regla para que solo el Dashboard esté activo en la raíz ("/")
+                        const isActive = pathname === item.href || (item.href === "/" && pathname.length === 1);
                         return (
                             <Link
                                 key={item.href}

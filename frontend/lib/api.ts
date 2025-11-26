@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { env } from './env';
-import type { Jugador, Club, FilterParams, CreateJugadorDTO } from '@/types';
+import type { Jugador, Club, FilterParams, CreateJugadorDTO, CreateClubDTO } from '@/types';
 
 // Configuración del Cliente Axios
 // Se asume que env.apiUrl es "http://localhost:8080" (el host del backend)
@@ -104,5 +104,27 @@ export const api = {
     async getClubes(): Promise<Club[]> {
         const response = await apiClient.get<Club[]>('/api/clubes');
         return response.data;
+    },
+
+    // AÑADIDO: Obtiene un club por su ID
+    async getClubPorId(id: string): Promise<Club> {
+        const response = await apiClient.get<Club>(`/api/clubes/${id}`);
+        return response.data;
+    },
+
+    // AÑADIDO: Crea un nuevo club
+    async createClub(data: CreateClubDTO): Promise<Club> {
+        const response = await apiClient.post<Club>('/api/clubes', data);
+        return response.data;
+    },
+
+    // AÑADIDO: Actualiza un club existente
+    async updateClub(id: string, data: CreateClubDTO): Promise<void> {
+        await apiClient.put(`/api/clubes/${id}`, data);
+    },
+
+    // AÑADIDO: Elimina un club (solucionando el primer error)
+    async deleteClub(id: string): Promise<void> {
+        await apiClient.delete(`/api/clubes/${id}`);
     },
 };
