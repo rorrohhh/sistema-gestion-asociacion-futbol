@@ -1,0 +1,107 @@
+<div class="container pb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            
+            <div class="card main-card">
+                
+                <div class="header-gradient d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        <i class="bi bi-pencil-square me-2"></i>Editar Ficha
+                    </h4>
+                    <span class="badge bg-white text-dark opacity-75">ID: <%= jugador.id %></span>
+                </div>
+
+                <div class="card-body p-4">
+                    <form action="/actualizar" method="POST">
+                        
+                        <input type="hidden" name="id" value="<%= jugador.id %>">
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Club Actual</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-flag-fill"></i></span>
+                                    <select name="club_id" class="form-select" required>
+                                        <% clubes.forEach(function(c) { %>
+                                            <option value="<%= c.id %>" <%= jugador.club_id === c.id ? 'selected' : '' %>>
+                                                <%= c.nombre %>
+                                            </option>
+                                        <% }); %>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3 col-6">
+                                <label class="form-label">N° Camiseta</label>
+                                <input type="number" name="numero" class="form-control text-center fw-bold" value="<%= jugador.numero %>">
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <label class="form-label">ROL Asoc.</label>
+                                <input type="text" name="rol_input" class="form-control text-uppercase" value="<%= jugador.rol_asociacion %>">
+                            </div>
+                        </div>
+
+                        <hr class="my-4 text-muted">
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">RUN</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-postcard"></i></span>
+                                    <input type="text" name="run_input" class="form-control fw-bold" 
+                                            value="<%= jugador.rut_num %>-<%= jugador.rut_dv %>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Nombres</label>
+                                <input type="text" name="nombres" class="form-control text-uppercase" value="<%= jugador.nombres %>">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Apellido Paterno</label>
+                                <input type="text" name="paterno" class="form-control text-uppercase" value="<%= jugador.apellido_paterno %>">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Apellido Materno</label>
+                                <input type="text" name="materno" class="form-control text-uppercase" value="<%= jugador.apellido_materno %>">
+                            </div>
+                        </div>
+
+                        <% 
+                            const formatearFecha = (fecha) => {
+                                if(!fecha) return '';
+                                const d = new Date(fecha);
+                                return d.toISOString().split('T')[0];
+                            }
+                        %>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha Nacimiento</label>
+                                <input type="date" name="nacimiento" class="form-control" 
+                                        value="<%= formatearFecha(jugador.fecha_nacimiento) %>">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha Inscripción</label>
+                                <input type="date" name="inscripcion" class="form-control" 
+                                        value="<%= formatearFecha(jugador.fecha_inscripcion) %>">
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="/" class="btn btn-light border px-4">Cancelar</a>
+                            <button type="submit" class="btn btn-primary px-5 fw-bold shadow-sm">
+                                <i class="bi bi-check-lg me-2"></i>Guardar Cambios
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

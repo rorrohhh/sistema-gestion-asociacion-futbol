@@ -1,0 +1,56 @@
+
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="bi bi-shield-shaded me-2"></i>Clubes del Torneo</h2>
+            <a href="/" class="btn btn-outline-secondary"><i class="bi bi-house-door"></i> Volver al Inicio</a>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white fw-bold">Nuevo Club</div>
+                    <div class="card-body">
+                        <form action="/clubes/guardar" method="POST">
+                            <div class="mb-3">
+                                <label class="form-label">Nombre del Equipo</label>
+                                <input type="text" name="nombre" class="form-control text-uppercase" required placeholder="Ej: REAL JUVENTUD">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Agregar Club</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-0">
+                        <table class="table table-hover mb-0 align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="ps-4">ID</th>
+                                    <th>Nombre del Club</th>
+                                    <th class="text-end pe-4">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (clubes && clubes.length > 0) { %>
+                                    <% clubes.forEach(function(c) { %>
+                                        <tr>
+                                            <td class="ps-4 text-muted">#<%= c.id %></td>
+                                            <td class="fw-bold"><%= c.nombre %></td>
+                                            <td class="text-end pe-4">
+                                                <a href="/clubes/editar/<%= c.id %>" class="btn btn-sm btn-light text-primary"><i class="bi bi-pencil-square"></i></a>
+                                                <a href="/clubes/eliminar/<%= c.id %>" class="btn btn-sm btn-light text-danger" onclick="return confirm('¿Borrar <%= c.nombre %>?')"><i class="bi bi-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                <% } else { %>
+                                    <tr><td colspan="3" class="text-center py-4">No hay clubes registrados.</td></tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

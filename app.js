@@ -1,18 +1,25 @@
 require('dotenv').config();
+const expressLayouts = require('express-ejs-layouts');
 const express = require('express');
 const path = require('path');
 const app = express();
 
-// --- CONFIGURACIÓN ---
+//  Configurar EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+// ACTIVAR LAYOUTS (¡IMPORTANTE!)
+app.use(expressLayouts);
+app.set('layout', 'layout'); // Indica que busque "layout.ejs" por defecto
+
+//  Carpeta Pública
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Middlewares (para entender los formularios)
+//  Middlewares para datos
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// --- IMPORTAR RUTAS ---
+//  RUTAS (Al final de la configuración)
 app.use('/', require('./routes/index'));
 
 // --- INICIAR SERVIDOR ---

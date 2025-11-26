@@ -1,0 +1,18 @@
+<div class="container" style="max-width: 500px;">
+    <div class="card shadow border-0">
+        <div class="card-header bg-warning text-white fw-bold">Editar Club</div>
+        <div class="card-body p-4">
+            <form action="/clubes/actualizar" method="POST">
+                <input type="hidden" name="id" value="<%= club.id %>">
+                <div class="mb-3">
+                    <label class="form-label">Nombre del Equipo</label>
+                    <input type="text" name="nombre" class="form-control text-uppercase fw-bold" value="<%= club.nombre %>" required>
+                </div>
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="/clubes" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-warning">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

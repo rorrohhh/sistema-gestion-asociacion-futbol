@@ -1,0 +1,67 @@
+<style>
+    /* Estilos específicos solo para el HOME */
+    .home-container {
+        min-height: 80vh; /* Para que ocupe casi toda la pantalla */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        /* Un fondo suave solo para el área de contenido si quieres */
+    }
+    
+    .menu-card { 
+        border: none; 
+        border-radius: 20px; 
+        transition: transform 0.3s, box-shadow 0.3s; 
+        cursor: pointer; 
+        text-decoration: none; 
+        color: inherit; 
+        height: 100%;
+    }
+    
+    .menu-card:hover { 
+        transform: translateY(-10px); 
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1); 
+    }
+    
+    .icon-box { font-size: 4rem; margin-bottom: 15px; }
+    
+    .card-jugadores { 
+        background: linear-gradient(45deg, #11998e, #38ef7d); 
+        color: white; 
+    }
+    
+    .card-clubes { 
+        background: linear-gradient(45deg, #667eea, #764ba2); 
+        color: white; 
+    }
+</style>
+
+<div class="home-container">
+    <h1 class="display-4 fw-bold mb-5 text-dark">Sistema de Gestión Deportiva</h1>
+    
+    <div class="row justify-content-center g-4 w-100">
+        <div class="col-md-5 col-lg-4">
+            <a href="/jugadores" class="card menu-card card-jugadores p-5 text-decoration-none">
+                <div class="card-body text-center">
+                    <div class="icon-box"><i class="bi bi-people-fill"></i></div>
+                    <h2 class="fw-bold">Jugadores</h2>
+                    <p class="opacity-75 mb-0">Inscripciones, Fichas y Buscador</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-5 col-lg-4">
+            <a href="/clubes" class="card menu-card card-clubes p-5 text-decoration-none">
+                <div class="card-body text-center">
+                    <div class="icon-box"><i class="bi bi-shield-shaded"></i></div>
+                    <h2 class="fw-bold">Clubes</h2>
+                    <p class="opacity-75 mb-0">Administrar Equipos del Torneo</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<script>
+    document.body.style.background = "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)";
+</script>

@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const nombre = nombreInput.value; 
 
     // Agregamos nombre a la URL
-    const url = `/?club=${club}&rut=${rut}&rol=${rol}&nombre=${nombre}&ajax=true`;
+    const url = `/jugadores?club=${club}&rut=${rut}&rol=${rol}&nombre=${nombre}&ajax=true`;
     
     // ... fetch igual que antes ...
     fetch(url)
@@ -48,9 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Evitar submit del form
-    const form = document.querySelector('form');
-    if (form) {
-        form.addEventListener('submit', (e) => {
+    const formBuscador = document.getElementById('formBuscador');
+    if (formBuscador) {
+        formBuscador.addEventListener('submit', (e) => {
             e.preventDefault();
             buscarJugadores();
         });

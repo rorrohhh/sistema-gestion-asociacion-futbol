@@ -1,148 +1,107 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liga de Barrio - Gestión de Jugadores</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    
-    <style>
-        body { background-color: #f0f2f5; }
-        .main-card { border: none; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .table-header-custom { background: linear-gradient(45deg, #1a2a6c, #b21f1f); color: white; }
-        .rut-font { font-family: 'Consolas', 'Monaco', monospace; font-weight: 600; color: #555; }
-        .rol-badge { font-size: 0.9rem; background-color: #e3f2fd; color: #0d47a1; padding: 5px 10px; border-radius: 20px; font-weight: bold; }
-        .club-tag { font-weight: 600; letter-spacing: 0.5px; }
-        .table-hover tbody tr:hover { background-color: #fff8e1; transition: background-color 0.2s ease; }
-        .numero-camiseta { font-weight: 900; color: #b21f1f; font-size: 1.1em; }
-        
-        /* Estilo para la nueva columna de edad */
-        .edad-badge { 
-            font-weight: bold; 
-            color: #198754; 
-            background-color: #e8f5e9;
-            padding: 5px 10px;
-            border-radius: 8px;
-        }
-    </style>
-</head>
-<body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="bi bi-trophy-fill text-warning me-2"></i> Fútbol de Barrio
-            </a>
+<div class="container pb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark">Plantilla de Jugadores</h2>
+            <p class="text-muted mb-0">Listado oficial temporada 2025</p>
         </div>
-    </nav>
-
-    <div class="container pb-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h2 class="fw-bold text-dark">Plantilla de Jugadores</h2>
-                <p class="text-muted mb-0">Listado oficial temporada 2025</p>
-            </div>
-            <a href="/inscribir" class="btn btn-success btn-lg shadow-sm">
-                <i class="bi bi-person-plus-fill me-2"></i>Inscribir Jugador
-            </a>
-        </div>
-
-        <div class="card main-card overflow-hidden">
-            <div class="card-header bg-white p-4 border-bottom-0">
-                <form action="/" method="GET">
-                    <div class="row g-2 align-items-end">
-                        
-                        <div class="col-md-3">
-                            <label class="form-label small text-muted fw-bold">Club</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-flag-fill text-muted"></i></span>
-                                <select name="club" class="form-select border-start-0 bg-light">
-                                    <option value="">Todos los Clubes</option>
-                                    <% if(clubes && clubes.length > 0) { %>
-                                        <% clubes.forEach(function(c) { %>
-                                            <option value="<%= c.id %>" <%= filtroClub == c.id ? 'selected' : '' %>>
-                                                <%= c.nombre %>
-                                            </option>
-                                        <% }); %>
-                                    <% } %>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label class="form-label small text-muted fw-bold">Nombre / Apellido</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-person-fill text-muted"></i></span>
-                                <input type="text" name="nombre" class="form-control border-start-0 bg-light" 
-                                    placeholder="Buscar nombre..." 
-                                    value="<%= filtroNombre || '' %>">
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <label class="form-label small text-muted fw-bold">RUT</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-postcard text-muted"></i></span>
-                                <input type="text" name="rut" class="form-control border-start-0 bg-light" 
-                                    placeholder="12345678" 
-                                    value="<%= filtroRut || '' %>">
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <label class="form-label small text-muted fw-bold">ROL</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-hash text-muted"></i></span>
-                                <input type="text" name="rol" class="form-control border-start-0 bg-light" 
-                                    placeholder="9328" 
-                                    value="<%= filtroRol || '' %>">
-                            </div>
-                        </div>
-
-                        <div class="col-md-2 d-flex gap-2">
-                            <button class="btn btn-primary w-100 fw-bold" type="submit">
-                                <i class="bi bi-search"></i>
-                            </button>
-                            
-                            <% if(filtroClub || filtroRut || filtroRol || filtroNombre) { %>
-                                <a href="/" class="btn btn-outline-danger" title="Limpiar">
-                                    <i class="bi bi-x-lg"></i>
-                                </a>
-                            <% } %>
-                        </div>
-
-                    </div>
-                    
-                    <div class="text-end mt-2 text-muted">
-                        <small>Encontrados: <strong><%= jugadores ? jugadores.length : 0 %></strong> registros</small>
-                    </div>
-                </form>
-            </div>
-
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-header-custom">
-                        <tr>
-                            <th class="py-3 ps-4">N°</th>
-                            <th class="py-3">Jugador</th>
-                            <th class="py-3">RUN</th>
-                            <th class="py-3 text-center">Rol</th>
-                            <th class="py-3 text-center">F. Nacimiento</th>
-                            <th class="py-3 text-center">Edad</th>
-                            <th class="py-3">Club</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white" id="tablaJugadores">
-                        <%- include('partials/tabla_resultados') %>
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-footer bg-light text-center py-3 text-muted small">Sistema de Gestión Deportiva &copy; 2025</div>
-        </div>
+        <a href="/jugadores/inscribir" class="btn btn-success btn-lg shadow-sm">
+            <i class="bi bi-person-plus-fill me-2"></i>Inscribir Jugador
+        </a>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/buscador.js"></script>
-</body>
-</html>
+
+    <div class="card main-card overflow-hidden">
+        <div class="card-header bg-white p-4 border-bottom-0">
+            <form action="/" method="GET" id="formBuscador">
+                <div class="row g-2 align-items-end">
+                    <div class="col-md-3">
+                        <label class="form-label small text-muted fw-bold">Club</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-flag-fill text-muted"></i></span>
+                            <select name="club" class="form-select border-start-0 bg-light">
+                                <option value="">Todos los Clubes</option>
+                                <% if(clubes && clubes.length > 0) { %>
+                                    <% clubes.forEach(function(c) { %>
+                                        <option value="<%= c.id %>" <%= filtroClub == c.id ? 'selected' : '' %>>
+                                            <%= c.nombre %>
+                                        </option>
+                                    <% }); %>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label small text-muted fw-bold">Nombre / Apellido</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-person-fill text-muted"></i></span>
+                            <input type="text" name="nombre" class="form-control border-start-0 bg-light" 
+                                placeholder="Buscar nombre..." 
+                                value="<%= filtroNombre || '' %>">
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label class="form-label small text-muted fw-bold">RUT</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-postcard text-muted"></i></span>
+                            <input type="text" name="rut" class="form-control border-start-0 bg-light" 
+                                placeholder="12345678" 
+                                value="<%= filtroRut || '' %>">
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label class="form-label small text-muted fw-bold">ROL</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-hash text-muted"></i></span>
+                            <input type="text" name="rol" class="form-control border-start-0 bg-light" 
+                                placeholder="9328" 
+                                value="<%= filtroRol || '' %>">
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 d-flex gap-2">
+                        <button class="btn btn-primary w-100 fw-bold" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        
+                        <% if(filtroClub || filtroRut || filtroRol || filtroNombre) { %>
+                            <a href="/" class="btn btn-outline-danger" title="Limpiar">
+                                <i class="bi bi-x-lg"></i>
+                            </a>
+                        <% } %>
+                    </div>
+
+                </div>
+                
+                <div class="text-end mt-2 text-muted">
+                    <small>Encontrados: <strong><%= jugadores ? jugadores.length : 0 %></strong> registros</small>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                
+                <thead class="table-header-custom">
+                    <tr>
+                        <th class="py-3 ps-4">N°</th>
+                        <th class="py-3">Jugador</th>
+                        <th class="py-3">RUN</th>
+                        <th class="py-3 text-center">Rol</th>
+                        <th class="py-3 text-center">F. Nacimiento</th>
+                        <th class="py-3 text-center">Edad</th>
+                        <th class="py-3">Club</th>
+                        <th class="text-end pe-4">Acciones</th>
+                    </tr>
+                </thead>
+                
+                <tbody class="bg-white" id="tablaJugadores">
+                    <%- include('partials/tabla_resultados') %>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="card-footer bg-light text-center py-3 text-muted small">Sistema de Gestión Deportiva &copy; 2025</div>
+    </div>
+</div>

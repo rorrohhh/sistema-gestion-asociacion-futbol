@@ -8,31 +8,37 @@
                 const nacimiento = new Date(jugador.fecha_nacimiento);
                 let anios = hoy.getFullYear() - nacimiento.getFullYear();
                 const mes = hoy.getMonth() - nacimiento.getMonth();
-                if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-                    anios--;
-                }
+                if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) anios--;
                 edad = anios;
             }
         %>
 
         <tr>
             <td class="ps-4"><span class="numero-camiseta"><%= jugador.numero %></span></td>
+            
             <td>
-                <div class="fw-bold text-dark"><%= jugador.apellido_paterno %> <%= jugador.apellido_materno %></div>
-                <div class="text-muted small text-uppercase"><%= jugador.nombres %></div>
+                <div class="fw-bold text-dark texto-mayuscula">
+                    <%= jugador.apellido_paterno %> <%= jugador.apellido_materno %>
+                </div>
+                <div class="text-muted small texto-mayuscula"><%= jugador.nombres %></div>
             </td>
+
             <td>
                 <% if(jugador.rut_num) { %>
-                    <span class="rut-font"><%= jugador.rut_num %>-<%= jugador.rut_dv %></span>
-                <% } else { %>
-                    <span class="text-muted">--</span>
-                <% } %>
+                    <% 
+                        let rutVisual = jugador.rut_num.toString();
+                        if (/^\d+$/.test(rutVisual)) { 
+                            rutVisual = parseInt(rutVisual).toLocaleString('es-CL');
+                        }
+                    %>
+                    <span class="rut-font"><%= rutVisual %>-<%= jugador.rut_dv %></span>
+                <% } else { %> <span class="text-muted">--</span> <% } %>
             </td>
+
             <td class="text-center"><span class="rol-badge border"><%= jugador.rol_asociacion %></span></td>
             
             <td class="text-center text-muted">
                 <% if(jugador.fecha_nacimiento) { %>
-                    <i class="bi bi-calendar3 me-1"></i>
                     <%= new Date(jugador.fecha_nacimiento).toLocaleDateString('es-CL') %>
                 <% } else { %> -- <% } %>
             </td>
@@ -43,9 +49,25 @@
                 <% } else { %> -- <% } %>
             </td>
 
-            <td><span class="badge rounded-pill text-bg-secondary club-tag px-3 py-2"><%= jugador.nombre_club %></span></td>
+            <td>
+                <span class="badge rounded-pill badge-club-destacado px-3 py-2 texto-mayuscula">
+                    <%= jugador.nombre_club %>
+                </span>
+            </td>
+
+            <td class="text-end pe-4">
+                <div class="btn-group" role="group">
+                    <a href="/jugadores/editar/<%= jugador.id %>" class="btn btn-sm btn-outline-primary border-0"><i class="bi bi-pencil-square fs-5"></i></a>
+                    <a href="/jugadores/eliminar/<%= jugador.id %>" class="btn btn-sm btn-outline-danger border-0" onclick="return confirm('¿Borrar?')"><i class="bi bi-trash fs-5"></i></a>
+                </div>
+            </td>
         </tr>
     <% }); %>
 <% } else { %>
-    <tr><td colspan="7" class="text-center py-5">No se encontraron jugadores.</td></tr>
+    <tr>
+        <td colspan="8" class="text-center py-5 text-muted">
+            <i class="bi bi-emoji-frown display-4 d-block mb-3"></i>
+            <h5>No se encontraron resultados.</h5>
+        </td>
+    </tr>
 <% } %>
