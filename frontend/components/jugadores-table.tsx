@@ -20,7 +20,8 @@ function calcularEdad(fechaNacimiento: string): number {
     }
 }
 
-function formatearRUT(rut: number, dv: string): string {
+function formatearRUT(rut: number | string | undefined | null, dv: string): string {
+    if (!rut) return '-';
     const rutStr = rut.toString();
     const formatted = rutStr.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     return `${formatted}-${dv}`;
@@ -92,10 +93,10 @@ export function JugadoresTable({ jugadores, isLoading = false }: JugadoresTableP
                 </TableHeader>
                 <TableBody>
                     {jugadores.map((jugador) => {
-                        const edad = calcularEdad(jugador.fecha_nacimiento);
-                        const nombreCompleto = `${jugador.nombres} ${jugador.apellido_paterno} ${jugador.apellido_materno}`;
-                        const rutFormateado = formatearRUT(jugador.rut_num, jugador.rut_dv);
-                        const fechaInscripcion = new Date(jugador.fecha_inscripcion).toLocaleDateString('es-CL');
+                        const edad = calcularEdad(jugador.nacimiento);
+                        const nombreCompleto = `${jugador.nombres} ${jugador.paterno} ${jugador.materno}`;
+                        const rutFormateado = formatearRUT(jugador.rut, jugador.dv);
+                        const fechaInscripcion = new Date(jugador.inscripcion).toLocaleDateString('es-CL');
 
                         return (
                             <TableRow
@@ -106,12 +107,12 @@ export function JugadoresTable({ jugadores, isLoading = false }: JugadoresTableP
                                 <TableCell>{nombreCompleto}</TableCell>
                                 <TableCell className="font-mono">{rutFormateado}</TableCell>
                                 <TableCell>
-                                    <Badge variant="secondary">{jugador.nombre_club}</Badge>
+                                    <Badge variant="secondary">{jugador.Club?.nombre || 'Sin Club'}</Badge>
                                 </TableCell>
                                 <TableCell>{edad} años</TableCell>
                                 <TableCell>{fechaInscripcion}</TableCell>
                                 <TableCell>
-                                    <Badge>{jugador.rol_asociacion}</Badge>
+                                    <Badge>{jugador.rol}</Badge>
                                 </TableCell>
                             </TableRow>
                         );

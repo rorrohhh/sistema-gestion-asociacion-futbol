@@ -3,16 +3,16 @@
 export interface Jugador {
     id: number;
     numero: number;
-    apellido_paterno: string;
-    apellido_materno: string;
+    paterno: string;
+    materno: string;
     nombres: string;
-    rut_num: number;
-    rut_dv: string;
-    rol_asociacion: string;
-    fecha_nacimiento: string;
-    fecha_inscripcion: string;
+    rut: number;
+    dv: string;
+    rol: string;
+    nacimiento: string;
+    inscripcion: string;
     club_id: number;
-    nombre_club: string;
+    Club?: Club;
 }
 
 export interface Club {
@@ -32,8 +32,8 @@ export interface CreateJugadorDTO {
     paterno: string;
     materno: string;
     nombres: string;
-    run_input: string; // RUT completo con formato (ej: 12345678-9)
-    rol_input: string;
+    rut: string; // RUT completo con formato (ej: 12345678-9)
+    rol: string;
     nacimiento: string; // YYYY-MM-DD
     inscripcion: string; // YYYY-MM-DD
     club_id: number;

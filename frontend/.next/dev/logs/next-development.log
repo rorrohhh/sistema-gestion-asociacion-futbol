@@ -1,0 +1,28 @@
+[00:00:01.972] Server  LOG      ✓ Ready in 1366ms
+[00:00:34.324] Server  LOG      ○ Compiling / ...
+[00:00:35.998] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:38.508] Browser ERROR   Error cargando jugadores: {"code":"ERR_NETWORK","config":{"adapter":["xhr","http","fetch"],"allowAbsoluteUrls":true,"baseURL":"http://localhost:3001","env":{},"headers":{"Accept":"application/json, text/plain, */*","Content-Type":"application/json"},"maxBodyLength":-1,"maxContentLength":-1,"method":"get","timeout":0,"transformRequest":[null],"transformResponse":[null],"transitional":{"clarifyTimeoutError":false,"forcedJSONParsing":true,"silentJSONParsing":true},"url":"/","xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN"},"message":"Network Error","name":"AxiosError","stack":"handleError@http://localhost:3000/_next/static/chunks/node_modules_87270cff._.js:20396:25\n"}
+[00:00:38.508] Browser ERROR   Error cargando clubes: {"code":"ERR_NETWORK","config":{"adapter":["xhr","http","fetch"],"allowAbsoluteUrls":true,"baseURL":"http://localhost:3001","env":{},"headers":{"Accept":"application/json, text/plain, */*","Content-Type":"application/json"},"maxBodyLength":-1,"maxContentLength":-1,"method":"get","timeout":0,"transformRequest":[null],"transformResponse":[null],"transitional":{"clarifyTimeoutError":false,"forcedJSONParsing":true,"silentJSONParsing":true},"url":"/clubes","xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN"},"message":"Network Error","name":"AxiosError","stack":"handleError@http://localhost:3000/_next/static/chunks/node_modules_87270cff._.js:20396:25\n"}
+[00:09:15.358] Server  LOG        Reload env: .env.local
+[00:09:29.542] Server  LOG        Reload env: .env.local
+[00:09:29.932] Server  LOG      ✓ Compiled in 281ms
+[00:17:37.728] Server  LOG      ✓ Compiled in 63ms
+[00:19:56.792] Server  LOG      ✓ Compiled in 53ms
+[00:20:10.223] Server  LOG      ✓ Compiled in 42ms
+[00:22:00.853] Browser ERROR   uncaughtError: TypeError: can't access property "toString", rut is undefined
+[00:22:35.341] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:22:35.645] Browser ERROR   uncaughtError: TypeError: can't access property "toString", rut is undefined
+[00:29:47.344] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:29:47.369] Server  LOG      ✓ Compiled in 158ms
+[00:29:47.916] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:29:59.019] Server  LOG      ✓ Compiled in 145ms
+[00:30:04.271] Server  LOG      ✓ Compiled in 103ms
+[00:30:08.937] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:33:09.104] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:34:33.475] Server  LOG      ✓ Compiled in 178ms
+[00:34:37.751] Server  LOG      ✓ Compiled in 101ms
+[00:34:41.310] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:40:43.550] Server  LOG      ✓ Compiled in 34ms
+[00:41:09.914] Server  LOG      ✓ Compiled in 42ms
+[00:41:37.295] Server  LOG      ✓ Compiled in 126ms
+[00:45:09.530] Server  LOG      ✓ Compiled in 163ms
