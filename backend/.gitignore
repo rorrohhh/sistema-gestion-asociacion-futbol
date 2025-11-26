@@ -10,3 +10,6 @@ npm-debug.log*
 
 # .env para claves:
 .env
+/generated/prisma
+
+/generated/prisma

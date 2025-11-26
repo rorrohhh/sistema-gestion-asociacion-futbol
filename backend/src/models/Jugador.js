@@ -1,0 +1,36 @@
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
+
+const Jugador = sequelize.define('Jugador', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    numero: DataTypes.INTEGER,
+    paterno: DataTypes.STRING,
+    materno: DataTypes.STRING,
+    nombres: DataTypes.STRING,
+    rut: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    dv: {
+        type: DataTypes.STRING(1),
+        allowNull: false
+    },
+    rol: DataTypes.STRING,
+    nacimiento: DataTypes.DATEONLY,
+    inscripcion: DataTypes.DATEONLY,
+    // La llave foránea clubId se crea automática al hacer la relación,
+    // pero es buena práctica declararla explícitamente para validaciones.
+    clubId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    }
+}, {
+    tableName: 'jugadores',
+    timestamps: false
+});
+
+module.exports = Jugador;
