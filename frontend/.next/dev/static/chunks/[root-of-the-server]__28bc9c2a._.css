@@ -639,6 +639,10 @@
     margin-right: calc(var(--spacing) * 2);
   }
 
+  .mr-3 {
+    margin-right: calc(var(--spacing) * 3);
+  }
+
   .mb-3 {
     margin-bottom: calc(var(--spacing) * 3);
   }
@@ -752,6 +756,10 @@
     height: 1px;
   }
 
+  .h-screen {
+    height: 100vh;
+  }
+
   .max-h-\(--radix-select-content-available-height\) {
     max-height: var(--radix-select-content-available-height);
   }
@@ -804,6 +812,10 @@
     width: calc(var(--spacing) * 32);
   }
 
+  .w-64 {
+    width: calc(var(--spacing) * 64);
+  }
+
   .w-fit {
     width: fit-content;
   }
@@ -832,7 +844,11 @@
     min-width: var(--radix-select-trigger-width);
   }
 
-  .shrink-0 {
+  .flex-1 {
+    flex: 1;
+  }
+
+  .flex-shrink-0, .shrink-0 {
     flex-shrink: 0;
   }
 
@@ -1017,6 +1033,11 @@
     border-top-width: 1px;
   }
 
+  .border-r {
+    border-right-style: var(--tw-border-style);
+    border-right-width: 1px;
+  }
+
   .border-b {
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 1px;
@@ -1058,6 +1079,10 @@
 
   .border-slate-300 {
     border-color: var(--color-slate-300);
+  }
+
+  .border-slate-800 {
+    border-color: var(--color-slate-800);
   }
 
   .border-transparent {
@@ -1148,6 +1173,10 @@
     background-color: var(--color-slate-100);
   }
 
+  .bg-slate-950 {
+    background-color: var(--color-slate-950);
+  }
+
   .bg-transparent {
     background-color: #0000;
   }
@@ -1234,6 +1263,14 @@
 
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
+  }
+
+  .py-3 {
+    padding-block: calc(var(--spacing) * 3);
+  }
+
+  .py-4 {
+    padding-block: calc(var(--spacing) * 4);
   }
 
   .py-6 {
@@ -1669,6 +1706,12 @@
   }
 
   @media (hover: hover) {
+    .hover\:bg-slate-900:hover {
+      background-color: var(--color-slate-900);
+    }
+  }
+
+  @media (hover: hover) {
     .hover\:bg-transparent:hover {
       background-color: #0000;
     }
@@ -1695,6 +1738,12 @@
   @media (hover: hover) {
     .hover\:text-slate-900:hover {
       color: var(--color-slate-900);
+    }
+  }
+
+  @media (hover: hover) {
+    .hover\:text-white:hover {
+      color: var(--color-white);
     }
   }
 
