@@ -48,17 +48,17 @@ function LoadingSkeleton() {
 export function JugadoresTable({ jugadores, isLoading = false }: JugadoresTableProps) {
     if (isLoading) {
         return (
-            <div className="rounded-md border">
+            <div className="rounded-md border border-slate-200 dark:border-slate-800">
                 <Table>
-                    <TableHeader className="bg-gradient-to-r from-blue-600 to-red-600">
-                        <TableRow>
-                            <TableHead className="text-white">Número</TableHead>
-                            <TableHead className="text-white">Nombre Completo</TableHead>
-                            <TableHead className="text-white">RUT</TableHead>
-                            <TableHead className="text-white">Club</TableHead>
-                            <TableHead className="text-white">Edad</TableHead>
-                            <TableHead className="text-white">Inscripción</TableHead>
-                            <TableHead className="text-white">ROL</TableHead>
+                    <TableHeader className="bg-slate-50 dark:bg-slate-900/50">
+                        <TableRow className="hover:bg-transparent">
+                            <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Número</TableHead>
+                            <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Nombre Completo</TableHead>
+                            <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">RUT</TableHead>
+                            <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Club</TableHead>
+                            <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Edad</TableHead>
+                            <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Inscripción</TableHead>
+                            <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">ROL</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -78,17 +78,17 @@ export function JugadoresTable({ jugadores, isLoading = false }: JugadoresTableP
     }
 
     return (
-        <div className="rounded-md border">
+        <div className="rounded-md border border-slate-200 dark:border-slate-800">
             <Table>
-                <TableHeader className="bg-gradient-to-r from-blue-600 to-red-600">
-                    <TableRow>
-                        <TableHead className="text-white">Número</TableHead>
-                        <TableHead className="text-white">Nombre Completo</TableHead>
-                        <TableHead className="text-white">RUT</TableHead>
-                        <TableHead className="text-white">Club</TableHead>
-                        <TableHead className="text-white">Edad</TableHead>
-                        <TableHead className="text-white">Inscripción</TableHead>
-                        <TableHead className="text-white">ROL</TableHead>
+                <TableHeader className="bg-slate-50 dark:bg-slate-900/50">
+                    <TableRow className="hover:bg-transparent">
+                        <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Número</TableHead>
+                        <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Nombre Completo</TableHead>
+                        <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">RUT</TableHead>
+                        <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Club</TableHead>
+                        <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Edad</TableHead>
+                        <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Inscripción</TableHead>
+                        <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">ROL</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>

@@ -5,10 +5,19 @@ import Link from 'next/link';
 import { Filtros } from '@/components/filtros';
 import { JugadoresTable } from '@/components/jugadores-table';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useDebounce } from '@/hooks/use-debounce';
 import { api } from '@/lib/api';
 import type { Jugador, Club, FilterParams } from '@/types';
 import { toast } from 'sonner';
+import {
+  Users,
+  UserPlus,
+  Trophy,
+  Filter,
+  LayoutGrid,
+  Activity
+} from 'lucide-react';
 
 export default function HomePage() {
   const [jugadores, setJugadores] = useState<Jugador[]>([]);
@@ -61,51 +70,115 @@ export default function HomePage() {
   const totalResultados = jugadores.length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-red-50 dark:from-slate-900 dark:to-slate-800">
-      <div className="container mx-auto py-8 px-4">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent">
-            Sistema de Gestión de Fútbol
-          </h1>
-          <p className="text-muted-foreground">
-            Listado de jugadores inscritos en la asociación
-          </p>
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+      {/* Navbar / Top Header */}
+      <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-10">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="bg-blue-600 p-2 rounded-lg">
+              <Trophy className="h-5 w-5 text-white" />
+            </div>
+            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent hidden sm:block">
+              Gestión Fútbol
+            </h1>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <div className="text-sm text-slate-500 dark:text-slate-400 hidden md:block">
+              <span className="font-medium text-slate-900 dark:text-slate-200">{clubes.length}</span> Clubes Registrados
+            </div>
+            <Link href="/inscribir">
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all">
+                <UserPlus className="mr-2 h-4 w-4" />
+                Inscribir Jugador
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      <main className="container mx-auto py-8 px-4 space-y-8">
+
+        {/* Stats Overview (Optional but adds to the "Dashboard" feel) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card className="border-0 shadow-sm bg-white dark:bg-slate-900 ring-1 ring-slate-200 dark:ring-slate-800">
+            <CardContent className="p-6 flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Total Jugadores</p>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mt-1">
+                  {isLoading ? '...' : totalResultados}
+                </h3>
+              </div>
+              <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-full">
+                <Users className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-sm bg-white dark:bg-slate-900 ring-1 ring-slate-200 dark:ring-slate-800">
+            <CardContent className="p-6 flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Clubes Activos</p>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mt-1">
+                  {clubes.length}
+                </h3>
+              </div>
+              <div className="p-3 bg-indigo-50 dark:bg-indigo-900/20 rounded-full">
+                <LayoutGrid className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-sm bg-white dark:bg-slate-900 ring-1 ring-slate-200 dark:ring-slate-800">
+            <CardContent className="p-6 flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Estado del Sistema</p>
+                <h3 className="text-2xl font-bold text-green-600 dark:text-green-400 mt-1">
+                  En Línea
+                </h3>
+              </div>
+              <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-full">
+                <Activity className="h-6 w-6 text-green-600 dark:text-green-400" />
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Botón Inscribir */}
-        <div className="mb-6">
-          <Link href="/inscribir">
-            <Button size="lg" className="bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700">
-              Inscribir Jugador
-            </Button>
-          </Link>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Sidebar Filters */}
+          <div className="lg:col-span-1 space-y-6">
+            <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-5 sticky top-24">
+              <div className="flex items-center gap-2 mb-6 text-slate-800 dark:text-slate-200 font-semibold">
+                <Filter className="h-5 w-5" />
+                <h2>Filtros de Búsqueda</h2>
+              </div>
+              <Filtros
+                clubes={clubes}
+                filters={filters}
+                onFilterChange={handleFilterChange}
+                onClear={handleClearFilters}
+              />
+            </div>
+          </div>
+
+          {/* Main Content Table */}
+          <div className="lg:col-span-3 space-y-4">
+            <div className="flex items-center justify-between bg-white dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
+              <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                <Users className="h-5 w-5 text-slate-500" />
+                Listado de Jugadores
+              </h2>
+              <span className="text-sm px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full font-medium">
+                {isLoading ? 'Cargando...' : `${totalResultados} resultados`}
+              </span>
+            </div>
+
+            <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+              <JugadoresTable jugadores={jugadores} isLoading={isLoading} />
+            </div>
+          </div>
         </div>
-
-        {/* Filtros */}
-        <Filtros
-          clubes={clubes}
-          filters={filters}
-          onFilterChange={handleFilterChange}
-          onClear={handleClearFilters}
-        />
-
-        {/* Contador de resultados */}
-        <div className="mb-4">
-          <p className="text-sm text-muted-foreground">
-            {isLoading ? (
-              'Cargando...'
-            ) : (
-              <>
-                Se encontraron <span className="font-semibold text-foreground">{totalResultados}</span> jugador{totalResultados !== 1 ? 'es' : ''}
-              </>
-            )}
-          </p>
-        </div>
-
-        {/* Tabla de jugadores */}
-        <JugadoresTable jugadores={jugadores} isLoading={isLoading} />
-      </div>
+      </main>
     </div>
   );
 }
