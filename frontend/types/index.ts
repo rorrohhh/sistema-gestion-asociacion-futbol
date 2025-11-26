@@ -6,8 +6,10 @@ export interface Jugador {
     paterno: string;
     materno: string;
     nombres: string;
-    rut: number;
-    dv: string;
+    rut: number | null;
+    dv: string | null;
+    pasaporte?: string;
+    tipoIdentificacion?: 'RUT' | 'PASSPORT';
     rol: string;
     nacimiento: string;
     inscripcion: string;
@@ -37,6 +39,9 @@ export interface CreateJugadorDTO {
     nacimiento: string; // YYYY-MM-DD
     inscripcion: string; // YYYY-MM-DD
     club_id: number;
+
+    tipo_identificacion: 'RUT' | 'PASSPORT';
+    passport_input: string; // Para el valor del Pasaporte
 }
 
 export interface CreateClubDTO {

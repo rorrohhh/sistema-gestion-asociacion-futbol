@@ -54,15 +54,11 @@ export const api = {
             nombres: data.nombres,
             nacimiento: data.nacimiento,
             inscripcion: data.inscripcion,
-
-            // CORRECCIÓN AQUÍ:
-            // Usamos data.club_id (como lo tienes en tu type)
             club_id: data.club_id,
-
-            // Revisa si 'rut' y 'rol' te dan error también. 
-            // Si TypeScript no se queja, déjalos así.
-            run_input: data.rut,      // Front: 'rut' -> Back: 'run_input'
-            rol_input: data.rol,      // Front: 'rol' -> Back: 'rol_input'
+            run_input: data.rut,
+            rol_input: data.rol,
+            tipo_identificacion_input: data.tipo_identificacion,
+            passport_input: data.passport_input,
         };
 
         await apiClient.post('/api/jugadores', payloadBackend);
@@ -80,6 +76,8 @@ export const api = {
             club_id: data.club_id,
             run_input: data.rut,
             rol_input: data.rol,
+            tipo_identificacion_input: data.tipo_identificacion,
+            passport_input: data.passport_input,
         };
 
         // Realizamos la petición PUT, incluyendo el ID en la URL
