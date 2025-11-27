@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { differenceInYears, parseISO } from 'date-fns';
 import type { Jugador } from '@/types';
-import { IdCard, Pencil, Trash2 } from 'lucide-react';
+import { Pencil, Trash2, Globe, CreditCard, Flag } from 'lucide-react';
 import { Button } from './ui/button';
 
 interface JugadoresTableProps {
@@ -24,13 +24,14 @@ function calcularEdad(fechaNacimiento: string): number {
     }
 }
 
-function formatearRUT(rut: number | string | undefined | null, dv: string): string {
+function formatearRUT(rut: number | string | undefined | null, dv: string | null): string {
     if (!rut) return '-';
     const rutStr = rut.toString();
     const formatted = rutStr.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    return `${formatted}-${dv}`;
+    return `${formatted}-${dv || ''}`;
 }
 
+// CORREGIDO: Eliminados los comentarios entre celdas para evitar error de hidratación
 function LoadingSkeleton() {
     return (
         <>
@@ -38,6 +39,7 @@ function LoadingSkeleton() {
                 <TableRow key={i}>
                     <TableCell><Skeleton className="h-4 w-16" /></TableCell>
                     <TableCell><Skeleton className="h-4 w-full" /></TableCell>
+                    <TableCell><Skeleton className="h-4 w-24" /></TableCell>
                     <TableCell><Skeleton className="h-4 w-24" /></TableCell>
                     <TableCell><Skeleton className="h-6 w-32" /></TableCell>
                     <TableCell><Skeleton className="h-4 w-16" /></TableCell>
@@ -59,7 +61,8 @@ export function JugadoresTable({ jugadores, isLoading = false, onEliminar, onEdi
                         <TableRow className="hover:bg-transparent">
                             <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Número</TableHead>
                             <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Nombre Completo</TableHead>
-                            <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">RUT</TableHead>
+                            <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Identificación</TableHead>
+                            <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Nacionalidad</TableHead>
                             <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Club</TableHead>
                             <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Edad</TableHead>
                             <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Inscripción</TableHead>
@@ -90,7 +93,8 @@ export function JugadoresTable({ jugadores, isLoading = false, onEliminar, onEdi
                     <TableRow className="hover:bg-transparent">
                         <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Número</TableHead>
                         <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Nombre Completo</TableHead>
-                        <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">RUT</TableHead>
+                        <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Identificación</TableHead>
+                        <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Nacionalidad</TableHead>
                         <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Club</TableHead>
                         <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Edad</TableHead>
                         <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Inscripción</TableHead>
@@ -102,7 +106,6 @@ export function JugadoresTable({ jugadores, isLoading = false, onEliminar, onEdi
                     {jugadores.map((jugador) => {
                         const edad = calcularEdad(jugador.nacimiento);
                         const nombreCompleto = `${jugador.nombres} ${jugador.paterno} ${jugador.materno}`;
-                        const rutFormateado = formatearRUT(jugador.rut, jugador.dv);
                         const fechaInscripcion = new Date(jugador.inscripcion).toLocaleDateString('es-CL');
 
                         return (
@@ -112,33 +115,56 @@ export function JugadoresTable({ jugadores, isLoading = false, onEliminar, onEdi
                             >
                                 <TableCell className="font-medium">{jugador.numero}</TableCell>
                                 <TableCell>{nombreCompleto}</TableCell>
-                                <TableCell className="font-mono">{rutFormateado}</TableCell>
+
+                                <TableCell className="font-mono text-sm">
+                                    {jugador.tipoIdentificacion === 'PASSPORT' ? (
+                                        <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400" title="Pasaporte Extranjero">
+                                            <Globe className="h-4 w-4 text-slate-400" />
+                                            <span className="uppercase">{jugador.pasaporte}</span>
+                                        </div>
+                                    ) : (
+                                        <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300" title="RUT Nacional">
+                                            <CreditCard className="h-4 w-4 text-slate-400" />
+                                            <span>{formatearRUT(jugador.rut, jugador.dv)}</span>
+                                        </div>
+                                    )}
+                                </TableCell>
+
+                                <TableCell>
+                                    {jugador.nacionalidad ? (
+                                        <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                                            <Flag className="h-3 w-3 text-slate-400" />
+                                            <span className="capitalize">{jugador.nacionalidad}</span>
+                                        </div>
+                                    ) : (
+                                        <span className="text-slate-400 italic text-xs">-</span>
+                                    )}
+                                </TableCell>
+
                                 <TableCell>
                                     <Badge variant="secondary">{jugador.Club?.nombre || 'Sin Club'}</Badge>
                                 </TableCell>
                                 <TableCell>{edad} años</TableCell>
                                 <TableCell>{fechaInscripcion}</TableCell>
                                 <TableCell>
-                                    <Badge>{jugador.rol}</Badge>
+                                    <Badge variant="outline">{jugador.rol}</Badge>
                                 </TableCell>
                                 <TableCell className="w-1/12 min-w-[100px]">
                                     <div className="flex items-center space-x-2">
-                                        {/* Botón Editar */}
                                         <Button
                                             variant="ghost"
                                             size="icon"
-                                            onClick={() => onEditar(jugador.id.toString())} // Llama a la función onEditar con el ID
+                                            onClick={() => onEditar(jugador.id.toString())}
                                             title="Editar Jugador"
                                             className="hover:text-blue-600 dark:hover:text-blue-400"
                                         >
                                             <Pencil className="h-4 w-4" />
                                         </Button>
 
-                                        {/* Botón Eliminar */}
                                         <Button
                                             variant="ghost"
                                             size="icon"
-                                            onClick={() => onEliminar(jugador.id.toString())} // Llama a la función onEliminar con el ID
+                                            onClick={() => onEliminar(jugador.id.toString())}
                                             title="Eliminar Jugador"
                                             className="hover:text-red-600 dark:hover:text-red-400"
                                         >

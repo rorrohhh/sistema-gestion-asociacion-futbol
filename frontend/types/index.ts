@@ -6,8 +6,15 @@ export interface Jugador {
     paterno: string;
     materno: string;
     nombres: string;
-    rut: number;
-    dv: string;
+
+    // ACTUALIZADO: El RUT puede ser nulo si es extranjero
+    rut: number | null;
+    dv: string | null;
+
+    // NUEVOS CAMPOS: Soporte para pasaporte
+    tipoIdentificacion: string; // 'RUT' | 'PASSPORT'
+    pasaporte: string | null;
+    nacionalidad: string | null;
     rol: string;
     nacimiento: string;
     inscripcion: string;
@@ -23,20 +30,31 @@ export interface Club {
 export interface FilterParams {
     club?: string;
     nombre?: string;
-    rut?: string;
+    identificacion?: string;
     rol?: string;
 }
 
 export interface CreateJugadorDTO {
-    numero: string;
+    // Flexibilidad para recibir string del formulario o number
+    numero: string | number;
     paterno: string;
     materno: string;
     nombres: string;
-    rut: string; // RUT completo con formato (ej: 12345678-9)
+
+    // RUT ahora es opcional en el DTO
+    rut?: string;
+
     rol: string;
     nacimiento: string; // YYYY-MM-DD
     inscripcion: string; // YYYY-MM-DD
-    club_id: number;
+
+    // Flexibilidad para el select
+    club_id: number | string;
+
+    // NUEVOS CAMPOS para el envío al backend
+    tipo_identificacion_input?: string;
+    passport_input?: string;
+    nacionalidad?: string;
 }
 
 export interface CreateClubDTO {

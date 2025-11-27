@@ -1,26 +1,55 @@
 const Jugador = require('../models/Jugador');
 const Club = require('../models/Club');
 const { Op } = require('sequelize');
+const sequelize = require('../config/database');
 
 const controller = {};
 
-// LISTAR CON FILTROS (No requiere cambios, ya incluye Club)
+// LISTAR (Sin cambios mayores, pero ya traerá la nacionalidad automáticamente)
 controller.listar = async (req, res) => {
     try {
-        const { club, rut, rol, nombre } = req.query;
+        const { club, identificacion, rol, nombre } = req.query;
         let where = {};
 
         if (club) where.clubId = club;
-        if (rol) where.rol = rol;
 
-        // Filtro RUT (limpieza). NOTA: Esto solo funcionará si se busca por RUT, no por Pasaporte.
-        if (rut) {
-            const limpio = rut.toString().replace(/[^0-9kK]/g, '');
-            const soloNumeros = parseInt(limpio.slice(0, -1)) || parseInt(limpio);
-            if(soloNumeros) where.rut = soloNumeros;
+        if (rol) {
+            where.rol = { [Op.like]: `%${rol}%` };
         }
 
-        // Filtro Nombre (Búsqueda flexible OR)
+        // BÚSQUEDA HÍBRIDA (RUT O PASAPORTE)
+        if (identificacion) {
+            const terminoBusqueda = identificacion.trim();
+            const rutSearch = terminoBusqueda.replace(/[^0-9kK]/g, '');
+
+            const condicionesIdentificacion = [];
+
+            // 1. Buscar en Pasaporte
+            condicionesIdentificacion.push({
+                pasaporte: { [Op.like]: `%${terminoBusqueda}%` }
+            });
+
+            // 2. Buscar en RUT
+            if (rutSearch.length > 0) {
+                condicionesIdentificacion.push(
+                    sequelize.where(
+                        sequelize.fn('CONCAT', 
+                            sequelize.cast(sequelize.col('Jugador.rut'), 'char'),
+                            sequelize.col('Jugador.dv')
+                        ),
+                        { [Op.like]: `%${rutSearch}%` }
+                    )
+                );
+            }
+
+            where = {
+                ...where,
+                [Op.and]: [
+                    { [Op.or]: condicionesIdentificacion }
+                ]
+            };
+        }
+
         if (nombre) {
             where[Op.or] = [
                 { nombres: { [Op.substring]: nombre } },
@@ -31,27 +60,27 @@ controller.listar = async (req, res) => {
 
         const jugadores = await Jugador.findAll({
             where: where,
-            include: [{ model: Club }], // JOIN
+            include: [{ model: Club }], 
             order: [['paterno', 'ASC']]
         });
 
         res.json(jugadores);
     } catch (error) {
-        console.error(error);
+        console.error("Error listar:", error);
         res.status(500).json({ error: error.message });
     }
 };
 
-// GUARDAR (Actualizado para Pasaporte/RUT)
+// GUARDAR (Actualizado con nacionalidad)
 controller.guardar = async (req, res) => {
     try {
         const { 
             numero, paterno, materno, nombres, 
             run_input, rol_input, 
             nacimiento, inscripcion, club_id,
-            // CAMPOS NUEVOS:
             tipo_identificacion_input, 
-            passport_input 
+            passport_input,
+            nacionalidad // <--- NUEVO CAMPO RECIBIDO
         } = req.body;
 
         let rutData = { rut: null, dv: null };
@@ -59,34 +88,29 @@ controller.guardar = async (req, res) => {
         let tipoIdentificacion = (tipo_identificacion_input || 'RUT').toUpperCase();
 
         if (tipoIdentificacion === 'RUT') {
-            // Lógica de validación y limpieza para RUT
             let rutString = (run_input || '').toString().replace(/[^0-9kK]/g, '').toUpperCase();
             let dv = rutString.slice(-1);
             let rutNum = parseInt(rutString.slice(0, -1));
 
-            // Validación: RUT debe ser numérico
             if (!rutNum) return res.status(400).json({ error: "RUT Inválido" });
             
             rutData.rut = rutNum;
             rutData.dv = dv;
 
         } else if (tipoIdentificacion === 'PASSPORT') {
-            // Lógica de Pasaporte
             if (!passport_input || passport_input.trim() === '') return res.status(400).json({ error: "Número de Pasaporte obligatorio." });
-            pasaporte = passport_input.toUpperCase(); // Guardamos en mayúsculas por consistencia
+            pasaporte = passport_input.toUpperCase();
         } else {
              return res.status(400).json({ error: "Tipo de identificación no válido." });
         }
 
-
         const nuevo = await Jugador.create({
             numero, paterno, materno, nombres,
-            // Datos de identificación condicionales
             rut: rutData.rut,
             dv: rutData.dv,
             pasaporte: pasaporte,
             tipoIdentificacion: tipoIdentificacion,
-            
+            nacionalidad: nacionalidad, 
             rol: rol_input,
             nacimiento,
             inscripcion,
@@ -103,7 +127,6 @@ controller.guardar = async (req, res) => {
 // OBTENER UNO
 controller.obtener = async (req, res) => {
     try {
-        // Sequilize devolverá automáticamente los campos pasaporte y tipoIdentificacion
         const jugador = await Jugador.findByPk(req.params.id, { include: Club }); 
         if(!jugador) return res.status(404).json({error: "No encontrado"});
         res.json(jugador);
@@ -112,16 +135,16 @@ controller.obtener = async (req, res) => {
     }
 };
 
-// ACTUALIZAR (Actualizado para Pasaporte/RUT)
+// ACTUALIZAR (Actualizado con nacionalidad)
 controller.actualizar = async (req, res) => {
     try {
         const { 
             numero, paterno, materno, nombres, 
             run_input, rol_input, 
             nacimiento, inscripcion, club_id,
-            // CAMPOS NUEVOS:
             tipo_identificacion_input, 
-            passport_input
+            passport_input,
+            nacionalidad // <--- NUEVO CAMPO RECIBIDO
         } = req.body;
 
         let updateData = {
@@ -134,7 +157,6 @@ controller.actualizar = async (req, res) => {
         const tipoIdentificacion = updateData.tipoIdentificacion;
 
         if (tipoIdentificacion === 'RUT') {
-            // Lógica para RUT
             if(!run_input || run_input.trim() === '') return res.status(400).json({ error: "RUT obligatorio para tipo RUT." });
             
             let rutString = run_input.toString().replace(/[^0-9kK]/g, '').toUpperCase();
@@ -144,17 +166,16 @@ controller.actualizar = async (req, res) => {
             if (!updateData.rut) return res.status(400).json({ error: "RUT Inválido." });
 
         } else if (tipoIdentificacion === 'PASSPORT') {
-            // Lógica para Pasaporte
             if (!passport_input || passport_input.trim() === '') return res.status(400).json({ error: "Número de Pasaporte obligatorio." });
             updateData.pasaporte = passport_input.toUpperCase();
         } else {
              return res.status(400).json({ error: "Tipo de identificación no válido." });
         }
 
-
         await Jugador.update({
             numero, paterno, materno, nombres,
-            ...updateData, // Sobrescribe rut, dv, pasaporte, y tipoIdentificacion
+            ...updateData,
+            nacionalidad: nacionalidad, // <--- ACTUALIZAMOS LA NACIONALIDAD
             rol: rol_input,
             nacimiento,
             inscripcion,

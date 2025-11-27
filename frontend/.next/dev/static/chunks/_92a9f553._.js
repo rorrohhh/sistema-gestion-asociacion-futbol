@@ -1299,46 +1299,85 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 
 __turbopack_context__.s([
     "jugadorSchema",
-    ()=>jugadorSchema,
-    "validarRutChileno",
-    ()=>validarRutChileno
+    ()=>jugadorSchema
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__ = __turbopack_context__.i("[project]/node_modules/zod/v4/classic/external.js [app-client] (ecmascript) <export * as z>");
 ;
-function validarRutChileno(rutCompleto) {
-    // Limpiar formato
-    const rutLimpio = rutCompleto.replace(/[^0-9kK]/g, '').toUpperCase();
-    if (rutLimpio.length < 2) return false;
-    const dv = rutLimpio.slice(-1);
-    const rutNumero = parseInt(rutLimpio.slice(0, -1));
-    if (isNaN(rutNumero)) return false;
-    // Algoritmo de validación del dígito verificador
-    let suma = 0;
-    let multiplicador = 2;
-    const rutStr = rutNumero.toString().split('').reverse();
-    for (const digito of rutStr){
-        suma += parseInt(digito) * multiplicador;
-        multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
+// Función auxiliar para validar RUT Chileno (Módulo 11)
+function validateRut(rut) {
+    if (!rut) return false;
+    // 1. Limpiar el RUT (dejar solo números y k/K)
+    const cleanRut = rut.replace(/[^0-9kK]/g, '').toUpperCase();
+    // 2. Validar largo mínimo (al menos 1 número + 1 DV)
+    // RUT mínimo viable: 1-9 (Clean: 19, largo 2)
+    if (cleanRut.length < 2) return false;
+    // 3. Separar cuerpo y dígito verificador
+    const body = cleanRut.slice(0, -1);
+    const dv = cleanRut.slice(-1);
+    // 4. Validar que el cuerpo sea numérico
+    if (!/^\d+$/.test(body)) return false;
+    // 5. Calcular Dígito Verificador esperado
+    let sum = 0;
+    let multiplier = 2;
+    for(let i = body.length - 1; i >= 0; i--){
+        // IMPORTANTE: parseInt con base 10 para evitar errores de interpretación
+        sum += parseInt(body[i], 10) * multiplier;
+        multiplier = multiplier === 7 ? 2 : multiplier + 1;
     }
-    const dvCalculado = 11 - suma % 11;
-    let dvEsperado;
-    if (dvCalculado === 11) dvEsperado = '0';
-    else if (dvCalculado === 10) dvEsperado = 'K';
-    else dvEsperado = dvCalculado.toString();
-    return dv === dvEsperado;
+    const remainder = sum % 11;
+    const calculatedDv = remainder === 0 ? '0' : remainder === 1 ? 'K' : (11 - remainder).toString();
+    // DEBUG: Ver en consola del navegador (F12) qué está calculando
+    console.log(`Validando RUT: ${rut} | Cuerpo: ${body} | DV Usuario: ${dv} | DV Calculado: ${calculatedDv}`);
+    // 6. Comparar
+    return dv === calculatedDv;
 }
 const jugadorSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].object({
-    numero: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, 'Número es requerido'),
-    paterno: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, 'Apellido paterno es requerido'),
-    materno: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, 'Apellido materno es requerido'),
-    nombres: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, 'Nombres son requeridos'),
-    run_input: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, 'RUT es requerido').refine(validarRutChileno, {
-        message: 'RUT chileno inválido'
+    nombres: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(2, "El nombre es obligatorio (mínimo 2 caracteres)"),
+    paterno: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(2, "El apellido paterno es obligatorio"),
+    materno: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().optional(),
+    // Validación condicional: Si es RUT, validamos formato. Si es Pasaporte, solo que no esté vacío.
+    tipo_identificacion: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].enum([
+        'RUT',
+        'PASSPORT'
+    ]).default('RUT'),
+    rut: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().optional().refine((val)=>{
+        // Esta validación se ejecuta, pero la validación fuerte la hacemos cruzada con el tipo abajo
+        return true;
     }),
-    rol_input: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, 'ROL es requerido'),
-    nacimiento: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, 'Fecha de nacimiento es requerida'),
-    inscripcion: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, 'Fecha de inscripción es requerida'),
-    club_id: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().min(1, 'Debe seleccionar un club')
+    // Puedes usar un campo genérico o mapear según el tipo
+    numero: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].coerce.number().min(1, "El número de camiseta es obligatorio"),
+    nacimiento: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().refine((val)=>!isNaN(Date.parse(val)), {
+        message: "Fecha de nacimiento inválida"
+    }),
+    inscripcion: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().refine((val)=>!isNaN(Date.parse(val)), {
+        message: "Fecha de inscripción inválida"
+    }),
+    club_id: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, "Debes seleccionar un club"),
+    rol: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, "El ROL es obligatorio"),
+    passport: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().optional()
+}).superRefine((data, ctx)=>{
+    // Lógica condicional: Si eligió RUT, validamos el campo 'rut'
+    if (data.tipo_identificacion === 'RUT') {
+        if (!data.rut || !validateRut(data.rut)) {
+            ctx.addIssue({
+                code: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].ZodIssueCode.custom,
+                path: [
+                    'rut'
+                ],
+                message: "RUT inválido (Revise el dígito verificador)"
+            });
+        }
+    } else if (data.tipo_identificacion === 'PASSPORT') {
+        if (!data.passport || data.passport.length < 3) {
+            ctx.addIssue({
+                code: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].ZodIssueCode.custom,
+                path: [
+                    'passport'
+                ],
+                message: "Pasaporte obligatorio"
+            });
+        }
+    }
 });
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
