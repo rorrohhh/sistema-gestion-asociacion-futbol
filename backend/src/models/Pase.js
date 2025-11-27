@@ -17,6 +17,10 @@ const Pase = sequelize.define('Pase', {
         type: DataTypes.STRING,
         allowNull: true
     },
+    delegado: {
+        type: DataTypes.STRING,
+        allowNull: true 
+    },
     // Claves foráneas explícitas para referencia
     jugadorId: {
         type: DataTypes.INTEGER,

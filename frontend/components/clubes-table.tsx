@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Edit, Trash2, Building2 } from "lucide-react";
+import { Edit, Trash2, Building2, FileText, Loader2 } from "lucide-react"; // Agregamos iconos
 import { api } from "@/lib/api";
 import { Club } from "@/types";
 import { toast } from "sonner";
@@ -18,9 +18,20 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+// Librerías para PDF
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+
+// Función auxiliar para formatear RUT en el PDF
+const formatRut = (rut: number | null, dv: string | null) => {
+    if (!rut) return '-';
+    return `${rut.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}-${dv}`;
+};
+
 export function ClubesTable() {
     const [clubes, setClubes] = useState<Club[]>([]);
     const [loading, setLoading] = useState(true);
+    const [generatingPdf, setGeneratingPdf] = useState<number | null>(null); // Para mostrar loading en el botón específico
     const router = useRouter();
 
     const fetchClubes = async () => {
@@ -48,7 +59,7 @@ export function ClubesTable() {
         try {
             await api.deleteClub(id.toString());
             toast.success(`Club "${nombre}" eliminado exitosamente.`);
-            fetchClubes(); // Actualizar lista
+            fetchClubes();
         } catch (error) {
             console.error("Error al eliminar el club:", error);
             toast.error("Error al eliminar el club. Puede que tenga jugadores asociados.");
@@ -56,13 +67,68 @@ export function ClubesTable() {
     };
 
     const handleEdit = (id: number) => {
-        // Redirigir a la nueva ruta de edición anidada
         router.push(`/clubes/editar/${id}`);
+    };
+
+    // --- LÓGICA GENERACIÓN PDF ---
+    const handleGeneratePDF = async (clubId: number, clubNombre: string) => {
+        setGeneratingPdf(clubId);
+        toast.info(`Generando nómina para ${clubNombre}...`);
+
+        try {
+            // 1. Obtener jugadores filtrados por este club
+            const jugadores = await api.getJugadores({ club: clubId.toString() });
+
+            if (jugadores.length === 0) {
+                toast.warning(`El club ${clubNombre} no tiene jugadores inscritos.`);
+                setGeneratingPdf(null);
+                return;
+            }
+
+            // 2. Crear documento PDF
+            const doc = new jsPDF();
+
+            // Encabezado del PDF
+            doc.setFontSize(18);
+            doc.text(`Nómina de Jugadores - ${clubNombre}`, 14, 20);
+
+            doc.setFontSize(10);
+            doc.text(`Fecha de emisión: ${new Date().toLocaleDateString('es-CL')}`, 14, 28);
+            doc.text(`Total jugadores: ${jugadores.length}`, 14, 34);
+
+            // 3. Preparar datos para la tabla
+            const tableData = jugadores.map((j) => [
+                j.rol,                                  // ROL
+                `${j.nombres} ${j.paterno} ${j.materno || ''}`, // Nombre Completo
+                j.tipoIdentificacion === 'PASSPORT' ? j.pasaporte : formatRut(j.rut, j.dv), // Identificación
+                j.nacionalidad || '-',                  // Nacionalidad
+                new Date(j.nacimiento).toLocaleDateString('es-CL'), // F. Nacimiento
+                j.numero || '-'                         // Camiseta
+            ]);
+
+            // 4. Generar tabla con autoTable
+            autoTable(doc, {
+                startY: 40,
+                head: [['ROL', 'Nombre Completo', 'Identificación', 'Nacionalidad', 'F. Nac', 'N°']],
+                body: tableData,
+                styles: { fontSize: 9 },
+                headStyles: { fillColor: [41, 128, 185] }, // Color azulito corporativo
+            });
+
+            // 5. Descargar
+            doc.save(`nomina_${clubNombre.replace(/\s+/g, '_')}.pdf`);
+            toast.success("PDF descargado correctamente.");
+
+        } catch (error) {
+            console.error("Error generando PDF:", error);
+            toast.error("Hubo un error al generar el documento.");
+        } finally {
+            setGeneratingPdf(null);
+        }
     };
 
     return (
         <Card className="shadow-sm border-0 bg-white dark:bg-slate-900 ring-1 ring-slate-200 dark:ring-slate-800">
-            {/* Título y conteo de resultados */}
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4 border-b border-slate-100 dark:border-slate-800">
                 <CardTitle className="text-xl font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-2">
                     <Building2 className="h-5 w-5 text-slate-500" />
@@ -79,7 +145,7 @@ export function ClubesTable() {
                         <TableRow className="hover:bg-transparent">
                             <TableHead className="w-[100px]">ID</TableHead>
                             <TableHead>Nombre</TableHead>
-                            <TableHead className="text-right w-[100px]">Acciones</TableHead>
+                            <TableHead className="text-right w-[180px]">Acciones</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -103,22 +169,41 @@ export function ClubesTable() {
                                     <TableCell className="font-medium">{club.id}</TableCell>
                                     <TableCell>{club.nombre}</TableCell>
                                     <TableCell className="text-right">
-                                        <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            onClick={() => handleEdit(club.id)}
-                                            className="mr-1"
-                                        >
-                                            <Edit className="h-4 w-4 text-blue-500" />
-                                        </Button>
-                                        <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            onClick={() => handleDelete(club.id, club.nombre)}
-                                            className="text-red-500 hover:text-red-600"
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
+                                        <div className="flex items-center justify-end gap-1">
+                                            {/* Botón PDF */}
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={() => handleGeneratePDF(club.id, club.nombre)}
+                                                disabled={generatingPdf === club.id}
+                                                title="Descargar Nómina de Jugadores"
+                                                className="text-slate-600 hover:text-blue-600 hover:bg-blue-50"
+                                            >
+                                                {generatingPdf === club.id ? (
+                                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                                ) : (
+                                                    <FileText className="h-4 w-4" />
+                                                )}
+                                            </Button>
+
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={() => handleEdit(club.id)}
+                                                className="text-slate-600 hover:text-blue-600 hover:bg-blue-50"
+                                            >
+                                                <Edit className="h-4 w-4" />
+                                            </Button>
+
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={() => handleDelete(club.id, club.nombre)}
+                                                className="text-red-500 hover:text-red-600 hover:bg-red-50"
+                                            >
+                                                <Trash2 className="h-4 w-4" />
+                                            </Button>
+                                        </div>
                                     </TableCell>
                                 </TableRow>
                             ))

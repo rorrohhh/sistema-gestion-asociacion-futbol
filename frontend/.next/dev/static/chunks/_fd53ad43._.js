@@ -1101,6 +1101,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/arrow-right.js [app-client] (ecmascript) <export default as ArrowRight>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$history$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__History$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/history.js [app-client] (ecmascript) <export default as History>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$map$2d$pin$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__MapPin$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/map-pin.js [app-client] (ecmascript) <export default as MapPin>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__UserCheck$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/user-check.js [app-client] (ecmascript) <export default as UserCheck>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/badge.tsx [app-client] (ecmascript)");
 'use client';
 ;
@@ -1111,11 +1112,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e
 ;
 function HistorialPases(t0) {
     const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(8);
-    if ($[0] !== "4befc241b7b7daee4cf153ac380a9d4d292a11bd865ef28ca34a4a4b2ea7e110") {
+    if ($[0] !== "db406f14ac35cfb8324132b2c1fe95c690e6a96b76c8e1a73659efc1e163275d") {
         for(let $i = 0; $i < 8; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "4befc241b7b7daee4cf153ac380a9d4d292a11bd865ef28ca34a4a4b2ea7e110";
+        $[0] = "db406f14ac35cfb8324132b2c1fe95c690e6a96b76c8e1a73659efc1e163275d";
     }
     const { pases } = t0;
     if (!pases || pases.length === 0) {
@@ -1130,7 +1131,7 @@ function HistorialPases(t0) {
                             className: "mx-auto h-10 w-10 mb-3 opacity-20"
                         }, void 0, false, {
                             fileName: "[project]/components/historial-pases.tsx",
-                            lineNumber: 38,
+                            lineNumber: 37,
                             columnNumber: 136
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1138,7 +1139,7 @@ function HistorialPases(t0) {
                             children: "Este jugador no tiene historial de transferencias."
                         }, void 0, false, {
                             fileName: "[project]/components/historial-pases.tsx",
-                            lineNumber: 38,
+                            lineNumber: 37,
                             columnNumber: 193
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1146,18 +1147,18 @@ function HistorialPases(t0) {
                             children: "Siempre ha pertenecido al mismo club o es su primera inscripción."
                         }, void 0, false, {
                             fileName: "[project]/components/historial-pases.tsx",
-                            lineNumber: 38,
+                            lineNumber: 37,
                             columnNumber: 282
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/historial-pases.tsx",
-                    lineNumber: 38,
+                    lineNumber: 37,
                     columnNumber: 80
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/historial-pases.tsx",
-                lineNumber: 38,
+                lineNumber: 37,
                 columnNumber: 12
             }, this);
             $[1] = t1;
@@ -1177,19 +1178,19 @@ function HistorialPases(t0) {
                         className: "h-5 w-5 text-blue-600"
                     }, void 0, false, {
                         fileName: "[project]/components/historial-pases.tsx",
-                        lineNumber: 47,
+                        lineNumber: 46,
                         columnNumber: 187
                     }, this),
                     "Historial de Transferencias"
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/historial-pases.tsx",
-                lineNumber: 47,
+                lineNumber: 46,
                 columnNumber: 87
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/historial-pases.tsx",
-            lineNumber: 47,
+            lineNumber: 46,
             columnNumber: 10
         }, this);
         $[2] = t1;
@@ -1207,7 +1208,7 @@ function HistorialPases(t0) {
                         children: "Fecha"
                     }, void 0, false, {
                         fileName: "[project]/components/historial-pases.tsx",
-                        lineNumber: 54,
+                        lineNumber: 53,
                         columnNumber: 75
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -1215,26 +1216,34 @@ function HistorialPases(t0) {
                         children: "Movimiento"
                     }, void 0, false, {
                         fileName: "[project]/components/historial-pases.tsx",
-                        lineNumber: 54,
+                        lineNumber: 53,
                         columnNumber: 139
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
-                        className: "font-semibold text-right",
-                        children: "Detalle / Motivo"
+                        className: "font-semibold",
+                        children: "Delegado"
                     }, void 0, false, {
                         fileName: "[project]/components/historial-pases.tsx",
-                        lineNumber: 54,
+                        lineNumber: 53,
                         columnNumber: 198
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
+                        className: "font-semibold text-right",
+                        children: "Detalle"
+                    }, void 0, false, {
+                        fileName: "[project]/components/historial-pases.tsx",
+                        lineNumber: 53,
+                        columnNumber: 255
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/historial-pases.tsx",
-                lineNumber: 54,
+                lineNumber: 53,
                 columnNumber: 65
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/historial-pases.tsx",
-            lineNumber: 54,
+            lineNumber: 53,
             columnNumber: 10
         }, this);
         $[3] = t2;
@@ -1266,29 +1275,29 @@ function HistorialPases(t0) {
                                     children: t3
                                 }, void 0, false, {
                                     fileName: "[project]/components/historial-pases.tsx",
-                                    lineNumber: 69,
+                                    lineNumber: 68,
                                     columnNumber: 154
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/historial-pases.tsx",
-                            lineNumber: 69,
+                            lineNumber: 68,
                             columnNumber: 143
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/historial-pases.tsx",
-                        lineNumber: 69,
+                        lineNumber: 68,
                         columnNumber: 110
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/historial-pases.tsx",
-                    lineNumber: 69,
+                    lineNumber: 68,
                     columnNumber: 81
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/historial-pases.tsx",
-            lineNumber: 69,
+            lineNumber: 68,
             columnNumber: 10
         }, this);
         $[6] = t3;
@@ -1308,7 +1317,7 @@ function _HistorialPasesPasesMap(pase) {
                 children: new Date(pase.fecha + "T00:00:00").toLocaleDateString("es-CL")
             }, void 0, false, {
                 fileName: "[project]/components/historial-pases.tsx",
-                lineNumber: 78,
+                lineNumber: 77,
                 columnNumber: 94
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1322,7 +1331,7 @@ function _HistorialPasesPasesMap(pase) {
                                     className: "h-3 w-3"
                                 }, void 0, false, {
                                     fileName: "[project]/components/historial-pases.tsx",
-                                    lineNumber: 78,
+                                    lineNumber: 77,
                                     columnNumber: 398
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1330,27 +1339,27 @@ function _HistorialPasesPasesMap(pase) {
                                     children: pase.ClubOrigen?.nombre || "Libre / Inicios"
                                 }, void 0, false, {
                                     fileName: "[project]/components/historial-pases.tsx",
-                                    lineNumber: 78,
+                                    lineNumber: 77,
                                     columnNumber: 428
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/historial-pases.tsx",
-                            lineNumber: 78,
+                            lineNumber: 77,
                             columnNumber: 342
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
                             className: "h-4 w-4 text-blue-400 hidden sm:block"
                         }, void 0, false, {
                             fileName: "[project]/components/historial-pases.tsx",
-                            lineNumber: 78,
+                            lineNumber: 77,
                             columnNumber: 517
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
                             className: "h-3 w-3 text-blue-400 sm:hidden rotate-90 my-1 self-start ml-1"
                         }, void 0, false, {
                             fileName: "[project]/components/historial-pases.tsx",
-                            lineNumber: 78,
+                            lineNumber: 77,
                             columnNumber: 581
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -1359,19 +1368,42 @@ function _HistorialPasesPasesMap(pase) {
                             children: pase.ClubDestino?.nombre
                         }, void 0, false, {
                             fileName: "[project]/components/historial-pases.tsx",
-                            lineNumber: 78,
+                            lineNumber: 77,
                             columnNumber: 670
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/historial-pases.tsx",
-                    lineNumber: 78,
+                    lineNumber: 77,
                     columnNumber: 269
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/historial-pases.tsx",
-                lineNumber: 78,
+                lineNumber: 77,
                 columnNumber: 258
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "flex items-center gap-1 text-sm text-slate-600",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__UserCheck$3e$__["UserCheck"], {
+                            className: "h-3 w-3 text-slate-400"
+                        }, void 0, false, {
+                            fileName: "[project]/components/historial-pases.tsx",
+                            lineNumber: 77,
+                            columnNumber: 955
+                        }, this),
+                        pase.delegado || "-"
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/components/historial-pases.tsx",
+                    lineNumber: 77,
+                    columnNumber: 891
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/components/historial-pases.tsx",
+                lineNumber: 77,
+                columnNumber: 880
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
                 className: "text-right",
@@ -1384,25 +1416,25 @@ function _HistorialPasesPasesMap(pase) {
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/historial-pases.tsx",
-                    lineNumber: 78,
-                    columnNumber: 933
+                    lineNumber: 77,
+                    columnNumber: 1096
                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                     className: "text-xs text-slate-400",
                     children: "-"
                 }, void 0, false, {
                     fileName: "[project]/components/historial-pases.tsx",
-                    lineNumber: 78,
-                    columnNumber: 1030
+                    lineNumber: 77,
+                    columnNumber: 1193
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/historial-pases.tsx",
-                lineNumber: 78,
-                columnNumber: 880
+                lineNumber: 77,
+                columnNumber: 1043
             }, this)
         ]
     }, pase.id, true, {
         fileName: "[project]/components/historial-pases.tsx",
-        lineNumber: 78,
+        lineNumber: 77,
         columnNumber: 10
     }, this);
 }
@@ -1440,7 +1472,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$env$2e$ts__$5b$app$2d
 ;
 ;
 // Configuración del Cliente Axios
-// Se asume que env.apiUrl es "http://localhost:8080" (el host del backend)
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].create({
     baseURL: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$env$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["env"].apiUrl,
     headers: {
@@ -1449,16 +1480,12 @@ const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2
 });
 const api = {
     // ------------------------------------------------------------------
-    // JUGADORES (Base Endpoint: /api/jugadores)
+    // JUGADORES
     // ------------------------------------------------------------------
-    /**
-     * Obtiene la lista de jugadores con filtros opcionales
-     * Documentación 2.1: GET /api/jugadores
-     */ async getJugadores (filters) {
+    async getJugadores (filters) {
         const params = new URLSearchParams();
         if (filters?.club) params.append('club', filters.club);
         if (filters?.nombre) params.append('nombre', filters.nombre);
-        // CAMBIO: Ahora enviamos 'identificacion'
         if (filters?.identificacion) params.append('identificacion', filters.identificacion);
         if (filters?.rol) params.append('rol', filters.rol);
         const queryString = params.toString() ? `?${params.toString()}` : '';
@@ -1469,80 +1496,97 @@ const api = {
         const response = await apiClient.get(`/api/jugadores/${id}`);
         return response.data;
     },
-    /**
-     * Crea un nuevo jugador
-     * Documentación 2.2: POST /api/jugadores
-     */ async createJugador (data) {
-        // TRADUCCIÓN DE DATOS (Frontend -> Backend)
-        const payloadBackend = {
-            numero: data.numero,
-            paterno: data.paterno,
-            materno: data.materno,
-            nombres: data.nombres,
-            nacimiento: data.nacimiento,
-            inscripcion: data.inscripcion,
-            // Usamos data.club_id
-            club_id: data.club_id,
-            run_input: data.rut,
-            rol_input: data.rol,
-            // Agregamos los campos de pasaporte ---
-            tipo_identificacion_input: data.tipo_identificacion_input,
-            passport_input: data.passport_input,
-            nacionalidad: data.nacionalidad
-        };
-        await apiClient.post('/api/jugadores', payloadBackend);
+    async createJugador (data) {
+        const formData = new FormData();
+        // Campos de texto
+        formData.append('numero', data.numero);
+        formData.append('nombres', data.nombres);
+        formData.append('paterno', data.paterno);
+        formData.append('materno', data.materno || '');
+        formData.append('nacimiento', data.nacimiento);
+        formData.append('inscripcion', data.inscripcion);
+        formData.append('club_id', data.club_id);
+        formData.append('rol_input', data.rol);
+        formData.append('nacionalidad', data.nacionalidad || '');
+        formData.append('delegado_input', data.delegado || '');
+        // Identificación
+        formData.append('tipo_identificacion_input', data.tipo_identificacion);
+        if (data.tipo_identificacion === 'RUT') {
+            formData.append('run_input', data.rut);
+        } else {
+            formData.append('passport_input', data.passport);
+        }
+        // NUEVOS CAMPOS
+        // 1. Activo (convertir boolean a string)
+        formData.append('activo', String(data.activo));
+        // 2. Foto (solo si existe y es un archivo)
+        if (data.foto instanceof File) {
+            formData.append('foto', data.foto);
+        }
+        // Enviamos como multipart/form-data
+        await apiClient.post('/api/jugadores', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     },
     async updateJugador (id, data) {
-        // TRADUCCIÓN DE DATOS (Frontend -> Backend)
-        const payloadBackend = {
-            numero: data.numero,
-            paterno: data.paterno,
-            materno: data.materno,
-            nombres: data.nombres,
-            nacimiento: data.nacimiento,
-            inscripcion: data.inscripcion,
-            club_id: data.club_id,
-            run_input: data.rut,
-            rol_input: data.rol,
-            tipo_identificacion_input: data.tipo_identificacion_input,
-            passport_input: data.passport_input,
-            nacionalidad: data.nacionalidad
-        };
-        // Realizamos la petición PUT, incluyendo el ID en la URL
-        await apiClient.put(`/api/jugadores/${id}`, payloadBackend);
+        const formData = new FormData();
+        formData.append('numero', data.numero);
+        formData.append('nombres', data.nombres);
+        formData.append('paterno', data.paterno);
+        formData.append('materno', data.materno || '');
+        formData.append('nacimiento', data.nacimiento);
+        formData.append('inscripcion', data.inscripcion);
+        formData.append('club_id', data.club_id);
+        formData.append('rol_input', data.rol);
+        formData.append('nacionalidad', data.nacionalidad || '');
+        // El delegado también se puede actualizar si se desea
+        formData.append('delegado_input', data.delegado || '');
+        formData.append('tipo_identificacion_input', data.tipo_identificacion);
+        if (data.tipo_identificacion === 'RUT') {
+            formData.append('run_input', data.rut);
+        } else {
+            formData.append('passport_input', data.passport);
+        }
+        // NUEVOS CAMPOS
+        formData.append('activo', String(data.activo));
+        if (data.foto instanceof File) {
+            formData.append('foto', data.foto);
+        }
+        await apiClient.put(`/api/jugadores/${id}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     },
     async deleteJugador (id) {
-        // El ID se pasa como parte de la URL
         await apiClient.delete(`/api/jugadores/${id}`);
     },
     // ------------------------------------------------------------------
-    // CLUBES (Base Endpoint: /api/clubes)
+    // CLUBES
     // ------------------------------------------------------------------
-    /**
-     * Obtiene la lista de clubes
-     * Documentación 1.1: GET /api/clubes
-     */ async getClubes () {
+    async getClubes () {
         const response = await apiClient.get('/api/clubes');
         return response.data;
     },
-    // Obtiene un club por su ID
     async getClubPorId (id) {
         const response = await apiClient.get(`/api/clubes/${id}`);
         return response.data;
     },
-    //  Crea un nuevo club
     async createClub (data) {
         const response = await apiClient.post('/api/clubes', data);
         return response.data;
     },
-    // Actualiza un club existente
     async updateClub (id, data) {
         await apiClient.put(`/api/clubes/${id}`, data);
     },
-    // Elimina un club
     async deleteClub (id) {
         await apiClient.delete(`/api/clubes/${id}`);
     },
+    // ------------------------------------------------------------------
+    // PASES
+    // ------------------------------------------------------------------
     async realizarPase (data) {
         await apiClient.post('/api/pases', data);
     },
@@ -1578,14 +1622,17 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$pencil$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Pencil$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/pencil.js [app-client] (ecmascript) <export default as Pencil>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$globe$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Globe$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/globe.js [app-client] (ecmascript) <export default as Globe>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$flag$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Flag$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/flag.js [app-client] (ecmascript) <export default as Flag>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__UserCheck$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/user-check.js [app-client] (ecmascript) <export default as UserCheck>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Circle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle.js [app-client] (ecmascript) <export default as Circle>");
 // UI
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/card.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/badge.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$separator$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/separator.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$historial$2d$pases$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/historial-pases.tsx [app-client] (ecmascript)"); // Reutilizamos el componente
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$historial$2d$pases$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/historial-pases.tsx [app-client] (ecmascript)");
 // Logic
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/api.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$env$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/env.ts [app-client] (ecmascript)"); // <--- IMPORTAR ENV PARA URL BASE DE IMAGEN
 ;
 var _s = __turbopack_context__.k.signature();
 'use client';
@@ -1600,11 +1647,7 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
-// Helpers
-const extractIdFromPath = (pathname)=>{
-    const parts = pathname.split('/');
-    return parts[parts.length - 1] || null;
-};
+;
 const formatRut = (rut, dv)=>{
     if (!rut) return '-';
     return `${rut.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}-${dv}`;
@@ -1612,8 +1655,8 @@ const formatRut = (rut, dv)=>{
 function DetalleJugadorPage() {
     _s();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
-    const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"])();
-    const jugadorId = extractIdFromPath(pathname);
+    const params = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useParams"])();
+    const jugadorId = params.id;
     const [jugador, setJugador] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [historial, setHistorial] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
@@ -1622,7 +1665,6 @@ function DetalleJugadorPage() {
             async function loadData() {
                 if (!jugadorId) return;
                 try {
-                    // Cargamos datos del jugador e historial en paralelo
                     const [playerData, historialData] = await Promise.all([
                         __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getJugadorPorId(jugadorId),
                         __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getHistorialPases(jugadorId)
@@ -1648,12 +1690,12 @@ function DetalleJugadorPage() {
                 className: "h-8 w-8 animate-spin text-blue-600"
             }, void 0, false, {
                 fileName: "[project]/app/jugadores/[id]/page.tsx",
-                lineNumber: 55,
+                lineNumber: 49,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/jugadores/[id]/page.tsx",
-            lineNumber: 54,
+            lineNumber: 48,
             columnNumber: 12
         }, this);
     }
@@ -1663,10 +1705,14 @@ function DetalleJugadorPage() {
             children: "Jugador no encontrado"
         }, void 0, false, {
             fileName: "[project]/app/jugadores/[id]/page.tsx",
-            lineNumber: 59,
+            lineNumber: 53,
             columnNumber: 12
         }, this);
     }
+    // Construir URL de la foto si existe
+    // Si la ruta viene como '/uploads/foto.jpg', le pegamos la URL base del backend
+    const fotoUrl = jugador.foto ? `${__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$env$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["env"].apiUrl}${jugador.foto}` : null;
+    const isActive = jugador.activo;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "min-h-screen bg-slate-50 dark:bg-slate-950 p-4 sm:p-8",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1684,14 +1730,14 @@ function DetalleJugadorPage() {
                                     className: "mr-2 h-4 w-4"
                                 }, void 0, false, {
                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                    lineNumber: 67,
+                                    lineNumber: 66,
                                     columnNumber: 25
                                 }, this),
                                 "Volver"
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                            lineNumber: 66,
+                            lineNumber: 65,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1704,39 +1750,54 @@ function DetalleJugadorPage() {
                                         className: "mr-2 h-4 w-4"
                                     }, void 0, false, {
                                         fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                        lineNumber: 72,
+                                        lineNumber: 71,
                                         columnNumber: 29
                                     }, this),
                                     "Editar Ficha"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                lineNumber: 71,
+                                lineNumber: 70,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                            lineNumber: 70,
+                            lineNumber: 69,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                    lineNumber: 65,
+                    lineNumber: 64,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "flex flex-col md:flex-row gap-6 items-start md:items-center bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "h-20 w-20 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-2xl font-bold text-slate-400",
-                            children: [
-                                jugador.nombres.charAt(0),
-                                jugador.paterno.charAt(0)
-                            ]
-                        }, void 0, true, {
+                            className: "relative h-24 w-24 rounded-full overflow-hidden border-4 border-white shadow-sm bg-slate-100 dark:bg-slate-800 flex-shrink-0",
+                            children: fotoUrl ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                src: fotoUrl,
+                                alt: "Foto de perfil",
+                                className: "h-full w-full object-cover"
+                            }, void 0, false, {
+                                fileName: "[project]/app/jugadores/[id]/page.tsx",
+                                lineNumber: 82,
+                                columnNumber: 36
+                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "h-full w-full flex items-center justify-center text-3xl font-bold text-slate-400",
+                                children: [
+                                    jugador.nombres.charAt(0),
+                                    jugador.paterno.charAt(0)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/app/jugadores/[id]/page.tsx",
+                                lineNumber: 82,
+                                columnNumber: 120
+                            }, this)
+                        }, void 0, false, {
                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                            lineNumber: 80,
+                            lineNumber: 81,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1756,22 +1817,47 @@ function DetalleJugadorPage() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                            lineNumber: 85,
+                                            lineNumber: 89,
                                             columnNumber: 29
                                         }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
-                                            variant: jugador.Club ? "default" : "secondary",
-                                            className: "text-sm",
-                                            children: jugador.Club ? jugador.Club.nombre : 'Libre'
-                                        }, void 0, false, {
+                                        isActive ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
+                                            className: "bg-green-100 text-green-700 border-green-200 hover:bg-green-100 gap-1",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Circle$3e$__["Circle"], {
+                                                    className: "h-2 w-2 fill-current"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/app/jugadores/[id]/page.tsx",
+                                                    lineNumber: 95,
+                                                    columnNumber: 37
+                                                }, this),
+                                                " Activo"
+                                            ]
+                                        }, void 0, true, {
                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                            lineNumber: 88,
-                                            columnNumber: 29
+                                            lineNumber: 94,
+                                            columnNumber: 41
+                                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
+                                            variant: "destructive",
+                                            className: "gap-1",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Circle$3e$__["Circle"], {
+                                                    className: "h-2 w-2 fill-current"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/app/jugadores/[id]/page.tsx",
+                                                    lineNumber: 97,
+                                                    columnNumber: 37
+                                                }, this),
+                                                " Inactivo"
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/app/jugadores/[id]/page.tsx",
+                                            lineNumber: 96,
+                                            columnNumber: 44
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                    lineNumber: 84,
+                                    lineNumber: 88,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1784,7 +1870,7 @@ function DetalleJugadorPage() {
                                                     className: "h-3 w-3"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                    lineNumber: 94,
+                                                    lineNumber: 103,
                                                     columnNumber: 33
                                                 }, this),
                                                 " ROL: ",
@@ -1792,7 +1878,7 @@ function DetalleJugadorPage() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                            lineNumber: 93,
+                                            lineNumber: 102,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1802,7 +1888,7 @@ function DetalleJugadorPage() {
                                                     className: "h-3 w-3"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                    lineNumber: 97,
+                                                    lineNumber: 106,
                                                     columnNumber: 33
                                                 }, this),
                                                 " Camiseta: ",
@@ -1810,25 +1896,43 @@ function DetalleJugadorPage() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                            lineNumber: 96,
+                                            lineNumber: 105,
+                                            columnNumber: 29
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "flex items-center gap-1",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__["Building2"], {
+                                                    className: "h-3 w-3"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/app/jugadores/[id]/page.tsx",
+                                                    lineNumber: 109,
+                                                    columnNumber: 33
+                                                }, this),
+                                                " ",
+                                                jugador.Club ? jugador.Club.nombre : 'Libre'
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/app/jugadores/[id]/page.tsx",
+                                            lineNumber: 108,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                    lineNumber: 92,
+                                    lineNumber: 101,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                            lineNumber: 83,
+                            lineNumber: 87,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                    lineNumber: 79,
+                    lineNumber: 78,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1847,19 +1951,19 @@ function DetalleJugadorPage() {
                                                         className: "h-4 w-4 text-blue-500"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                        lineNumber: 110,
+                                                        lineNumber: 122,
                                                         columnNumber: 37
                                                     }, this),
                                                     "Información Personal"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                lineNumber: 109,
+                                                lineNumber: 121,
                                                 columnNumber: 33
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                            lineNumber: 108,
+                                            lineNumber: 120,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1872,7 +1976,7 @@ function DetalleJugadorPage() {
                                                             children: "Identificación"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                            lineNumber: 116,
+                                                            lineNumber: 128,
                                                             columnNumber: 37
                                                         }, this),
                                                         jugador.tipoIdentificacion === 'PASSPORT' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1882,14 +1986,14 @@ function DetalleJugadorPage() {
                                                                     className: "h-4 w-4"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                                    lineNumber: 118,
+                                                                    lineNumber: 130,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                     children: jugador.pasaporte
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                                    lineNumber: 119,
+                                                                    lineNumber: 131,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -1898,13 +2002,13 @@ function DetalleJugadorPage() {
                                                                     children: "Pasaporte"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                                    lineNumber: 120,
+                                                                    lineNumber: 132,
                                                                     columnNumber: 45
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                            lineNumber: 117,
+                                                            lineNumber: 129,
                                                             columnNumber: 82
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "flex items-center gap-2 text-slate-700 dark:text-slate-200",
@@ -1913,14 +2017,14 @@ function DetalleJugadorPage() {
                                                                     className: "h-4 w-4"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                                    lineNumber: 122,
+                                                                    lineNumber: 134,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                     children: formatRut(jugador.rut, jugador.dv)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                                    lineNumber: 123,
+                                                                    lineNumber: 135,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -1929,24 +2033,24 @@ function DetalleJugadorPage() {
                                                                     children: "RUT"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                                    lineNumber: 124,
+                                                                    lineNumber: 136,
                                                                     columnNumber: 45
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                            lineNumber: 121,
+                                                            lineNumber: 133,
                                                             columnNumber: 50
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                    lineNumber: 115,
+                                                    lineNumber: 127,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$separator$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Separator"], {}, void 0, false, {
                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                    lineNumber: 127,
+                                                    lineNumber: 139,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1956,7 +2060,7 @@ function DetalleJugadorPage() {
                                                             children: "Nacionalidad"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                            lineNumber: 129,
+                                                            lineNumber: 141,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1966,31 +2070,31 @@ function DetalleJugadorPage() {
                                                                     className: "h-4 w-4"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                                    lineNumber: 131,
+                                                                    lineNumber: 143,
                                                                     columnNumber: 41
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                     children: jugador.nacionalidad || 'No registrada'
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                                    lineNumber: 132,
+                                                                    lineNumber: 144,
                                                                     columnNumber: 41
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                            lineNumber: 130,
+                                                            lineNumber: 142,
                                                             columnNumber: 37
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                    lineNumber: 128,
+                                                    lineNumber: 140,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$separator$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Separator"], {}, void 0, false, {
                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                    lineNumber: 135,
+                                                    lineNumber: 147,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2000,7 +2104,7 @@ function DetalleJugadorPage() {
                                                             children: "Fecha Nacimiento"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                            lineNumber: 137,
+                                                            lineNumber: 149,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2010,42 +2114,42 @@ function DetalleJugadorPage() {
                                                                     className: "h-4 w-4"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                                    lineNumber: 139,
+                                                                    lineNumber: 151,
                                                                     columnNumber: 41
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                    children: jugador.nacimiento ? new Date(jugador.nacimiento).toLocaleDateString('es-CL', {
+                                                                    children: jugador.nacimiento ? new Date(jugador.nacimiento + 'T00:00:00').toLocaleDateString('es-CL', {
                                                                         day: 'numeric',
                                                                         month: 'long',
                                                                         year: 'numeric'
                                                                     }) : '-'
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                                    lineNumber: 140,
+                                                                    lineNumber: 152,
                                                                     columnNumber: 41
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                            lineNumber: 138,
+                                                            lineNumber: 150,
                                                             columnNumber: 37
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                    lineNumber: 136,
+                                                    lineNumber: 148,
                                                     columnNumber: 33
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                            lineNumber: 114,
+                                            lineNumber: 126,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                    lineNumber: 107,
+                                    lineNumber: 119,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -2058,19 +2162,19 @@ function DetalleJugadorPage() {
                                                         className: "h-4 w-4 text-green-500"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                        lineNumber: 155,
+                                                        lineNumber: 167,
                                                         columnNumber: 37
                                                     }, this),
                                                     "Datos Asociación"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                lineNumber: 154,
+                                                lineNumber: 166,
                                                 columnNumber: 33
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                            lineNumber: 153,
+                                            lineNumber: 165,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -2083,63 +2187,80 @@ function DetalleJugadorPage() {
                                                             children: "Fecha Inscripción"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                            lineNumber: 161,
+                                                            lineNumber: 173,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                             className: "text-sm font-medium",
-                                                            children: jugador.inscripcion ? new Date(jugador.inscripcion).toLocaleDateString('es-CL') : '-'
+                                                            children: jugador.inscripcion ? new Date(jugador.inscripcion + 'T00:00:00').toLocaleDateString('es-CL') : '-'
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                            lineNumber: 162,
+                                                            lineNumber: 174,
                                                             columnNumber: 37
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                    lineNumber: 160,
+                                                    lineNumber: 172,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "pt-2",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                             className: "text-xs text-slate-400 uppercase font-bold mb-1",
-                                                            children: "Club Actual"
+                                                            children: "Inscrito por"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                            lineNumber: 167,
+                                                            lineNumber: 179,
                                                             columnNumber: 37
                                                         }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            className: "text-lg font-bold text-blue-600",
-                                                            children: jugador.Club?.nombre || 'Sin Club'
-                                                        }, void 0, false, {
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "flex items-center gap-2 text-slate-700 dark:text-slate-300",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__UserCheck$3e$__["UserCheck"], {
+                                                                    className: "h-4 w-4"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/app/jugadores/[id]/page.tsx",
+                                                                    lineNumber: 181,
+                                                                    columnNumber: 41
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                    className: "capitalize",
+                                                                    children: jugador.delegadoInscripcion || 'No registrado'
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/app/jugadores/[id]/page.tsx",
+                                                                    lineNumber: 182,
+                                                                    columnNumber: 41
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
                                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                            lineNumber: 168,
+                                                            lineNumber: 180,
                                                             columnNumber: 37
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                                    lineNumber: 166,
+                                                    lineNumber: 178,
                                                     columnNumber: 33
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                            lineNumber: 159,
+                                            lineNumber: 171,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                    lineNumber: 152,
+                                    lineNumber: 164,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                            lineNumber: 106,
+                            lineNumber: 118,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2148,36 +2269,36 @@ function DetalleJugadorPage() {
                                 pases: historial
                             }, void 0, false, {
                                 fileName: "[project]/app/jugadores/[id]/page.tsx",
-                                lineNumber: 179,
+                                lineNumber: 191,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/jugadores/[id]/page.tsx",
-                            lineNumber: 177,
+                            lineNumber: 190,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/jugadores/[id]/page.tsx",
-                    lineNumber: 103,
+                    lineNumber: 115,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/jugadores/[id]/page.tsx",
-            lineNumber: 62,
+            lineNumber: 61,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/jugadores/[id]/page.tsx",
-        lineNumber: 61,
+        lineNumber: 60,
         columnNumber: 10
     }, this);
 }
-_s(DetalleJugadorPage, "ASjL7LVnZPo0TNL7ASC1OUUKHhc=", false, function() {
+_s(DetalleJugadorPage, "fC+Kt8LHOIKW/fwXoMgOMslfA00=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"]
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useParams"]
     ];
 });
 _c = DetalleJugadorPage;

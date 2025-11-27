@@ -2,14 +2,14 @@
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { ArrowRight, History, MapPin } from 'lucide-react';
+import { ArrowRight, History, MapPin, UserCheck } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
-// Interfaz para los datos que vienen del backend
 interface Pase {
     id: number;
     fecha: string;
     comentario: string | null;
+    delegado: string | null;
     ClubOrigen?: { nombre: string };
     ClubDestino?: { nombre: string };
 }
@@ -19,7 +19,6 @@ interface HistorialPasesProps {
 }
 
 export function HistorialPases({ pases }: HistorialPasesProps) {
-    // Si no hay historial, mostramos un mensaje amigable
     if (!pases || pases.length === 0) {
         return (
             <Card className="border-dashed bg-slate-50/50 dark:bg-slate-900/20">
@@ -47,19 +46,18 @@ export function HistorialPases({ pases }: HistorialPasesProps) {
                             <TableRow>
                                 <TableHead className="w-[120px] font-semibold">Fecha</TableHead>
                                 <TableHead className="font-semibold">Movimiento</TableHead>
-                                <TableHead className="font-semibold text-right">Detalle / Motivo</TableHead>
+                                <TableHead className="font-semibold">Delegado</TableHead>
+                                <TableHead className="font-semibold text-right">Detalle</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {pases.map((pase) => (
                                 <TableRow key={pase.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/50">
                                     <TableCell className="font-medium text-slate-600 dark:text-slate-400 whitespace-nowrap">
-                                        {/* Formato de fecha chileno dd-mm-yyyy */}
                                         {new Date(pase.fecha + 'T00:00:00').toLocaleDateString('es-CL')}
                                     </TableCell>
                                     <TableCell>
                                         <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-sm">
-                                            {/* Origen */}
                                             <div className="flex items-center gap-1 text-slate-500">
                                                 <MapPin className="h-3 w-3" />
                                                 <span className="font-medium">
@@ -70,10 +68,15 @@ export function HistorialPases({ pases }: HistorialPasesProps) {
                                             <ArrowRight className="h-4 w-4 text-blue-400 hidden sm:block" />
                                             <ArrowRight className="h-3 w-3 text-blue-400 sm:hidden rotate-90 my-1 self-start ml-1" />
 
-                                            {/* Destino */}
                                             <Badge variant="secondary" className="bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 border-blue-200 dark:border-blue-800">
                                                 {pase.ClubDestino?.nombre}
                                             </Badge>
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>
+                                        <div className="flex items-center gap-1 text-sm text-slate-600">
+                                            <UserCheck className="h-3 w-3 text-slate-400" />
+                                            {pase.delegado || '-'}
                                         </div>
                                     </TableCell>
                                     <TableCell className="text-right">

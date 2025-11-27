@@ -4845,7 +4845,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$env$2e$ts__$5b$app$2d
 ;
 ;
 // Configuración del Cliente Axios
-// Se asume que env.apiUrl es "http://localhost:8080" (el host del backend)
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].create({
     baseURL: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$env$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["env"].apiUrl,
     headers: {
@@ -4854,16 +4853,12 @@ const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2
 });
 const api = {
     // ------------------------------------------------------------------
-    // JUGADORES (Base Endpoint: /api/jugadores)
+    // JUGADORES
     // ------------------------------------------------------------------
-    /**
-     * Obtiene la lista de jugadores con filtros opcionales
-     * Documentación 2.1: GET /api/jugadores
-     */ async getJugadores (filters) {
+    async getJugadores (filters) {
         const params = new URLSearchParams();
         if (filters?.club) params.append('club', filters.club);
         if (filters?.nombre) params.append('nombre', filters.nombre);
-        // CAMBIO: Ahora enviamos 'identificacion'
         if (filters?.identificacion) params.append('identificacion', filters.identificacion);
         if (filters?.rol) params.append('rol', filters.rol);
         const queryString = params.toString() ? `?${params.toString()}` : '';
@@ -4874,80 +4869,97 @@ const api = {
         const response = await apiClient.get(`/api/jugadores/${id}`);
         return response.data;
     },
-    /**
-     * Crea un nuevo jugador
-     * Documentación 2.2: POST /api/jugadores
-     */ async createJugador (data) {
-        // TRADUCCIÓN DE DATOS (Frontend -> Backend)
-        const payloadBackend = {
-            numero: data.numero,
-            paterno: data.paterno,
-            materno: data.materno,
-            nombres: data.nombres,
-            nacimiento: data.nacimiento,
-            inscripcion: data.inscripcion,
-            // Usamos data.club_id
-            club_id: data.club_id,
-            run_input: data.rut,
-            rol_input: data.rol,
-            // Agregamos los campos de pasaporte ---
-            tipo_identificacion_input: data.tipo_identificacion_input,
-            passport_input: data.passport_input,
-            nacionalidad: data.nacionalidad
-        };
-        await apiClient.post('/api/jugadores', payloadBackend);
+    async createJugador (data) {
+        const formData = new FormData();
+        // Campos de texto
+        formData.append('numero', data.numero);
+        formData.append('nombres', data.nombres);
+        formData.append('paterno', data.paterno);
+        formData.append('materno', data.materno || '');
+        formData.append('nacimiento', data.nacimiento);
+        formData.append('inscripcion', data.inscripcion);
+        formData.append('club_id', data.club_id);
+        formData.append('rol_input', data.rol);
+        formData.append('nacionalidad', data.nacionalidad || '');
+        formData.append('delegado_input', data.delegado || '');
+        // Identificación
+        formData.append('tipo_identificacion_input', data.tipo_identificacion);
+        if (data.tipo_identificacion === 'RUT') {
+            formData.append('run_input', data.rut);
+        } else {
+            formData.append('passport_input', data.passport);
+        }
+        // NUEVOS CAMPOS
+        // 1. Activo (convertir boolean a string)
+        formData.append('activo', String(data.activo));
+        // 2. Foto (solo si existe y es un archivo)
+        if (data.foto instanceof File) {
+            formData.append('foto', data.foto);
+        }
+        // Enviamos como multipart/form-data
+        await apiClient.post('/api/jugadores', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     },
     async updateJugador (id, data) {
-        // TRADUCCIÓN DE DATOS (Frontend -> Backend)
-        const payloadBackend = {
-            numero: data.numero,
-            paterno: data.paterno,
-            materno: data.materno,
-            nombres: data.nombres,
-            nacimiento: data.nacimiento,
-            inscripcion: data.inscripcion,
-            club_id: data.club_id,
-            run_input: data.rut,
-            rol_input: data.rol,
-            tipo_identificacion_input: data.tipo_identificacion_input,
-            passport_input: data.passport_input,
-            nacionalidad: data.nacionalidad
-        };
-        // Realizamos la petición PUT, incluyendo el ID en la URL
-        await apiClient.put(`/api/jugadores/${id}`, payloadBackend);
+        const formData = new FormData();
+        formData.append('numero', data.numero);
+        formData.append('nombres', data.nombres);
+        formData.append('paterno', data.paterno);
+        formData.append('materno', data.materno || '');
+        formData.append('nacimiento', data.nacimiento);
+        formData.append('inscripcion', data.inscripcion);
+        formData.append('club_id', data.club_id);
+        formData.append('rol_input', data.rol);
+        formData.append('nacionalidad', data.nacionalidad || '');
+        // El delegado también se puede actualizar si se desea
+        formData.append('delegado_input', data.delegado || '');
+        formData.append('tipo_identificacion_input', data.tipo_identificacion);
+        if (data.tipo_identificacion === 'RUT') {
+            formData.append('run_input', data.rut);
+        } else {
+            formData.append('passport_input', data.passport);
+        }
+        // NUEVOS CAMPOS
+        formData.append('activo', String(data.activo));
+        if (data.foto instanceof File) {
+            formData.append('foto', data.foto);
+        }
+        await apiClient.put(`/api/jugadores/${id}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     },
     async deleteJugador (id) {
-        // El ID se pasa como parte de la URL
         await apiClient.delete(`/api/jugadores/${id}`);
     },
     // ------------------------------------------------------------------
-    // CLUBES (Base Endpoint: /api/clubes)
+    // CLUBES
     // ------------------------------------------------------------------
-    /**
-     * Obtiene la lista de clubes
-     * Documentación 1.1: GET /api/clubes
-     */ async getClubes () {
+    async getClubes () {
         const response = await apiClient.get('/api/clubes');
         return response.data;
     },
-    // Obtiene un club por su ID
     async getClubPorId (id) {
         const response = await apiClient.get(`/api/clubes/${id}`);
         return response.data;
     },
-    //  Crea un nuevo club
     async createClub (data) {
         const response = await apiClient.post('/api/clubes', data);
         return response.data;
     },
-    // Actualiza un club existente
     async updateClub (id, data) {
         await apiClient.put(`/api/clubes/${id}`, data);
     },
-    // Elimina un club
     async deleteClub (id) {
         await apiClient.delete(`/api/clubes/${id}`);
     },
+    // ------------------------------------------------------------------
+    // PASES
+    // ------------------------------------------------------------------
     async realizarPase (data) {
         await apiClient.post('/api/pases', data);
     },
@@ -5009,7 +5021,9 @@ var _s = __turbopack_context__.k.signature();
 const paseSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["object"]({
     club_destino_id: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["string"]().min(1, "Debe seleccionar un club de destino"),
     fecha: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["string"]().min(1, "La fecha es obligatoria"),
-    comentario: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["string"]().optional()
+    comentario: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["string"]().optional(),
+    // NUEVO CAMPO
+    delegado: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["string"]().min(2, "Debes indicar el delegado responsable")
 });
 function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }) {
     _s();
@@ -5019,14 +5033,12 @@ function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }) {
         defaultValues: {
             club_destino_id: '',
             fecha: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$format$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["format"])(new Date(), 'yyyy-MM-dd'),
-            comentario: ''
+            comentario: '',
+            delegado: '' // <--- NUEVO DEFAULT
         }
     });
-    // Si no hay jugador seleccionado, no renderizamos nada útil
     if (!jugador) return null;
     const clubActualId = jugador.clubId || jugador.club_id;
-    // Filtrar la lista de clubes para NO mostrar el club actual como destino
-    // Usamos el 'clubActualId' que acabamos de calcular de forma segura
     const clubesDestino = clubes.filter((c)=>c.id.toString() !== clubActualId?.toString());
     const clubActualNombre = jugador.Club?.nombre || 'Sin Club';
     const onSubmit = async (data)=>{
@@ -5036,12 +5048,12 @@ function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }) {
                 jugadorId: jugador.id,
                 clubDestinoId: data.club_destino_id,
                 fecha: data.fecha,
-                comentario: data.comentario || ''
+                comentario: data.comentario || '',
+                delegado: data.delegado // <--- SE ENVÍA AQUÍ
             });
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success(`Pase realizado correctamente. ${jugador.nombres} ha sido transferido.`);
-            // Limpiamos y cerramos
             form.reset();
-            onSuccess(); // Recargar la tabla en la página padre
+            onSuccess();
             onClose();
         } catch (error) {
             console.error(error);
@@ -5065,14 +5077,14 @@ function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }) {
                                     className: "h-5 w-5 text-blue-600"
                                 }, void 0, false, {
                                     fileName: "[project]/components/pase-modal.tsx",
-                                    lineNumber: 86,
+                                    lineNumber: 83,
                                     columnNumber: 25
                                 }, this),
                                 "Realizar Pase / Transferencia"
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/pase-modal.tsx",
-                            lineNumber: 85,
+                            lineNumber: 82,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
@@ -5086,13 +5098,13 @@ function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }) {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/pase-modal.tsx",
-                                    lineNumber: 90,
+                                    lineNumber: 87,
                                     columnNumber: 54
                                 }, this),
                                 ".",
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                     fileName: "[project]/components/pase-modal.tsx",
-                                    lineNumber: 91,
+                                    lineNumber: 88,
                                     columnNumber: 25
                                 }, this),
                                 "Su ROL (",
@@ -5101,13 +5113,13 @@ function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }) {
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/pase-modal.tsx",
-                            lineNumber: 89,
+                            lineNumber: 86,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/pase-modal.tsx",
-                    lineNumber: 84,
+                    lineNumber: 81,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Form"], {
@@ -5124,7 +5136,7 @@ function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }) {
                                         children: "Club de Origen"
                                     }, void 0, false, {
                                         fileName: "[project]/components/pase-modal.tsx",
-                                        lineNumber: 101,
+                                        lineNumber: 98,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5134,20 +5146,20 @@ function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }) {
                                                 className: "h-4 w-4 text-slate-400"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pase-modal.tsx",
-                                                lineNumber: 103,
+                                                lineNumber: 100,
                                                 columnNumber: 33
                                             }, this),
                                             clubActualNombre
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/pase-modal.tsx",
-                                        lineNumber: 102,
+                                        lineNumber: 99,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/pase-modal.tsx",
-                                lineNumber: 100,
+                                lineNumber: 97,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
@@ -5159,7 +5171,7 @@ function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }) {
                                                 children: "Club de Destino"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pase-modal.tsx",
-                                                lineNumber: 112,
+                                                lineNumber: 109,
                                                 columnNumber: 37
                                             }, void 0),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -5172,17 +5184,17 @@ function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }) {
                                                                 placeholder: "Seleccione el nuevo equipo"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/pase-modal.tsx",
-                                                                lineNumber: 116,
+                                                                lineNumber: 113,
                                                                 columnNumber: 49
                                                             }, void 0)
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/pase-modal.tsx",
-                                                            lineNumber: 115,
+                                                            lineNumber: 112,
                                                             columnNumber: 45
                                                         }, void 0)
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/pase-modal.tsx",
-                                                        lineNumber: 114,
+                                                        lineNumber: 111,
                                                         columnNumber: 41
                                                     }, void 0),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -5191,46 +5203,88 @@ function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }) {
                                                                 children: club.nombre
                                                             }, club.id, false, {
                                                                 fileName: "[project]/components/pase-modal.tsx",
-                                                                lineNumber: 120,
+                                                                lineNumber: 117,
                                                                 columnNumber: 72
                                                             }, void 0))
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/pase-modal.tsx",
-                                                        lineNumber: 119,
+                                                        lineNumber: 116,
                                                         columnNumber: 41
                                                     }, void 0)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/pase-modal.tsx",
-                                                lineNumber: 113,
+                                                lineNumber: 110,
                                                 columnNumber: 37
                                             }, void 0),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                 fileName: "[project]/components/pase-modal.tsx",
-                                                lineNumber: 125,
+                                                lineNumber: 122,
                                                 columnNumber: 37
                                             }, void 0)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/pase-modal.tsx",
-                                        lineNumber: 111,
+                                        lineNumber: 108,
                                         columnNumber: 17
                                     }, void 0)
                             }, void 0, false, {
                                 fileName: "[project]/components/pase-modal.tsx",
-                                lineNumber: 109,
+                                lineNumber: 106,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
+                                control: form.control,
+                                name: "delegado",
+                                render: ({ field: field_0 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormItem"], {
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormLabel"], {
+                                                children: "Delegado Responsable"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/pase-modal.tsx",
+                                                lineNumber: 129,
+                                                columnNumber: 37
+                                            }, void 0),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
+                                                    placeholder: "Nombre del delegado que gestiona el pase",
+                                                    ...field_0
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/pase-modal.tsx",
+                                                    lineNumber: 131,
+                                                    columnNumber: 41
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/pase-modal.tsx",
+                                                lineNumber: 130,
+                                                columnNumber: 37
+                                            }, void 0),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
+                                                fileName: "[project]/components/pase-modal.tsx",
+                                                lineNumber: 133,
+                                                columnNumber: 37
+                                            }, void 0)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/pase-modal.tsx",
+                                        lineNumber: 128,
+                                        columnNumber: 17
+                                    }, void 0)
+                            }, void 0, false, {
+                                fileName: "[project]/components/pase-modal.tsx",
+                                lineNumber: 126,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
                                 control: form.control,
                                 name: "fecha",
-                                render: ({ field: field_0 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormItem"], {
+                                render: ({ field: field_1 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormItem"], {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormLabel"], {
                                                 children: "Fecha del Pase"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pase-modal.tsx",
-                                                lineNumber: 132,
+                                                lineNumber: 140,
                                                 columnNumber: 37
                                             }, void 0),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -5241,86 +5295,86 @@ function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }) {
                                                             className: "absolute left-3 top-2.5 h-4 w-4 text-slate-400"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/pase-modal.tsx",
-                                                            lineNumber: 135,
+                                                            lineNumber: 143,
                                                             columnNumber: 45
                                                         }, void 0),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
                                                             type: "date",
                                                             className: "pl-9",
-                                                            ...field_0
+                                                            ...field_1
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/pase-modal.tsx",
-                                                            lineNumber: 136,
+                                                            lineNumber: 144,
                                                             columnNumber: 45
                                                         }, void 0)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/pase-modal.tsx",
-                                                    lineNumber: 134,
+                                                    lineNumber: 142,
                                                     columnNumber: 41
                                                 }, void 0)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pase-modal.tsx",
-                                                lineNumber: 133,
+                                                lineNumber: 141,
                                                 columnNumber: 37
                                             }, void 0),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                 fileName: "[project]/components/pase-modal.tsx",
-                                                lineNumber: 139,
+                                                lineNumber: 147,
                                                 columnNumber: 37
                                             }, void 0)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/pase-modal.tsx",
-                                        lineNumber: 131,
+                                        lineNumber: 139,
                                         columnNumber: 17
                                     }, void 0)
                             }, void 0, false, {
                                 fileName: "[project]/components/pase-modal.tsx",
-                                lineNumber: 129,
+                                lineNumber: 137,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
                                 control: form.control,
                                 name: "comentario",
-                                render: ({ field: field_1 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormItem"], {
+                                render: ({ field: field_2 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormItem"], {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormLabel"], {
                                                 children: "Comentario / Motivo (Opcional)"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pase-modal.tsx",
-                                                lineNumber: 146,
+                                                lineNumber: 154,
                                                 columnNumber: 37
                                             }, void 0),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Textarea"], {
                                                     placeholder: "Ej: Préstamo por temporada, Venta definitiva, etc.",
                                                     className: "resize-none",
-                                                    ...field_1
+                                                    ...field_2
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/pase-modal.tsx",
-                                                    lineNumber: 148,
+                                                    lineNumber: 156,
                                                     columnNumber: 41
                                                 }, void 0)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pase-modal.tsx",
-                                                lineNumber: 147,
+                                                lineNumber: 155,
                                                 columnNumber: 37
                                             }, void 0),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                 fileName: "[project]/components/pase-modal.tsx",
-                                                lineNumber: 150,
+                                                lineNumber: 158,
                                                 columnNumber: 37
                                             }, void 0)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/pase-modal.tsx",
-                                        lineNumber: 145,
+                                        lineNumber: 153,
                                         columnNumber: 17
                                     }, void 0)
                             }, void 0, false, {
                                 fileName: "[project]/components/pase-modal.tsx",
-                                lineNumber: 143,
+                                lineNumber: 151,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogFooter"], {
@@ -5334,7 +5388,7 @@ function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }) {
                                         children: "Cancelar"
                                     }, void 0, false, {
                                         fileName: "[project]/components/pase-modal.tsx",
-                                        lineNumber: 154,
+                                        lineNumber: 162,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -5346,42 +5400,42 @@ function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }) {
                                                 className: "mr-2 h-4 w-4 animate-spin"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pase-modal.tsx",
-                                                lineNumber: 158,
+                                                lineNumber: 166,
                                                 columnNumber: 50
                                             }, this),
                                             "Confirmar Pase"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/pase-modal.tsx",
-                                        lineNumber: 157,
+                                        lineNumber: 165,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/pase-modal.tsx",
-                                lineNumber: 153,
+                                lineNumber: 161,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/pase-modal.tsx",
-                        lineNumber: 97,
+                        lineNumber: 94,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/pase-modal.tsx",
-                    lineNumber: 96,
+                    lineNumber: 93,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/pase-modal.tsx",
-            lineNumber: 83,
+            lineNumber: 80,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/pase-modal.tsx",
-        lineNumber: 82,
+        lineNumber: 79,
         columnNumber: 10
     }, this);
 }

@@ -33,6 +33,19 @@ const Jugador = sequelize.define('Jugador', {
         type: DataTypes.STRING,
         allowNull: true // Puede ser opcional al principio
     },
+    delegadoInscripcion: {
+        type: DataTypes.STRING,
+        allowNull: true // Opcional para registros antiguos
+    },
+    foto: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    activo: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+    },
     rol: DataTypes.STRING,
     nacimiento: DataTypes.DATEONLY,
     inscripcion: DataTypes.DATEONLY,

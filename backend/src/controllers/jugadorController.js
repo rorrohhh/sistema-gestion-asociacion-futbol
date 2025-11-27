@@ -2,10 +2,12 @@ const Jugador = require('../models/Jugador');
 const Club = require('../models/Club');
 const { Op } = require('sequelize');
 const sequelize = require('../config/database');
+const fs = require('fs');
+const path = require('path');
 
 const controller = {};
 
-// LISTAR (Sin cambios mayores, pero ya traerá la nacionalidad automáticamente)
+// LISTAR
 controller.listar = async (req, res) => {
     try {
         const { club, identificacion, rol, nombre } = req.query;
@@ -17,19 +19,17 @@ controller.listar = async (req, res) => {
             where.rol = { [Op.like]: `%${rol}%` };
         }
 
-        // BÚSQUEDA HÍBRIDA (RUT O PASAPORTE)
+        // BÚSQUEDA HÍBRIDA
         if (identificacion) {
             const terminoBusqueda = identificacion.trim();
             const rutSearch = terminoBusqueda.replace(/[^0-9kK]/g, '');
 
             const condicionesIdentificacion = [];
 
-            // 1. Buscar en Pasaporte
             condicionesIdentificacion.push({
                 pasaporte: { [Op.like]: `%${terminoBusqueda}%` }
             });
 
-            // 2. Buscar en RUT
             if (rutSearch.length > 0) {
                 condicionesIdentificacion.push(
                     sequelize.where(
@@ -71,7 +71,7 @@ controller.listar = async (req, res) => {
     }
 };
 
-// GUARDAR (Actualizado con nacionalidad)
+// GUARDAR
 controller.guardar = async (req, res) => {
     try {
         const { 
@@ -80,8 +80,17 @@ controller.guardar = async (req, res) => {
             nacimiento, inscripcion, club_id,
             tipo_identificacion_input, 
             passport_input,
-            nacionalidad // <--- NUEVO CAMPO RECIBIDO
+            nacionalidad,
+            delegado_input,
+            activo // Recibimos el estado activo
         } = req.body;
+
+        // 1. Procesar la imagen si existe
+        let fotoPath = null;
+        if (req.file) {
+            // Guardamos la ruta relativa para servirla después
+            fotoPath = `/uploads/${req.file.filename}`;
+        }
 
         let rutData = { rut: null, dv: null };
         let pasaporte = null;
@@ -114,7 +123,12 @@ controller.guardar = async (req, res) => {
             rol: rol_input,
             nacimiento,
             inscripcion,
-            clubId: club_id
+            clubId: club_id,
+            delegadoInscripcion: delegado_input,
+            
+            // Nuevos campos
+            foto: fotoPath,
+            activo: activo === 'true' || activo === true // Convertir string a boolean
         });
 
         res.status(201).json(nuevo);
@@ -135,7 +149,7 @@ controller.obtener = async (req, res) => {
     }
 };
 
-// ACTUALIZAR (Actualizado con nacionalidad)
+// ACTUALIZAR
 controller.actualizar = async (req, res) => {
     try {
         const { 
@@ -144,7 +158,9 @@ controller.actualizar = async (req, res) => {
             nacimiento, inscripcion, club_id,
             tipo_identificacion_input, 
             passport_input,
-            nacionalidad // <--- NUEVO CAMPO RECIBIDO
+            nacionalidad,
+            delegado_input,
+            activo
         } = req.body;
 
         let updateData = {
@@ -172,15 +188,29 @@ controller.actualizar = async (req, res) => {
              return res.status(400).json({ error: "Tipo de identificación no válido." });
         }
 
-        await Jugador.update({
+        // Objeto base con los datos a actualizar
+        const camposActualizar = {
             numero, paterno, materno, nombres,
             ...updateData,
-            nacionalidad: nacionalidad, // <--- ACTUALIZAMOS LA NACIONALIDAD
+            nacionalidad: nacionalidad,
             rol: rol_input,
             nacimiento,
             inscripcion,
-            clubId: club_id
-        }, { where: { id: req.params.id } });
+            clubId: club_id,
+            delegadoInscripcion: delegado_input,
+            activo: activo === 'true' || activo === true
+        };
+
+        // Si se subió una nueva foto, la agregamos al objeto
+        if (req.file) {
+            // Opcional: Podrías borrar la foto antigua aquí si quisieras ahorrar espacio
+            // const jugadorAntiguo = await Jugador.findByPk(req.params.id);
+            // if(jugadorAntiguo.foto) fs.unlink(...)
+
+            camposActualizar.foto = `/uploads/${req.file.filename}`;
+        }
+
+        await Jugador.update(camposActualizar, { where: { id: req.params.id } });
 
         res.json({ message: "Actualizado" });
     } catch (error) {

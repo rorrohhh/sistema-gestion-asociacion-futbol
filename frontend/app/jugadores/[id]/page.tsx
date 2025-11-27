@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { toast } from 'sonner';
 import Link from 'next/link';
 import {
@@ -16,7 +16,8 @@ import {
     Pencil,
     Globe,
     Flag,
-    History
+    UserCheck,
+    Circle
 } from 'lucide-react';
 
 // UI
@@ -24,17 +25,12 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { HistorialPases } from '@/components/historial-pases'; // Reutilizamos el componente
+import { HistorialPases } from '@/components/historial-pases';
 
 // Logic
 import { api } from '@/lib/api';
-import type { Jugador, Club } from '@/types';
-
-// Helpers
-const extractIdFromPath = (pathname: string): string | null => {
-    const parts = pathname.split('/');
-    return parts[parts.length - 1] || null;
-};
+import { env } from '@/lib/env'; // <--- IMPORTAR ENV PARA URL BASE DE IMAGEN
+import type { Jugador } from '@/types';
 
 const formatRut = (rut: number | null, dv: string | null) => {
     if (!rut) return '-';
@@ -43,8 +39,8 @@ const formatRut = (rut: number | null, dv: string | null) => {
 
 export default function DetalleJugadorPage() {
     const router = useRouter();
-    const pathname = usePathname();
-    const jugadorId = extractIdFromPath(pathname);
+    const params = useParams();
+    const jugadorId = params.id as string;
 
     const [jugador, setJugador] = useState<Jugador | null>(null);
     const [historial, setHistorial] = useState<any[]>([]);
@@ -54,7 +50,6 @@ export default function DetalleJugadorPage() {
         async function loadData() {
             if (!jugadorId) return;
             try {
-                // Cargamos datos del jugador e historial en paralelo
                 const [playerData, historialData] = await Promise.all([
                     api.getJugadorPorId(jugadorId),
                     api.getHistorialPases(jugadorId)
@@ -83,6 +78,14 @@ export default function DetalleJugadorPage() {
         return <div className="p-8 text-center">Jugador no encontrado</div>;
     }
 
+    // Construir URL de la foto si existe
+    // Si la ruta viene como '/uploads/foto.jpg', le pegamos la URL base del backend
+    const fotoUrl = (jugador as any).foto
+        ? `${env.apiUrl}${(jugador as any).foto}`
+        : null;
+
+    const isActive = (jugador as any).activo;
+
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-4 sm:p-8">
             <div className="max-w-5xl mx-auto space-y-6">
@@ -103,24 +106,49 @@ export default function DetalleJugadorPage() {
 
                 {/* Encabezado Principal */}
                 <div className="flex flex-col md:flex-row gap-6 items-start md:items-center bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800">
-                    <div className="h-20 w-20 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-2xl font-bold text-slate-400">
-                        {jugador.nombres.charAt(0)}{jugador.paterno.charAt(0)}
+
+                    {/* FOTO DE PERFIL */}
+                    <div className="relative h-24 w-24 rounded-full overflow-hidden border-4 border-white shadow-sm bg-slate-100 dark:bg-slate-800 flex-shrink-0">
+                        {fotoUrl ? (
+                            <img
+                                src={fotoUrl}
+                                alt="Foto de perfil"
+                                className="h-full w-full object-cover"
+                            />
+                        ) : (
+                            <div className="h-full w-full flex items-center justify-center text-3xl font-bold text-slate-400">
+                                {jugador.nombres.charAt(0)}{jugador.paterno.charAt(0)}
+                            </div>
+                        )}
                     </div>
+
                     <div className="flex-1">
                         <div className="flex items-center gap-3 mb-1">
                             <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
                                 {jugador.nombres} {jugador.paterno} {jugador.materno}
                             </h1>
-                            <Badge variant={jugador.Club ? "default" : "secondary"} className="text-sm">
-                                {jugador.Club ? jugador.Club.nombre : 'Libre'}
-                            </Badge>
+
+                            {/* ESTADO ACTIVO/INACTIVO */}
+                            {isActive ? (
+                                <Badge className="bg-green-100 text-green-700 border-green-200 hover:bg-green-100 gap-1">
+                                    <Circle className="h-2 w-2 fill-current" /> Activo
+                                </Badge>
+                            ) : (
+                                <Badge variant="destructive" className="gap-1">
+                                    <Circle className="h-2 w-2 fill-current" /> Inactivo
+                                </Badge>
+                            )}
                         </div>
+
                         <div className="flex flex-wrap gap-4 text-sm text-slate-500">
                             <span className="flex items-center gap-1">
                                 <Hash className="h-3 w-3" /> ROL: {jugador.rol}
                             </span>
                             <span className="flex items-center gap-1">
                                 <Shirt className="h-3 w-3" /> Camiseta: {jugador.numero}
+                            </span>
+                            <span className="flex items-center gap-1">
+                                <Building2 className="h-3 w-3" /> {jugador.Club ? jugador.Club.nombre : 'Libre'}
                             </span>
                         </div>
                     </div>
@@ -169,7 +197,7 @@ export default function DetalleJugadorPage() {
                                         <Calendar className="h-4 w-4" />
                                         <span>
                                             {jugador.nacimiento
-                                                ? new Date(jugador.nacimiento).toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' })
+                                                ? new Date(jugador.nacimiento + 'T00:00:00').toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' })
                                                 : '-'}
                                         </span>
                                     </div>
@@ -189,15 +217,16 @@ export default function DetalleJugadorPage() {
                                     <p className="text-xs text-slate-400 uppercase font-bold mb-1">Fecha Inscripción</p>
                                     <p className="text-sm font-medium">
                                         {jugador.inscripcion
-                                            ? new Date(jugador.inscripcion).toLocaleDateString('es-CL')
+                                            ? new Date(jugador.inscripcion + 'T00:00:00').toLocaleDateString('es-CL')
                                             : '-'}
                                     </p>
                                 </div>
-                                <div>
-                                    <p className="text-xs text-slate-400 uppercase font-bold mb-1">Club Actual</p>
-                                    <p className="text-lg font-bold text-blue-600">
-                                        {jugador.Club?.nombre || 'Sin Club'}
-                                    </p>
+                                <div className="pt-2">
+                                    <p className="text-xs text-slate-400 uppercase font-bold mb-1">Inscrito por</p>
+                                    <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                                        <UserCheck className="h-4 w-4" />
+                                        <span className="capitalize">{jugador.delegadoInscripcion || 'No registrado'}</span>
+                                    </div>
                                 </div>
                             </CardContent>
                         </Card>
@@ -205,7 +234,6 @@ export default function DetalleJugadorPage() {
 
                     {/* Columna Derecha: Historial */}
                     <div className="lg:col-span-2">
-                        {/* Aquí usamos tu componente de historial */}
                         <HistorialPases pases={historial} />
                     </div>
                 </div>

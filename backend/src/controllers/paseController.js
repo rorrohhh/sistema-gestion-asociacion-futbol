@@ -11,7 +11,7 @@ controller.realizarPase = async (req, res) => {
     const t = await sequelize.transaction();
 
     try {
-        const { jugadorId, clubDestinoId, fecha, comentario } = req.body;
+        const { jugadorId, clubDestinoId, fecha, comentario, delegado } = req.body;
 
         // 1. Verificar que el jugador existe y obtener su club actual (Origen)
         const jugador = await Jugador.findByPk(jugadorId, { transaction: t });
@@ -35,7 +35,8 @@ controller.realizarPase = async (req, res) => {
             clubOrigenId,   // Guardamos de dónde venía
             clubDestinoId,  // Guardamos a dónde va
             fecha: fecha || new Date(),
-            comentario      // Guardamos el comentario del pase
+            comentario,
+            delegado: delegado 
         }, { transaction: t });
 
         // 3. Actualizar el club actual del Jugador

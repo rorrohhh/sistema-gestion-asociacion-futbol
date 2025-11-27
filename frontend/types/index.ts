@@ -15,6 +15,7 @@ export interface Jugador {
     tipoIdentificacion: string; // 'RUT' | 'PASSPORT'
     pasaporte: string | null;
     nacionalidad: string | null;
+    delegadoInscripcion: string | null;
     rol: string;
     nacimiento: string;
     inscripcion: string;
@@ -55,7 +56,9 @@ export interface CreateJugadorDTO {
     tipo_identificacion_input?: string;
     passport_input?: string;
     nacionalidad?: string;
+    delegado_input?: string;
 }
+
 
 export interface CreateClubDTO {
     nombre: string;

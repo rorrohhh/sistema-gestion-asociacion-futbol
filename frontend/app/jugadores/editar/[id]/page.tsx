@@ -19,7 +19,8 @@ import {
     ArrowLeft,
     CheckCircle2,
     Trophy,
-    Pencil
+    Pencil,
+    Camera
 } from 'lucide-react';
 
 // Componentes UI
@@ -29,6 +30,16 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Switch } from '@/components/ui/switch'; // <--- IMPORTANTE
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+    FormDescription
+} from '@/components/ui/form';
 
 // Lógica y Tipos
 import { jugadorSchema } from '@/lib/validations';
@@ -70,18 +81,20 @@ export default function EditarJugadorPage() {
             materno: '',
             rut: '',
             passport: '',
-            nacionalidad: '', // <--- NUEVO VALOR POR DEFECTO
+            nacionalidad: '',
+            delegado: '',
             rol: '',
             numero: 0,
             club_id: '',
             nacimiento: '',
             inscripcion: '',
+            activo: true, // <--- NUEVO DEFAULT
+            foto: undefined,
         },
     });
 
     const { register, handleSubmit, setValue, watch, formState: { errors, isSubmitting } } = form;
 
-    // Observamos el tipo para mostrar/ocultar campos condicionales
     const tipoIdentificacion = watch('tipo_identificacion');
 
     // 2. Cargar datos
@@ -109,21 +122,18 @@ export default function EditarJugadorPage() {
                     paterno: data.paterno,
                     materno: data.materno || '',
 
-                    // Convertimos ID a string para el Select
                     club_id: data.clubId ? data.clubId.toString() : (data.club_id ? data.club_id.toString() : ''),
-
                     numero: data.numero,
                     rol: data.rol,
-                    nacionalidad: data.nacionalidad || '', // <--- CARGAMOS LA NACIONALIDAD
+                    nacionalidad: data.nacionalidad || '',
+                    delegado: data.delegadoInscripcion || '', // <--- CARGAMOS DELEGADO
+                    activo: data.activo, // <--- CARGAMOS ESTADO
 
-                    // Manejo de fechas
                     nacimiento: data.nacimiento ? String(data.nacimiento) : '',
                     inscripcion: data.inscripcion ? String(data.inscripcion) : '',
 
-                    // Identificación (aseguramos el tipo correcto)
                     tipo_identificacion: (data.tipoIdentificacion === 'PASSPORT' ? 'PASSPORT' : 'RUT'),
 
-                    // Formatear RUT si existe
                     rut: data.rut ? formatRut(data.rut.toString() + (data.dv || '')) : '',
                     passport: data.pasaporte || '',
                 });
@@ -143,15 +153,17 @@ export default function EditarJugadorPage() {
         if (!jugadorId) return;
 
         try {
-            // Preparar payload
             const payload: any = {
                 ...data,
                 rut: data.rut || '',
                 rol: data.rol,
                 club_id: data.club_id,
-                nacionalidad: data.nacionalidad, // <--- SE ENVÍA AQUÍ
+                nacionalidad: data.nacionalidad,
+                delegado: data.delegado,
                 tipo_identificacion_input: data.tipo_identificacion,
-                passport_input: data.passport
+                passport_input: data.passport,
+                activo: data.activo, // <--- ENVÍO ESTADO
+                foto: data.foto // <--- ENVÍO FOTO (Si cambió)
             };
 
             await api.updateJugador(jugadorId, payload);
@@ -220,7 +232,7 @@ export default function EditarJugadorPage() {
                                     <div className="space-y-1">
                                         <h4 className="font-semibold text-blue-900 dark:text-blue-100 text-sm">Modo Edición</h4>
                                         <p className="text-sm text-blue-700 dark:text-blue-300">
-                                            Edite los campos necesarios. El RUT solo acepta formato válido chileno.
+                                            Edite los campos necesarios. Si sube una nueva foto, reemplazará a la anterior.
                                         </p>
                                     </div>
                                 </CardContent>
@@ -231,225 +243,357 @@ export default function EditarJugadorPage() {
                     {/* Formulario Principal */}
                     <div className="lg:col-span-8">
                         <Card className="border-0 shadow-lg bg-white dark:bg-slate-900 ring-1 ring-slate-200 dark:ring-slate-800">
-                            <form onSubmit={handleSubmit(onSubmit)}>
-                                <CardHeader className="border-b border-slate-100 dark:border-slate-800 pb-4">
-                                    <CardTitle className="text-xl font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-                                        <User className="h-5 w-5 text-slate-500" />
-                                        Ficha Técnica
-                                    </CardTitle>
-                                    <CardDescription>Información personal y deportiva</CardDescription>
-                                </CardHeader>
+                            {/* Envuelve todo el formulario con Form de Shadcn para usar FormField correctamente */}
+                            <Form {...form}>
+                                <form onSubmit={handleSubmit(onSubmit)}>
+                                    <CardHeader className="border-b border-slate-100 dark:border-slate-800 pb-4">
+                                        <CardTitle className="text-xl font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                                            <User className="h-5 w-5 text-slate-500" />
+                                            Ficha Técnica
+                                        </CardTitle>
+                                        <CardDescription>Información personal y deportiva</CardDescription>
+                                    </CardHeader>
 
-                                <CardContent className="p-6 sm:p-8 space-y-6">
+                                    <CardContent className="p-6 sm:p-8 space-y-6">
 
-                                    {/* IDENTIFICACIÓN */}
-                                    <div className="space-y-4">
-                                        <h3 className="text-sm font-medium text-slate-900 dark:text-slate-200 border-l-4 border-blue-500 pl-3">
-                                            Identificación
-                                        </h3>
+                                        {/* SECCIÓN 0: Estado y Foto (NUEVO) */}
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border mb-6">
+                                            {/* FOTO */}
+                                            <FormField
+                                                control={form.control}
+                                                name="foto"
+                                                render={({ field: { value, onChange, ...field } }) => (
+                                                    <FormItem>
+                                                        <FormLabel className="flex items-center gap-2">
+                                                            <Camera className="h-4 w-4" />
+                                                            Actualizar Foto
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                {...field}
+                                                                type="file"
+                                                                accept="image/*"
+                                                                className="cursor-pointer bg-white dark:bg-slate-950"
+                                                                onChange={(e) => {
+                                                                    const file = e.target.files?.[0];
+                                                                    if (file) onChange(file);
+                                                                }}
+                                                            />
+                                                        </FormControl>
+                                                        <FormDescription>Dejar vacío para mantener la actual.</FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
 
-                                        {/* Selector de Tipo */}
-                                        <div className="space-y-3">
-                                            <Label>Tipo de Documento</Label>
-                                            <RadioGroup
-                                                onValueChange={(val) => setValue('tipo_identificacion', val as "RUT" | "PASSPORT")}
-                                                defaultValue={tipoIdentificacion}
-                                                key={tipoIdentificacion}
-                                                className="flex flex-col sm:flex-row gap-4"
-                                            >
-                                                <div className="flex items-center space-x-2">
-                                                    <RadioGroupItem value="RUT" id="r-rut" />
-                                                    <Label htmlFor="r-rut" className="font-normal">RUT (Chile)</Label>
-                                                </div>
-                                                <div className="flex items-center space-x-2">
-                                                    <RadioGroupItem value="PASSPORT" id="r-pass" />
-                                                    <Label htmlFor="r-pass" className="font-normal">Pasaporte</Label>
-                                                </div>
-                                            </RadioGroup>
+                                            {/* ACTIVO */}
+                                            <FormField
+                                                control={form.control}
+                                                name="activo"
+                                                render={({ field }) => (
+                                                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm bg-white dark:bg-slate-950">
+                                                        <div className="space-y-0.5">
+                                                            <FormLabel>Estado</FormLabel>
+                                                            <FormDescription>
+                                                                {field.value ? 'Jugador Habilitado' : 'Jugador Inhabilitado'}
+                                                            </FormDescription>
+                                                        </div>
+                                                        <FormControl>
+                                                            <Switch
+                                                                checked={field.value}
+                                                                onCheckedChange={field.onChange}
+                                                            />
+                                                        </FormControl>
+                                                    </FormItem>
+                                                )}
+                                            />
                                         </div>
 
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            {/* Campo RUT */}
-                                            {tipoIdentificacion === 'RUT' && (
-                                                <div className="space-y-2">
-                                                    <Label htmlFor="rut">RUT</Label>
-                                                    <div className="relative">
-                                                        <CreditCard className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
-                                                        <Input
-                                                            id="rut"
-                                                            placeholder="12.345.678-9"
-                                                            className="pl-9"
-                                                            {...register('rut')}
-                                                            onChange={(e) => {
-                                                                const formatted = formatRut(e.target.value);
-                                                                if (formatted.length <= 12) {
-                                                                    setValue('rut', formatted);
-                                                                }
-                                                            }}
-                                                        />
+                                        {/* IDENTIFICACIÓN */}
+                                        <div className="space-y-4">
+                                            <h3 className="text-sm font-medium text-slate-900 dark:text-slate-200 border-l-4 border-blue-500 pl-3">
+                                                Identificación
+                                            </h3>
+
+                                            <div className="space-y-3">
+                                                <Label>Tipo de Documento</Label>
+                                                <RadioGroup
+                                                    onValueChange={(val) => setValue('tipo_identificacion', val as "RUT" | "PASSPORT")}
+                                                    defaultValue={tipoIdentificacion}
+                                                    key={tipoIdentificacion}
+                                                    className="flex flex-col sm:flex-row gap-4"
+                                                >
+                                                    <div className="flex items-center space-x-2">
+                                                        <RadioGroupItem value="RUT" id="r-rut" />
+                                                        <Label htmlFor="r-rut" className="font-normal">RUT (Chile)</Label>
                                                     </div>
-                                                    {errors.rut && <p className="text-xs text-red-500">{errors.rut.message}</p>}
-                                                </div>
+                                                    <div className="flex items-center space-x-2">
+                                                        <RadioGroupItem value="PASSPORT" id="r-pass" />
+                                                        <Label htmlFor="r-pass" className="font-normal">Pasaporte</Label>
+                                                    </div>
+                                                </RadioGroup>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                {tipoIdentificacion === 'RUT' && (
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="rut"
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>RUT</FormLabel>
+                                                                <FormControl>
+                                                                    <Input
+                                                                        placeholder="12.345.678-9"
+                                                                        {...field}
+                                                                        value={field.value as string || ''}
+                                                                        className="pl-9"
+                                                                        onChange={(e) => {
+                                                                            const formatted = formatRut(e.target.value);
+                                                                            if (formatted.length <= 12) {
+                                                                                field.onChange(formatted);
+                                                                            }
+                                                                        }}
+                                                                    />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                )}
+
+                                                {tipoIdentificacion === 'PASSPORT' && (
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="passport"
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>N° Pasaporte</FormLabel>
+                                                                <FormControl>
+                                                                    <Input
+                                                                        placeholder="A12345678"
+                                                                        {...field}
+                                                                        value={field.value as string || ''}
+                                                                    />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                )}
+
+                                                <FormField
+                                                    control={form.control}
+                                                    name="rol"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel>N° ROL</FormLabel>
+                                                            <FormControl>
+                                                                <Input
+                                                                    placeholder="Ej: 6785"
+                                                                    className="pl-9"
+                                                                    {...field}
+                                                                    value={field.value as string || ''}
+                                                                />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="h-px bg-slate-100 dark:bg-slate-800" />
+
+                                        {/* DATOS PERSONALES */}
+                                        <div className="space-y-4">
+                                            <h3 className="text-sm font-medium text-slate-900 dark:text-slate-200 border-l-4 border-indigo-500 pl-3">
+                                                Datos Personales
+                                            </h3>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <FormField
+                                                    control={form.control}
+                                                    name="nombres"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel>Nombres</FormLabel>
+                                                            <FormControl>
+                                                                <Input placeholder="Juan Andrés" className="pl-9" {...field} value={field.value as string || ''} />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                                <FormField
+                                                    control={form.control}
+                                                    name="paterno"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel>Apellido Paterno</FormLabel>
+                                                            <FormControl>
+                                                                <Input placeholder="Pérez" {...field} value={field.value as string || ''} />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                                <FormField
+                                                    control={form.control}
+                                                    name="materno"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel>Apellido Materno</FormLabel>
+                                                            <FormControl>
+                                                                <Input placeholder="González" {...field} value={field.value as string || ''} />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                                <FormField
+                                                    control={form.control}
+                                                    name="nacimiento"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel>Fecha Nacimiento</FormLabel>
+                                                            <FormControl>
+                                                                <Input type="date" className="pl-9" {...field} value={field.value as string || ''} />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+
+                                                <FormField
+                                                    control={form.control}
+                                                    name="nacionalidad"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel>Nacionalidad</FormLabel>
+                                                            <FormControl>
+                                                                <Input placeholder="Ej: Chilena" {...field} value={field.value as string || ''} />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="h-px bg-slate-100 dark:bg-slate-800" />
+
+                                        {/* DATOS DEPORTIVOS */}
+                                        <div className="space-y-4">
+                                            <h3 className="text-sm font-medium text-slate-900 dark:text-slate-200 border-l-4 border-green-500 pl-3">
+                                                Datos del Club
+                                            </h3>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                {/* CAMPO: DELEGADO */}
+                                                <FormField
+                                                    control={form.control}
+                                                    name="delegado"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel>Delegado Responsable</FormLabel>
+                                                            <FormControl>
+                                                                <Input placeholder="Nombre del delegado" {...field} value={field.value as string || ''} />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+
+                                                <FormField
+                                                    control={form.control}
+                                                    name="club_id"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel>Club</FormLabel>
+                                                            <Select onValueChange={field.onChange} value={watch('club_id')?.toString()}>
+                                                                <FormControl>
+                                                                    <SelectTrigger className="pl-9">
+                                                                        <SelectValue placeholder="Seleccione un club" />
+                                                                    </SelectTrigger>
+                                                                </FormControl>
+                                                                <SelectContent>
+                                                                    {clubes.map((club) => (
+                                                                        <SelectItem key={club.id} value={club.id.toString()}>
+                                                                            {club.nombre}
+                                                                        </SelectItem>
+                                                                    ))}
+                                                                </SelectContent>
+                                                            </Select>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+
+                                                <FormField
+                                                    control={form.control}
+                                                    name="numero"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel>Número Camiseta</FormLabel>
+                                                            <FormControl>
+                                                                <Input
+                                                                    type="number"
+                                                                    className="pl-9"
+                                                                    {...field}
+                                                                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                                                                    value={(field.value as number) || ''}
+                                                                />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+
+                                                <FormField
+                                                    control={form.control}
+                                                    name="inscripcion"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel>Fecha Inscripción</FormLabel>
+                                                            <FormControl>
+                                                                <Input type="date" className="pl-9" {...field} value={field.value as string || ''} />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                            </div>
+                                        </div>
+
+                                    </CardContent>
+
+                                    <CardFooter className="flex flex-col sm:flex-row gap-4 px-6 sm:px-8 py-6 bg-slate-50/50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-800">
+                                        <Button
+                                            type="submit"
+                                            disabled={isSubmitting}
+                                            className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white"
+                                        >
+                                            {isSubmitting ? (
+                                                <>
+                                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                                    Guardando...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Save className="mr-2 h-4 w-4" />
+                                                    Guardar Cambios
+                                                </>
                                             )}
-
-                                            {/* Campo Pasaporte */}
-                                            {tipoIdentificacion === 'PASSPORT' && (
-                                                <div className="space-y-2">
-                                                    <Label htmlFor="passport">N° Pasaporte</Label>
-                                                    <Input
-                                                        id="passport"
-                                                        placeholder="A12345678"
-                                                        {...register('passport')}
-                                                    />
-                                                    {errors.passport && <p className="text-xs text-red-500">{errors.passport.message}</p>}
-                                                </div>
-                                            )}
-
-                                            {/* ROL */}
-                                            <div className="space-y-2">
-                                                <Label htmlFor="rol">N° ROL</Label>
-                                                <div className="relative">
-                                                    <Hash className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
-                                                    <Input
-                                                        id="rol"
-                                                        placeholder="Ej: 6785"
-                                                        className="pl-9"
-                                                        {...register('rol')}
-                                                    />
-                                                </div>
-                                                {errors.rol && <p className="text-xs text-red-500">{errors.rol.message}</p>}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="h-px bg-slate-100 dark:bg-slate-800" />
-
-                                    {/* DATOS PERSONALES */}
-                                    <div className="space-y-4">
-                                        <h3 className="text-sm font-medium text-slate-900 dark:text-slate-200 border-l-4 border-indigo-500 pl-3">
-                                            Datos Personales
-                                        </h3>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <div className="space-y-2">
-                                                <Label htmlFor="nombres">Nombres</Label>
-                                                <div className="relative">
-                                                    <User className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
-                                                    <Input id="nombres" className="pl-9" {...register('nombres')} />
-                                                </div>
-                                                {errors.nombres && <p className="text-xs text-red-500">{errors.nombres.message}</p>}
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label htmlFor="paterno">Apellido Paterno</Label>
-                                                <Input id="paterno" {...register('paterno')} />
-                                                {errors.paterno && <p className="text-xs text-red-500">{errors.paterno.message}</p>}
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label htmlFor="materno">Apellido Materno</Label>
-                                                <Input id="materno" {...register('materno')} />
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label htmlFor="nacimiento">Fecha Nacimiento</Label>
-                                                <div className="relative">
-                                                    <Calendar className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
-                                                    <Input id="nacimiento" type="date" className="pl-9" {...register('nacimiento')} />
-                                                </div>
-                                                {errors.nacimiento && <p className="text-xs text-red-500">{errors.nacimiento.message}</p>}
-                                            </div>
-
-                                            {/* NUEVO CAMPO: NACIONALIDAD */}
-                                            <div className="space-y-2">
-                                                <Label htmlFor="nacionalidad">Nacionalidad</Label>
-                                                <Input id="nacionalidad" placeholder="Ej: Chilena" {...register('nacionalidad')} />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="h-px bg-slate-100 dark:bg-slate-800" />
-
-                                    {/* DATOS DEPORTIVOS */}
-                                    <div className="space-y-4">
-                                        <h3 className="text-sm font-medium text-slate-900 dark:text-slate-200 border-l-4 border-green-500 pl-3">
-                                            Datos del Club
-                                        </h3>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <div className="space-y-2 md:col-span-2">
-                                                <Label htmlFor="club_id">Club</Label>
-                                                <div className="relative">
-                                                    <Building2 className="absolute left-3 top-3 h-4 w-4 text-slate-400 z-10" />
-                                                    <Select
-                                                        onValueChange={(value) => setValue('club_id', value)}
-                                                        value={watch('club_id')}
-                                                    >
-                                                        <SelectTrigger className="pl-9">
-                                                            <SelectValue placeholder="Seleccione un club" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {clubes.map((club) => (
-                                                                <SelectItem key={club.id} value={club.id.toString()}>
-                                                                    {club.nombre}
-                                                                </SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                </div>
-                                                {errors.club_id && <p className="text-xs text-red-500">{errors.club_id.message}</p>}
-                                            </div>
-
-                                            <div className="space-y-2">
-                                                <Label htmlFor="numero">Número Camiseta</Label>
-                                                <div className="relative">
-                                                    <Shirt className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
-                                                    <Input
-                                                        id="numero"
-                                                        type="number"
-                                                        className="pl-9"
-                                                        {...register('numero')}
-                                                        onChange={(e) => setValue('numero', e.target.valueAsNumber)}
-                                                    />
-                                                </div>
-                                                {errors.numero && <p className="text-xs text-red-500">{errors.numero.message}</p>}
-                                            </div>
-
-                                            <div className="space-y-2">
-                                                <Label htmlFor="inscripcion">Fecha Inscripción</Label>
-                                                <div className="relative">
-                                                    <Calendar className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
-                                                    <Input id="inscripcion" type="date" className="pl-9" {...register('inscripcion')} />
-                                                </div>
-                                                {errors.inscripcion && <p className="text-xs text-red-500">{errors.inscripcion.message}</p>}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </CardContent>
-
-                                <CardFooter className="flex flex-col sm:flex-row gap-4 px-6 sm:px-8 py-6 bg-slate-50/50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-800">
-                                    <Button
-                                        type="submit"
-                                        disabled={isSubmitting}
-                                        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white"
-                                    >
-                                        {isSubmitting ? (
-                                            <>
-                                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                                Guardando...
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Save className="mr-2 h-4 w-4" />
-                                                Guardar Cambios
-                                            </>
-                                        )}
-                                    </Button>
-
-                                    <Link href="/jugadores" className="w-full sm:w-auto">
-                                        <Button type="button" variant="outline" disabled={isSubmitting} className="w-full">
-                                            <X className="mr-2 h-4 w-4" />
-                                            Cancelar
                                         </Button>
-                                    </Link>
-                                </CardFooter>
-                            </form>
+
+                                        <Link href="/jugadores" className="w-full sm:w-auto">
+                                            <Button type="button" variant="outline" disabled={isSubmitting} className="w-full">
+                                                <X className="mr-2 h-4 w-4" />
+                                                Cancelar
+                                            </Button>
+                                        </Link>
+                                    </CardFooter>
+                                </form>
+                            </Form>
                         </Card>
                     </div>
                 </div>

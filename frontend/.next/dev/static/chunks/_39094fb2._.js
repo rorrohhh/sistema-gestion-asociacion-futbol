@@ -1996,7 +1996,8 @@ const api = {
             // Agregamos los campos de pasaporte ---
             tipo_identificacion_input: data.tipo_identificacion_input,
             passport_input: data.passport_input,
-            nacionalidad: data.nacionalidad
+            nacionalidad: data.nacionalidad,
+            delegado_input: data.delegado
         };
         await apiClient.post('/api/jugadores', payloadBackend);
     },
@@ -2014,7 +2015,8 @@ const api = {
             rol_input: data.rol,
             tipo_identificacion_input: data.tipo_identificacion_input,
             passport_input: data.passport_input,
-            nacionalidad: data.nacionalidad
+            nacionalidad: data.nacionalidad,
+            delegado_input: data.delegado
         };
         // Realizamos la petición PUT, incluyendo el ID en la URL
         await apiClient.put(`/api/jugadores/${id}`, payloadBackend);
@@ -2124,7 +2126,8 @@ const jugadorSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
     club_id: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, "Debes seleccionar un club"),
     rol: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, "El ROL es obligatorio"),
     passport: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().optional(),
-    nacionalidad: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().optional()
+    nacionalidad: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().optional(),
+    delegado: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(2, "El nombre del delegado es obligatorio")
 }).superRefine((data, ctx)=>{
     // Lógica condicional: Si eligió RUT, validamos el campo 'rut'
     if (data.tipo_identificacion === 'RUT') {
@@ -2223,6 +2226,7 @@ function NuevoJugadorPage() {
             rut: '',
             passport: '',
             nacionalidad: '',
+            delegado: '',
             // <--- NUEVO VALOR POR DEFECTO
             rol: '',
             numero: 0,
@@ -2259,6 +2263,7 @@ function NuevoJugadorPage() {
                 rol: data_0.rol,
                 club_id: data_0.club_id,
                 nacionalidad: data_0.nacionalidad,
+                delegado: data_0.delegado,
                 // <--- SE ENVÍA AQUÍ
                 tipo_identificacion_input: data_0.tipo_identificacion,
                 passport_input: data_0.passport
@@ -2286,12 +2291,12 @@ function NuevoJugadorPage() {
                             className: "h-4 w-4"
                         }, void 0, false, {
                             fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                            lineNumber: 101,
+                            lineNumber: 103,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                        lineNumber: 100,
+                        lineNumber: 102,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2301,7 +2306,7 @@ function NuevoJugadorPage() {
                                 children: "Inscribir Nuevo Jugador"
                             }, void 0, false, {
                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                lineNumber: 104,
+                                lineNumber: 106,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2309,19 +2314,19 @@ function NuevoJugadorPage() {
                                 children: "Complete los datos para registrar un jugador."
                             }, void 0, false, {
                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                lineNumber: 105,
+                                lineNumber: 107,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                        lineNumber: 103,
+                        lineNumber: 105,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                lineNumber: 99,
+                lineNumber: 101,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -2332,20 +2337,20 @@ function NuevoJugadorPage() {
                                 children: "Datos Personales y Deportivos"
                             }, void 0, false, {
                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                lineNumber: 111,
+                                lineNumber: 113,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
                                 children: "Campos obligatorios marcados."
                             }, void 0, false, {
                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                lineNumber: 112,
+                                lineNumber: 114,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                        lineNumber: 110,
+                        lineNumber: 112,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -2363,7 +2368,7 @@ function NuevoJugadorPage() {
                                                 children: "Identificación"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                lineNumber: 120,
+                                                lineNumber: 123,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
@@ -2376,7 +2381,7 @@ function NuevoJugadorPage() {
                                                                 children: "Tipo de Documento"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 125,
+                                                                lineNumber: 128,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -2393,12 +2398,12 @@ function NuevoJugadorPage() {
                                                                                         value: "RUT"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                                        lineNumber: 130,
+                                                                                        lineNumber: 133,
                                                                                         columnNumber: 61
                                                                                     }, void 0)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                                    lineNumber: 129,
+                                                                                    lineNumber: 132,
                                                                                     columnNumber: 57
                                                                                 }, void 0),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormLabel"], {
@@ -2406,13 +2411,13 @@ function NuevoJugadorPage() {
                                                                                     children: "RUT (Chile)"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                                    lineNumber: 132,
+                                                                                    lineNumber: 135,
                                                                                     columnNumber: 57
                                                                                 }, void 0)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                            lineNumber: 128,
+                                                                            lineNumber: 131,
                                                                             columnNumber: 53
                                                                         }, void 0),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormItem"], {
@@ -2423,12 +2428,12 @@ function NuevoJugadorPage() {
                                                                                         value: "PASSPORT"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                                        lineNumber: 136,
+                                                                                        lineNumber: 139,
                                                                                         columnNumber: 61
                                                                                     }, void 0)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                                    lineNumber: 135,
+                                                                                    lineNumber: 138,
                                                                                     columnNumber: 57
                                                                                 }, void 0),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormLabel"], {
@@ -2436,40 +2441,40 @@ function NuevoJugadorPage() {
                                                                                     children: "Pasaporte"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                                    lineNumber: 138,
+                                                                                    lineNumber: 141,
                                                                                     columnNumber: 57
                                                                                 }, void 0)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                            lineNumber: 134,
+                                                                            lineNumber: 137,
                                                                             columnNumber: 53
                                                                         }, void 0)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                    lineNumber: 127,
+                                                                    lineNumber: 130,
                                                                     columnNumber: 49
                                                                 }, void 0)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 126,
+                                                                lineNumber: 129,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 142,
+                                                                lineNumber: 145,
                                                                 columnNumber: 45
                                                             }, void 0)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                        lineNumber: 124,
+                                                        lineNumber: 127,
                                                         columnNumber: 21
                                                     }, void 0)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                lineNumber: 122,
+                                                lineNumber: 125,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2484,7 +2489,7 @@ function NuevoJugadorPage() {
                                                                         children: "RUT"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                        lineNumber: 149,
+                                                                        lineNumber: 152,
                                                                         columnNumber: 53
                                                                     }, void 0),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -2500,35 +2505,35 @@ function NuevoJugadorPage() {
                                                                             }
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                            lineNumber: 151,
+                                                                            lineNumber: 154,
                                                                             columnNumber: 57
                                                                         }, void 0)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                        lineNumber: 150,
+                                                                        lineNumber: 153,
                                                                         columnNumber: 53
                                                                     }, void 0),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormDescription"], {
                                                                         children: "Con o sin puntos."
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                        lineNumber: 158,
+                                                                        lineNumber: 161,
                                                                         columnNumber: 53
                                                                     }, void 0),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                        lineNumber: 159,
+                                                                        lineNumber: 162,
                                                                         columnNumber: 53
                                                                     }, void 0)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 148,
+                                                                lineNumber: 151,
                                                                 columnNumber: 23
                                                             }, void 0)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                        lineNumber: 146,
+                                                        lineNumber: 149,
                                                         columnNumber: 70
                                                     }, this),
                                                     tipoIdentificacion === 'PASSPORT' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
@@ -2540,7 +2545,7 @@ function NuevoJugadorPage() {
                                                                         children: "N° Pasaporte"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                        lineNumber: 165,
+                                                                        lineNumber: 168,
                                                                         columnNumber: 53
                                                                     }, void 0),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -2550,28 +2555,28 @@ function NuevoJugadorPage() {
                                                                             value: field_1.value || ''
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                            lineNumber: 167,
+                                                                            lineNumber: 170,
                                                                             columnNumber: 57
                                                                         }, void 0)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                        lineNumber: 166,
+                                                                        lineNumber: 169,
                                                                         columnNumber: 53
                                                                     }, void 0),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                        lineNumber: 169,
+                                                                        lineNumber: 172,
                                                                         columnNumber: 53
                                                                     }, void 0)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 164,
+                                                                lineNumber: 167,
                                                                 columnNumber: 23
                                                             }, void 0)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                        lineNumber: 162,
+                                                        lineNumber: 165,
                                                         columnNumber: 75
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
@@ -2583,7 +2588,7 @@ function NuevoJugadorPage() {
                                                                         children: "N° ROL"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                        lineNumber: 175,
+                                                                        lineNumber: 178,
                                                                         columnNumber: 49
                                                                     }, void 0),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -2593,40 +2598,40 @@ function NuevoJugadorPage() {
                                                                             value: field_2.value || ''
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                            lineNumber: 177,
+                                                                            lineNumber: 180,
                                                                             columnNumber: 53
                                                                         }, void 0)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                        lineNumber: 176,
+                                                                        lineNumber: 179,
                                                                         columnNumber: 49
                                                                     }, void 0),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                        lineNumber: 179,
+                                                                        lineNumber: 182,
                                                                         columnNumber: 49
                                                                     }, void 0)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 174,
+                                                                lineNumber: 177,
                                                                 columnNumber: 23
                                                             }, void 0)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                        lineNumber: 172,
+                                                        lineNumber: 175,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                lineNumber: 145,
+                                                lineNumber: 148,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                        lineNumber: 119,
+                                        lineNumber: 121,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2641,7 +2646,7 @@ function NuevoJugadorPage() {
                                                                 children: "Nombres"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 189,
+                                                                lineNumber: 192,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -2651,28 +2656,28 @@ function NuevoJugadorPage() {
                                                                     value: field_3.value || ''
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                    lineNumber: 191,
+                                                                    lineNumber: 194,
                                                                     columnNumber: 49
                                                                 }, void 0)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 190,
+                                                                lineNumber: 193,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 193,
+                                                                lineNumber: 196,
                                                                 columnNumber: 45
                                                             }, void 0)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                        lineNumber: 188,
+                                                        lineNumber: 191,
                                                         columnNumber: 21
                                                     }, void 0)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                lineNumber: 186,
+                                                lineNumber: 189,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
@@ -2684,7 +2689,7 @@ function NuevoJugadorPage() {
                                                                 children: "Apellido Paterno"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 198,
+                                                                lineNumber: 201,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -2694,28 +2699,28 @@ function NuevoJugadorPage() {
                                                                     value: field_4.value || ''
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                    lineNumber: 200,
+                                                                    lineNumber: 203,
                                                                     columnNumber: 49
                                                                 }, void 0)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 199,
+                                                                lineNumber: 202,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 202,
+                                                                lineNumber: 205,
                                                                 columnNumber: 45
                                                             }, void 0)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                        lineNumber: 197,
+                                                        lineNumber: 200,
                                                         columnNumber: 21
                                                     }, void 0)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                lineNumber: 195,
+                                                lineNumber: 198,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
@@ -2727,7 +2732,7 @@ function NuevoJugadorPage() {
                                                                 children: "Apellido Materno"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 207,
+                                                                lineNumber: 210,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -2737,28 +2742,28 @@ function NuevoJugadorPage() {
                                                                     value: field_5.value || ''
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                    lineNumber: 209,
+                                                                    lineNumber: 212,
                                                                     columnNumber: 49
                                                                 }, void 0)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 208,
+                                                                lineNumber: 211,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 211,
+                                                                lineNumber: 214,
                                                                 columnNumber: 45
                                                             }, void 0)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                        lineNumber: 206,
+                                                        lineNumber: 209,
                                                         columnNumber: 21
                                                     }, void 0)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                lineNumber: 204,
+                                                lineNumber: 207,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
@@ -2770,7 +2775,7 @@ function NuevoJugadorPage() {
                                                                 children: "Fecha de Nacimiento"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 216,
+                                                                lineNumber: 219,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -2780,28 +2785,28 @@ function NuevoJugadorPage() {
                                                                     value: field_6.value || ''
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                    lineNumber: 218,
+                                                                    lineNumber: 221,
                                                                     columnNumber: 49
                                                                 }, void 0)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 217,
+                                                                lineNumber: 220,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 220,
+                                                                lineNumber: 223,
                                                                 columnNumber: 45
                                                             }, void 0)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                        lineNumber: 215,
+                                                        lineNumber: 218,
                                                         columnNumber: 21
                                                     }, void 0)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                lineNumber: 213,
+                                                lineNumber: 216,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
@@ -2813,7 +2818,7 @@ function NuevoJugadorPage() {
                                                                 children: "Nacionalidad"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 227,
+                                                                lineNumber: 230,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -2823,34 +2828,34 @@ function NuevoJugadorPage() {
                                                                     value: field_7.value || ''
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                    lineNumber: 229,
+                                                                    lineNumber: 232,
                                                                     columnNumber: 49
                                                                 }, void 0)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 228,
+                                                                lineNumber: 231,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 231,
+                                                                lineNumber: 234,
                                                                 columnNumber: 45
                                                             }, void 0)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                        lineNumber: 226,
+                                                        lineNumber: 229,
                                                         columnNumber: 21
                                                     }, void 0)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                lineNumber: 224,
+                                                lineNumber: 227,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                        lineNumber: 185,
+                                        lineNumber: 188,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2858,19 +2863,62 @@ function NuevoJugadorPage() {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
                                                 control: form.control,
-                                                name: "club_id",
+                                                name: "delegado",
                                                 render: ({ field: field_8 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormItem"], {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormLabel"], {
+                                                                children: "Delegado Responsable"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/app/jugadores/nuevo/page.tsx",
+                                                                lineNumber: 244,
+                                                                columnNumber: 45
+                                                            }, void 0),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
+                                                                    placeholder: "Nombre del delegado que inscribe",
+                                                                    ...field_8,
+                                                                    value: field_8.value || ''
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/app/jugadores/nuevo/page.tsx",
+                                                                    lineNumber: 246,
+                                                                    columnNumber: 49
+                                                                }, void 0)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/app/jugadores/nuevo/page.tsx",
+                                                                lineNumber: 245,
+                                                                columnNumber: 45
+                                                            }, void 0),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
+                                                                fileName: "[project]/app/jugadores/nuevo/page.tsx",
+                                                                lineNumber: 248,
+                                                                columnNumber: 45
+                                                            }, void 0)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/app/jugadores/nuevo/page.tsx",
+                                                        lineNumber: 243,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/jugadores/nuevo/page.tsx",
+                                                lineNumber: 241,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
+                                                control: form.control,
+                                                name: "club_id",
+                                                render: ({ field: field_9 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormItem"], {
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormLabel"], {
                                                                 children: "Club"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 240,
+                                                                lineNumber: 254,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
-                                                                onValueChange: field_8.onChange,
-                                                                defaultValue: field_8.value,
+                                                                onValueChange: field_9.onChange,
+                                                                defaultValue: field_9.value,
                                                                 children: [
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
                                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectTrigger"], {
@@ -2878,17 +2926,17 @@ function NuevoJugadorPage() {
                                                                                 placeholder: isLoadingClubs ? "Cargando..." : "Seleccione un club"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                                lineNumber: 244,
+                                                                                lineNumber: 258,
                                                                                 columnNumber: 57
                                                                             }, void 0)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                            lineNumber: 243,
+                                                                            lineNumber: 257,
                                                                             columnNumber: 53
                                                                         }, void 0)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                        lineNumber: 242,
+                                                                        lineNumber: 256,
                                                                         columnNumber: 49
                                                                     }, void 0),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -2897,127 +2945,127 @@ function NuevoJugadorPage() {
                                                                                 children: club.nombre
                                                                             }, club.id, false, {
                                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                                lineNumber: 248,
+                                                                                lineNumber: 262,
                                                                                 columnNumber: 73
                                                                             }, void 0))
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                        lineNumber: 247,
+                                                                        lineNumber: 261,
                                                                         columnNumber: 49
                                                                     }, void 0)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 241,
+                                                                lineNumber: 255,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 253,
+                                                                lineNumber: 267,
                                                                 columnNumber: 45
                                                             }, void 0)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                        lineNumber: 239,
+                                                        lineNumber: 253,
                                                         columnNumber: 21
                                                     }, void 0)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                lineNumber: 237,
+                                                lineNumber: 251,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
                                                 control: form.control,
                                                 name: "numero",
-                                                render: ({ field: field_9 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormItem"], {
+                                                render: ({ field: field_10 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormItem"], {
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormLabel"], {
                                                                 children: "Número de Camiseta"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 259,
+                                                                lineNumber: 273,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
                                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
                                                                     type: "number",
-                                                                    ...field_9,
-                                                                    value: field_9.value || '',
-                                                                    onChange: (e_0)=>field_9.onChange(e_0.target.valueAsNumber)
+                                                                    ...field_10,
+                                                                    value: field_10.value || '',
+                                                                    onChange: (e_0)=>field_10.onChange(e_0.target.valueAsNumber)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                    lineNumber: 261,
+                                                                    lineNumber: 275,
                                                                     columnNumber: 49
                                                                 }, void 0)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 260,
+                                                                lineNumber: 274,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 263,
+                                                                lineNumber: 277,
                                                                 columnNumber: 45
                                                             }, void 0)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                        lineNumber: 258,
+                                                        lineNumber: 272,
                                                         columnNumber: 21
                                                     }, void 0)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                lineNumber: 256,
+                                                lineNumber: 270,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
                                                 control: form.control,
                                                 name: "inscripcion",
-                                                render: ({ field: field_10 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormItem"], {
+                                                render: ({ field: field_11 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormItem"], {
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormLabel"], {
                                                                 children: "Fecha de Inscripción"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 269,
+                                                                lineNumber: 283,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
                                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
                                                                     type: "date",
-                                                                    ...field_10,
-                                                                    value: field_10.value || ''
+                                                                    ...field_11,
+                                                                    value: field_11.value || ''
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                    lineNumber: 271,
+                                                                    lineNumber: 285,
                                                                     columnNumber: 49
                                                                 }, void 0)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 270,
+                                                                lineNumber: 284,
                                                                 columnNumber: 45
                                                             }, void 0),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                                lineNumber: 273,
+                                                                lineNumber: 287,
                                                                 columnNumber: 45
                                                             }, void 0)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                        lineNumber: 268,
+                                                        lineNumber: 282,
                                                         columnNumber: 21
                                                     }, void 0)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                lineNumber: 266,
+                                                lineNumber: 280,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                        lineNumber: 236,
+                                        lineNumber: 239,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3030,7 +3078,7 @@ function NuevoJugadorPage() {
                                                 children: "Cancelar"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                lineNumber: 278,
+                                                lineNumber: 292,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3041,55 +3089,55 @@ function NuevoJugadorPage() {
                                                         className: "mr-2 h-4 w-4 animate-spin"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                        lineNumber: 282,
+                                                        lineNumber: 296,
                                                         columnNumber: 69
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$save$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Save$3e$__["Save"], {
                                                         className: "mr-2 h-4 w-4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                        lineNumber: 283,
+                                                        lineNumber: 297,
                                                         columnNumber: 37
                                                     }, this),
                                                     "Guardar Jugador"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                                lineNumber: 281,
+                                                lineNumber: 295,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                        lineNumber: 277,
+                                        lineNumber: 291,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                                lineNumber: 116,
+                                lineNumber: 118,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                            lineNumber: 115,
+                            lineNumber: 117,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                        lineNumber: 114,
+                        lineNumber: 116,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/jugadores/nuevo/page.tsx",
-                lineNumber: 109,
+                lineNumber: 111,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/jugadores/nuevo/page.tsx",
-        lineNumber: 98,
+        lineNumber: 100,
         columnNumber: 10
     }, this);
 }

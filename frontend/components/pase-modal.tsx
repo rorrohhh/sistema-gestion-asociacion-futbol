@@ -25,6 +25,8 @@ const paseSchema = z.object({
     club_destino_id: z.string().min(1, "Debe seleccionar un club de destino"),
     fecha: z.string().min(1, "La fecha es obligatoria"),
     comentario: z.string().optional(),
+    // NUEVO CAMPO
+    delegado: z.string().min(2, "Debes indicar el delegado responsable"),
 });
 
 interface PaseModalProps {
@@ -44,19 +46,14 @@ export function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }: PaseM
             club_destino_id: '',
             fecha: format(new Date(), 'yyyy-MM-dd'),
             comentario: '',
+            delegado: '', // <--- NUEVO DEFAULT
         },
     });
 
-    // Si no hay jugador seleccionado, no renderizamos nada útil
     if (!jugador) return null;
 
-
     const clubActualId = (jugador as any).clubId || jugador.club_id;
-
-    // Filtrar la lista de clubes para NO mostrar el club actual como destino
-    // Usamos el 'clubActualId' que acabamos de calcular de forma segura
     const clubesDestino = clubes.filter(c => c.id.toString() !== clubActualId?.toString());
-
     const clubActualNombre = jugador.Club?.nombre || 'Sin Club';
 
     const onSubmit = async (data: z.infer<typeof paseSchema>) => {
@@ -67,13 +64,12 @@ export function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }: PaseM
                 clubDestinoId: data.club_destino_id,
                 fecha: data.fecha,
                 comentario: data.comentario || '',
+                delegado: data.delegado // <--- SE ENVÍA AQUÍ
             });
 
             toast.success(`Pase realizado correctamente. ${jugador.nombres} ha sido transferido.`);
-
-            // Limpiamos y cerramos
             form.reset();
-            onSuccess(); // Recargar la tabla en la página padre
+            onSuccess();
             onClose();
         } catch (error) {
             console.error(error);
@@ -101,7 +97,7 @@ export function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }: PaseM
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4">
 
-                        {/* Club Actual (Solo Lectura) */}
+                        {/* Club Actual */}
                         <div className="p-3 bg-slate-50 dark:bg-slate-900 rounded-md border border-slate-200 dark:border-slate-800">
                             <Label className="text-xs text-slate-500 uppercase font-bold">Club de Origen</Label>
                             <div className="flex items-center gap-2 mt-1 text-slate-700 dark:text-slate-300 font-medium">
@@ -136,6 +132,21 @@ export function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }: PaseM
                             )}
                         />
 
+                        {/* NUEVO CAMPO: DELEGADO */}
+                        <FormField
+                            control={form.control}
+                            name="delegado"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Delegado Responsable</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Nombre del delegado que gestiona el pase" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
                         {/* Fecha */}
                         <FormField
                             control={form.control}
@@ -154,7 +165,7 @@ export function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }: PaseM
                             )}
                         />
 
-                        {/* Comentario / Motivo */}
+                        {/* Comentario */}
                         <FormField
                             control={form.control}
                             name="comentario"

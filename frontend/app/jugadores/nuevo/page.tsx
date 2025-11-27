@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
-import { Save, ArrowLeft, Loader2 } from 'lucide-react';
+import { Save, ArrowLeft, Loader2, Upload, Camera } from 'lucide-react';
 import * as z from 'zod';
 
 // UI Components
@@ -30,6 +30,7 @@ import {
 } from '@/components/ui/select';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Switch } from '@/components/ui/switch'; // <--- ASEGÚRATE DE TENERLO INSTALADO (npx shadcn@latest add switch)
 
 // Logic & Types
 import { api } from '@/lib/api';
@@ -61,12 +62,15 @@ export default function NuevoJugadorPage() {
             materno: '',
             rut: '',
             passport: '',
-            nacionalidad: '', // <--- NUEVO VALOR POR DEFECTO
+            nacionalidad: '',
+            delegado: '',
             rol: '',
             numero: 0,
             club_id: '',
             nacimiento: '',
             inscripcion: format(new Date(), 'yyyy-MM-dd'),
+            activo: true, // <--- NUEVO: Por defecto activo
+            foto: undefined, // <--- NUEVO: Campo para la foto
         },
     });
 
@@ -97,9 +101,12 @@ export default function NuevoJugadorPage() {
                 passport: data.passport || '',
                 rol: data.rol,
                 club_id: data.club_id,
-                nacionalidad: data.nacionalidad, // <--- SE ENVÍA AQUÍ
+                nacionalidad: data.nacionalidad,
+                delegado: data.delegado,
                 tipo_identificacion_input: data.tipo_identificacion,
-                passport_input: data.passport
+                passport_input: data.passport,
+                activo: data.activo, // <--- Enviamos estado
+                foto: data.foto // <--- Enviamos archivo (si existe)
             };
 
             await api.createJugador(payload);
@@ -132,6 +139,59 @@ export default function NuevoJugadorPage() {
                 <CardContent>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+
+                            {/* SECCIÓN 0: Estado y Foto (NUEVO) */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border mb-6">
+                                {/* FOTO */}
+                                <FormField
+                                    control={form.control}
+                                    name="foto"
+                                    render={({ field: { value, onChange, ...field } }) => (
+                                        <FormItem>
+                                            <FormLabel className="flex items-center gap-2">
+                                                <Camera className="h-4 w-4" />
+                                                Fotografía de Perfil
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    type="file"
+                                                    accept="image/*"
+                                                    className="cursor-pointer bg-white dark:bg-slate-950"
+                                                    onChange={(e) => {
+                                                        const file = e.target.files?.[0];
+                                                        if (file) onChange(file);
+                                                    }}
+                                                />
+                                            </FormControl>
+                                            <FormDescription>Formatos: JPG, PNG, WEBP.</FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                {/* ACTIVO */}
+                                <FormField
+                                    control={form.control}
+                                    name="activo"
+                                    render={({ field }) => (
+                                        <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm bg-white dark:bg-slate-950">
+                                            <div className="space-y-0.5">
+                                                <FormLabel>Estado del Jugador</FormLabel>
+                                                <FormDescription>
+                                                    ¿El jugador está habilitado para jugar?
+                                                </FormDescription>
+                                            </div>
+                                            <FormControl>
+                                                <Switch
+                                                    checked={field.value}
+                                                    onCheckedChange={field.onChange}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
 
                             {/* SECCIÓN 1: Identificación */}
                             <div className="space-y-4 p-4 bg-slate-50 dark:bg-slate-900 rounded-lg border">
@@ -307,7 +367,7 @@ export default function NuevoJugadorPage() {
                                     )}
                                 />
 
-                                {/* NUEVO CAMPO: NACIONALIDAD */}
+                                {/* Campo Nacionalidad */}
                                 <FormField
                                     control={form.control}
                                     name="nacionalidad"
@@ -327,8 +387,27 @@ export default function NuevoJugadorPage() {
                                 />
                             </div>
 
-                            {/* SECCIÓN 3: Club y Datos Técnicos */}
+                            {/* SECCIÓN 3: Datos Administrativos y Club */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {/* CAMPO: DELEGADO */}
+                                <FormField
+                                    control={form.control}
+                                    name="delegado"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Delegado Responsable</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="Nombre del delegado que inscribe"
+                                                    {...field}
+                                                    value={field.value as string || ''}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
                                 <FormField
                                     control={form.control}
                                     name="club_id"

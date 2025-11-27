@@ -27,7 +27,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$env$2e$ts__$5b$app$2d
 ;
 ;
 // Configuración del Cliente Axios
-// Se asume que env.apiUrl es "http://localhost:8080" (el host del backend)
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].create({
     baseURL: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$env$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["env"].apiUrl,
     headers: {
@@ -36,16 +35,12 @@ const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2
 });
 const api = {
     // ------------------------------------------------------------------
-    // JUGADORES (Base Endpoint: /api/jugadores)
+    // JUGADORES
     // ------------------------------------------------------------------
-    /**
-     * Obtiene la lista de jugadores con filtros opcionales
-     * Documentación 2.1: GET /api/jugadores
-     */ async getJugadores (filters) {
+    async getJugadores (filters) {
         const params = new URLSearchParams();
         if (filters?.club) params.append('club', filters.club);
         if (filters?.nombre) params.append('nombre', filters.nombre);
-        // CAMBIO: Ahora enviamos 'identificacion'
         if (filters?.identificacion) params.append('identificacion', filters.identificacion);
         if (filters?.rol) params.append('rol', filters.rol);
         const queryString = params.toString() ? `?${params.toString()}` : '';
@@ -56,81 +51,103 @@ const api = {
         const response = await apiClient.get(`/api/jugadores/${id}`);
         return response.data;
     },
-    /**
-     * Crea un nuevo jugador
-     * Documentación 2.2: POST /api/jugadores
-     */ // CAMBIO: Usamos 'any' para permitir los campos nuevos sin error de TS inmediato
     async createJugador (data) {
-        // TRADUCCIÓN DE DATOS (Frontend -> Backend)
-        const payloadBackend = {
-            numero: data.numero,
-            paterno: data.paterno,
-            materno: data.materno,
-            nombres: data.nombres,
-            nacimiento: data.nacimiento,
-            inscripcion: data.inscripcion,
-            // Usamos data.club_id
-            club_id: data.club_id,
-            run_input: data.rut,
-            rol_input: data.rol,
-            // --- CORRECCIÓN: Agregamos los campos de pasaporte ---
-            tipo_identificacion_input: data.tipo_identificacion_input,
-            passport_input: data.passport_input,
-            nacionalidad: data.nacionalidad
-        };
-        await apiClient.post('/api/jugadores', payloadBackend);
+        const formData = new FormData();
+        // Campos de texto
+        formData.append('numero', data.numero);
+        formData.append('nombres', data.nombres);
+        formData.append('paterno', data.paterno);
+        formData.append('materno', data.materno || '');
+        formData.append('nacimiento', data.nacimiento);
+        formData.append('inscripcion', data.inscripcion);
+        formData.append('club_id', data.club_id);
+        formData.append('rol_input', data.rol);
+        formData.append('nacionalidad', data.nacionalidad || '');
+        formData.append('delegado_input', data.delegado || '');
+        // Identificación
+        formData.append('tipo_identificacion_input', data.tipo_identificacion);
+        if (data.tipo_identificacion === 'RUT') {
+            formData.append('run_input', data.rut);
+        } else {
+            formData.append('passport_input', data.passport);
+        }
+        // NUEVOS CAMPOS
+        // 1. Activo (convertir boolean a string)
+        formData.append('activo', String(data.activo));
+        // 2. Foto (solo si existe y es un archivo)
+        if (data.foto instanceof File) {
+            formData.append('foto', data.foto);
+        }
+        // Enviamos como multipart/form-data
+        await apiClient.post('/api/jugadores', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     },
-    // CAMBIO: Usamos 'any' aquí también
     async updateJugador (id, data) {
-        // TRADUCCIÓN DE DATOS (Frontend -> Backend)
-        const payloadBackend = {
-            numero: data.numero,
-            paterno: data.paterno,
-            materno: data.materno,
-            nombres: data.nombres,
-            nacimiento: data.nacimiento,
-            inscripcion: data.inscripcion,
-            club_id: data.club_id,
-            run_input: data.rut,
-            rol_input: data.rol,
-            tipo_identificacion_input: data.tipo_identificacion_input,
-            passport_input: data.passport_input,
-            nacionalidad: data.nacionalidad
-        };
-        // Realizamos la petición PUT, incluyendo el ID en la URL
-        await apiClient.put(`/api/jugadores/${id}`, payloadBackend);
+        const formData = new FormData();
+        formData.append('numero', data.numero);
+        formData.append('nombres', data.nombres);
+        formData.append('paterno', data.paterno);
+        formData.append('materno', data.materno || '');
+        formData.append('nacimiento', data.nacimiento);
+        formData.append('inscripcion', data.inscripcion);
+        formData.append('club_id', data.club_id);
+        formData.append('rol_input', data.rol);
+        formData.append('nacionalidad', data.nacionalidad || '');
+        // El delegado también se puede actualizar si se desea
+        formData.append('delegado_input', data.delegado || '');
+        formData.append('tipo_identificacion_input', data.tipo_identificacion);
+        if (data.tipo_identificacion === 'RUT') {
+            formData.append('run_input', data.rut);
+        } else {
+            formData.append('passport_input', data.passport);
+        }
+        // NUEVOS CAMPOS
+        formData.append('activo', String(data.activo));
+        if (data.foto instanceof File) {
+            formData.append('foto', data.foto);
+        }
+        await apiClient.put(`/api/jugadores/${id}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     },
     async deleteJugador (id) {
-        // El ID se pasa como parte de la URL
         await apiClient.delete(`/api/jugadores/${id}`);
     },
     // ------------------------------------------------------------------
-    // CLUBES (Base Endpoint: /api/clubes)
+    // CLUBES
     // ------------------------------------------------------------------
-    /**
-     * Obtiene la lista de clubes
-     * Documentación 1.1: GET /api/clubes
-     */ async getClubes () {
+    async getClubes () {
         const response = await apiClient.get('/api/clubes');
         return response.data;
     },
-    // AÑADIDO: Obtiene un club por su ID
     async getClubPorId (id) {
         const response = await apiClient.get(`/api/clubes/${id}`);
         return response.data;
     },
-    // AÑADIDO: Crea un nuevo club
     async createClub (data) {
         const response = await apiClient.post('/api/clubes', data);
         return response.data;
     },
-    // AÑADIDO: Actualiza un club existente
     async updateClub (id, data) {
         await apiClient.put(`/api/clubes/${id}`, data);
     },
-    // AÑADIDO: Elimina un club
     async deleteClub (id) {
         await apiClient.delete(`/api/clubes/${id}`);
+    },
+    // ------------------------------------------------------------------
+    // PASES
+    // ------------------------------------------------------------------
+    async realizarPase (data) {
+        await apiClient.post('/api/pases', data);
+    },
+    async getHistorialPases (jugadorId) {
+        const response = await apiClient.get(`/api/pases/historial/${jugadorId}`);
+        return response.data;
     }
 };
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
@@ -1121,9 +1138,11 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$square$2d$pen$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Edit$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/square-pen.js [app-client] (ecmascript) <export default as Edit>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$square$2d$pen$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Edit$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/square-pen.js [app-client] (ecmascript) <export default as Edit>"); // Agregamos iconos
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/trash-2.js [app-client] (ecmascript) <export default as Trash2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/building-2.js [app-client] (ecmascript) <export default as Building2>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$text$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FileText$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/file-text.js [app-client] (ecmascript) <export default as FileText>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/loader-circle.js [app-client] (ecmascript) <export default as Loader2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/api.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/sonner/dist/index.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-client] (ecmascript)");
@@ -1131,6 +1150,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navi
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$skeleton$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/skeleton.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/table.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/card.tsx [app-client] (ecmascript)");
+// Librerías para PDF
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$jspdf$2f$dist$2f$jspdf$2e$es$2e$min$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/jspdf/dist/jspdf.es.min.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$jspdf$2d$autotable$2f$dist$2f$jspdf$2e$plugin$2e$autotable$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.mjs [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
@@ -1143,10 +1165,18 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
+;
+;
+// Función auxiliar para formatear RUT en el PDF
+const formatRut = (rut, dv)=>{
+    if (!rut) return '-';
+    return `${rut.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}-${dv}`;
+};
 function ClubesTable() {
     _s();
     const [clubes, setClubes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [generatingPdf, setGeneratingPdf] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null); // Para mostrar loading en el botón específico
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const fetchClubes = async ()=>{
         setLoading(true);
@@ -1172,15 +1202,85 @@ function ClubesTable() {
         try {
             await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].deleteClub(id.toString());
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success(`Club "${nombre}" eliminado exitosamente.`);
-            fetchClubes(); // Actualizar lista
+            fetchClubes();
         } catch (error_0) {
             console.error("Error al eliminar el club:", error_0);
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error("Error al eliminar el club. Puede que tenga jugadores asociados.");
         }
     };
     const handleEdit = (id_0)=>{
-        // Redirigir a la nueva ruta de edición anidada
         router.push(`/clubes/editar/${id_0}`);
+    };
+    // --- LÓGICA GENERACIÓN PDF ---
+    const handleGeneratePDF = async (clubId, clubNombre)=>{
+        setGeneratingPdf(clubId);
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].info(`Generando nómina para ${clubNombre}...`);
+        try {
+            // 1. Obtener jugadores filtrados por este club
+            const jugadores = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getJugadores({
+                club: clubId.toString()
+            });
+            if (jugadores.length === 0) {
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].warning(`El club ${clubNombre} no tiene jugadores inscritos.`);
+                setGeneratingPdf(null);
+                return;
+            }
+            // 2. Crear documento PDF
+            const doc = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$jspdf$2f$dist$2f$jspdf$2e$es$2e$min$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"]();
+            // Encabezado del PDF
+            doc.setFontSize(18);
+            doc.text(`Nómina de Jugadores - ${clubNombre}`, 14, 20);
+            doc.setFontSize(10);
+            doc.text(`Fecha de emisión: ${new Date().toLocaleDateString('es-CL')}`, 14, 28);
+            doc.text(`Total jugadores: ${jugadores.length}`, 14, 34);
+            // 3. Preparar datos para la tabla
+            const tableData = jugadores.map((j)=>[
+                    j.rol,
+                    // ROL
+                    `${j.nombres} ${j.paterno} ${j.materno || ''}`,
+                    // Nombre Completo
+                    j.tipoIdentificacion === 'PASSPORT' ? j.pasaporte : formatRut(j.rut, j.dv),
+                    // Identificación
+                    j.nacionalidad || '-',
+                    // Nacionalidad
+                    new Date(j.nacimiento).toLocaleDateString('es-CL'),
+                    // F. Nacimiento
+                    j.numero || '-' // Camiseta
+                ]);
+            // 4. Generar tabla con autoTable
+            (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$jspdf$2d$autotable$2f$dist$2f$jspdf$2e$plugin$2e$autotable$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])(doc, {
+                startY: 40,
+                head: [
+                    [
+                        'ROL',
+                        'Nombre Completo',
+                        'Identificación',
+                        'Nacionalidad',
+                        'F. Nac',
+                        'N°'
+                    ]
+                ],
+                body: tableData,
+                styles: {
+                    fontSize: 9
+                },
+                headStyles: {
+                    fillColor: [
+                        41,
+                        128,
+                        185
+                    ]
+                } // Color azulito corporativo
+            });
+            // 5. Descargar
+            doc.save(`nomina_${clubNombre.replace(/\s+/g, '_')}.pdf`);
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success("PDF descargado correctamente.");
+        } catch (error_1) {
+            console.error("Error generando PDF:", error_1);
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error("Hubo un error al generar el documento.");
+        } finally{
+            setGeneratingPdf(null);
+        }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
         className: "shadow-sm border-0 bg-white dark:bg-slate-900 ring-1 ring-slate-200 dark:ring-slate-800",
@@ -1195,14 +1295,14 @@ function ClubesTable() {
                                 className: "h-5 w-5 text-slate-500"
                             }, void 0, false, {
                                 fileName: "[project]/components/clubes-table.tsx",
-                                lineNumber: 53,
+                                lineNumber: 125,
                                 columnNumber: 21
                             }, this),
                             "Listado de Clubes"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/clubes-table.tsx",
-                        lineNumber: 52,
+                        lineNumber: 124,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1210,13 +1310,13 @@ function ClubesTable() {
                         children: loading ? 'Cargando...' : `${clubes.length} resultados`
                     }, void 0, false, {
                         fileName: "[project]/components/clubes-table.tsx",
-                        lineNumber: 56,
+                        lineNumber: 128,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/clubes-table.tsx",
-                lineNumber: 51,
+                lineNumber: 123,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1232,33 +1332,33 @@ function ClubesTable() {
                                         children: "ID"
                                     }, void 0, false, {
                                         fileName: "[project]/components/clubes-table.tsx",
-                                        lineNumber: 65,
+                                        lineNumber: 137,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
                                         children: "Nombre"
                                     }, void 0, false, {
                                         fileName: "[project]/components/clubes-table.tsx",
-                                        lineNumber: 66,
+                                        lineNumber: 138,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
-                                        className: "text-right w-[100px]",
+                                        className: "text-right w-[180px]",
                                         children: "Acciones"
                                     }, void 0, false, {
                                         fileName: "[project]/components/clubes-table.tsx",
-                                        lineNumber: 67,
+                                        lineNumber: 139,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/clubes-table.tsx",
-                                lineNumber: 64,
+                                lineNumber: 136,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/clubes-table.tsx",
-                            lineNumber: 63,
+                            lineNumber: 135,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableBody"], {
@@ -1272,12 +1372,12 @@ function ClubesTable() {
                                                 className: "h-4 w-12"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/clubes-table.tsx",
-                                                lineNumber: 74,
+                                                lineNumber: 146,
                                                 columnNumber: 48
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/clubes-table.tsx",
-                                            lineNumber: 74,
+                                            lineNumber: 146,
                                             columnNumber: 37
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1285,12 +1385,12 @@ function ClubesTable() {
                                                 className: "h-4 w-40"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/clubes-table.tsx",
-                                                lineNumber: 75,
+                                                lineNumber: 147,
                                                 columnNumber: 48
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/clubes-table.tsx",
-                                            lineNumber: 75,
+                                            lineNumber: 147,
                                             columnNumber: 37
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1299,18 +1399,18 @@ function ClubesTable() {
                                                 className: "h-8 w-16 float-right"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/clubes-table.tsx",
-                                                lineNumber: 76,
+                                                lineNumber: 148,
                                                 columnNumber: 71
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/clubes-table.tsx",
-                                            lineNumber: 76,
+                                            lineNumber: 148,
                                             columnNumber: 37
                                         }, this)
                                     ]
                                 }, i, true, {
                                     fileName: "[project]/components/clubes-table.tsx",
-                                    lineNumber: 73,
+                                    lineNumber: 145,
                                     columnNumber: 28
                                 }, this)) : clubes.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableRow"], {
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1319,12 +1419,12 @@ function ClubesTable() {
                                     children: "No hay clubes registrados."
                                 }, void 0, false, {
                                     fileName: "[project]/components/clubes-table.tsx",
-                                    lineNumber: 78,
+                                    lineNumber: 150,
                                     columnNumber: 33
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/clubes-table.tsx",
-                                lineNumber: 77,
+                                lineNumber: 149,
                                 columnNumber: 70
                             }, this) : clubes.map((club)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableRow"], {
                                     children: [
@@ -1333,89 +1433,121 @@ function ClubesTable() {
                                             children: club.id
                                         }, void 0, false, {
                                             fileName: "[project]/components/clubes-table.tsx",
-                                            lineNumber: 82,
+                                            lineNumber: 154,
                                             columnNumber: 37
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
                                             children: club.nombre
                                         }, void 0, false, {
                                             fileName: "[project]/components/clubes-table.tsx",
-                                            lineNumber: 83,
+                                            lineNumber: 155,
                                             columnNumber: 37
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
                                             className: "text-right",
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                                    variant: "ghost",
-                                                    size: "sm",
-                                                    onClick: ()=>handleEdit(club.id),
-                                                    className: "mr-1",
-                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$square$2d$pen$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Edit$3e$__["Edit"], {
-                                                        className: "h-4 w-4 text-blue-500"
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex items-center justify-end gap-1",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                        variant: "ghost",
+                                                        size: "sm",
+                                                        onClick: ()=>handleGeneratePDF(club.id, club.nombre),
+                                                        disabled: generatingPdf === club.id,
+                                                        title: "Descargar Nómina de Jugadores",
+                                                        className: "text-slate-600 hover:text-blue-600 hover:bg-blue-50",
+                                                        children: generatingPdf === club.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                                                            className: "h-4 w-4 animate-spin"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/components/clubes-table.tsx",
+                                                            lineNumber: 160,
+                                                            columnNumber: 78
+                                                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$text$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FileText$3e$__["FileText"], {
+                                                            className: "h-4 w-4"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/components/clubes-table.tsx",
+                                                            lineNumber: 160,
+                                                            columnNumber: 125
+                                                        }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/clubes-table.tsx",
-                                                        lineNumber: 86,
+                                                        lineNumber: 159,
                                                         columnNumber: 45
-                                                    }, this)
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/clubes-table.tsx",
-                                                    lineNumber: 85,
-                                                    columnNumber: 41
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                                    variant: "ghost",
-                                                    size: "sm",
-                                                    onClick: ()=>handleDelete(club.id, club.nombre),
-                                                    className: "text-red-500 hover:text-red-600",
-                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__["Trash2"], {
-                                                        className: "h-4 w-4"
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                        variant: "ghost",
+                                                        size: "sm",
+                                                        onClick: ()=>handleEdit(club.id),
+                                                        className: "text-slate-600 hover:text-blue-600 hover:bg-blue-50",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$square$2d$pen$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Edit$3e$__["Edit"], {
+                                                            className: "h-4 w-4"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/components/clubes-table.tsx",
+                                                            lineNumber: 164,
+                                                            columnNumber: 49
+                                                        }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/clubes-table.tsx",
-                                                        lineNumber: 89,
+                                                        lineNumber: 163,
+                                                        columnNumber: 45
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                        variant: "ghost",
+                                                        size: "sm",
+                                                        onClick: ()=>handleDelete(club.id, club.nombre),
+                                                        className: "text-red-500 hover:text-red-600 hover:bg-red-50",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__["Trash2"], {
+                                                            className: "h-4 w-4"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/components/clubes-table.tsx",
+                                                            lineNumber: 168,
+                                                            columnNumber: 49
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/clubes-table.tsx",
+                                                        lineNumber: 167,
                                                         columnNumber: 45
                                                     }, this)
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/clubes-table.tsx",
-                                                    lineNumber: 88,
-                                                    columnNumber: 41
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/components/clubes-table.tsx",
+                                                lineNumber: 157,
+                                                columnNumber: 41
+                                            }, this)
+                                        }, void 0, false, {
                                             fileName: "[project]/components/clubes-table.tsx",
-                                            lineNumber: 84,
+                                            lineNumber: 156,
                                             columnNumber: 37
                                         }, this)
                                     ]
                                 }, club.id, true, {
                                     fileName: "[project]/components/clubes-table.tsx",
-                                    lineNumber: 81,
+                                    lineNumber: 153,
                                     columnNumber: 62
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/components/clubes-table.tsx",
-                            lineNumber: 70,
+                            lineNumber: 142,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/clubes-table.tsx",
-                    lineNumber: 62,
+                    lineNumber: 134,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/clubes-table.tsx",
-                lineNumber: 61,
+                lineNumber: 133,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/clubes-table.tsx",
-        lineNumber: 49,
+        lineNumber: 122,
         columnNumber: 10
     }, this);
 }
-_s(ClubesTable, "6u7uEFx/c8Tfopawjj4u029ksBU=", false, function() {
+_s(ClubesTable, "abA1IwYXCUQdjSLMlJesZuYWmYM=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];
