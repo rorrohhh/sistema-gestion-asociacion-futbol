@@ -2,8 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'; // Usamos el router de Next.js para navegación fluida
 import { Filtros } from '@/components/filtros';
 import { JugadoresTable } from '@/components/jugadores-table';
+import { PaseModal } from '@/components/pase-modal'; // <--- IMPORTACIÓN DEL NUEVO MODAL
 import { Button } from '@/components/ui/button';
 import { useDebounce } from '@/hooks/use-debounce';
 import { api } from '@/lib/api';
@@ -16,14 +18,20 @@ import {
 } from 'lucide-react';
 
 export default function JugadoresPage() {
+    const router = useRouter();
     const [jugadores, setJugadores] = useState<Jugador[]>([]);
     const [clubes, setClubes] = useState<Club[]>([]);
     const [filters, setFilters] = useState<FilterParams>({});
     const [isLoading, setIsLoading] = useState(true);
 
+    // --- ESTADOS PARA EL PASE (TRANSFERENCIA) ---
+    const [isPaseModalOpen, setIsPaseModalOpen] = useState(false);
+    const [selectedJugador, setSelectedJugador] = useState<Jugador | null>(null);
+    // -------------------------------------------
+
     const debouncedFilters = useDebounce(filters, 300);
 
-    // Cargar clubes al montar (necesarios para el componente Filtros)
+    // Cargar clubes al montar (necesarios para el filtro y el modal de pases)
     useEffect(() => {
         async function loadClubes() {
             try {
@@ -68,8 +76,21 @@ export default function JugadoresPage() {
     };
 
     const handleEditarJugador = (jugadorId: string) => {
-        window.location.href = `/jugadores/editar/${jugadorId}`;
+        router.push(`/jugadores/editar/${jugadorId}`);
     };
+
+    // --- LÓGICA DEL PASE ---
+    const handleTransferirJugador = (jugador: Jugador) => {
+        setSelectedJugador(jugador);
+        setIsPaseModalOpen(true);
+    };
+
+    const handlePaseSuccess = () => {
+        // Al terminar el pase, recargamos la lista para ver al jugador en su nuevo club
+        loadJugadores();
+        setSelectedJugador(null);
+    };
+    // -----------------------
 
     const handleFilterChange = (newFilters: FilterParams) => {
         setFilters(newFilters);
@@ -136,10 +157,20 @@ export default function JugadoresPage() {
                             isLoading={isLoading}
                             onEliminar={handleEliminarJugador}
                             onEditar={handleEditarJugador}
+                            onTransferir={handleTransferirJugador} // <--- Conectamos la acción
                         />
                     </div>
                 </div>
             </div>
+
+            {/* Renderizamos el Modal de Pases */}
+            <PaseModal
+                isOpen={isPaseModalOpen}
+                onClose={() => setIsPaseModalOpen(false)}
+                jugador={selectedJugador}
+                clubes={clubes}
+                onSuccess={handlePaseSuccess}
+            />
         </div>
     );
 }

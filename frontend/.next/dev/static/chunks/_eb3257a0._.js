@@ -43,13 +43,12 @@ const api = {
      * Documentación 2.1: GET /api/jugadores
      */ async getJugadores (filters) {
         const params = new URLSearchParams();
-        // Mapeo de filtros según la doc (Query Params)
         if (filters?.club) params.append('club', filters.club);
         if (filters?.nombre) params.append('nombre', filters.nombre);
-        if (filters?.rut) params.append('rut', filters.rut);
+        // CAMBIO: Ahora enviamos 'identificacion'
+        if (filters?.identificacion) params.append('identificacion', filters.identificacion);
         if (filters?.rol) params.append('rol', filters.rol);
         const queryString = params.toString() ? `?${params.toString()}` : '';
-        // Apuntamos a /api/jugadores
         const response = await apiClient.get(`/api/jugadores${queryString}`);
         return response.data;
     },
@@ -69,13 +68,15 @@ const api = {
             nombres: data.nombres,
             nacimiento: data.nacimiento,
             inscripcion: data.inscripcion,
-            // CORRECCIÓN AQUÍ:
-            // Usamos data.club_id (como lo tienes en tu type)
+            // Usamos data.club_id
             club_id: data.club_id,
-            // Revisa si 'rut' y 'rol' te dan error también. 
-            // Si TypeScript no se queja, déjalos así.
             run_input: data.rut,
-            rol_input: data.rol
+            rol_input: data.rol,
+            // Agregamos los campos de pasaporte ---
+            tipo_identificacion_input: data.tipo_identificacion_input,
+            passport_input: data.passport_input,
+            nacionalidad: data.nacionalidad,
+            delegado_input: data.delegado
         };
         await apiClient.post('/api/jugadores', payloadBackend);
     },
@@ -90,16 +91,18 @@ const api = {
             inscripcion: data.inscripcion,
             club_id: data.club_id,
             run_input: data.rut,
-            rol_input: data.rol
+            rol_input: data.rol,
+            tipo_identificacion_input: data.tipo_identificacion_input,
+            passport_input: data.passport_input,
+            nacionalidad: data.nacionalidad,
+            delegado_input: data.delegado
         };
         // Realizamos la petición PUT, incluyendo el ID en la URL
         await apiClient.put(`/api/jugadores/${id}`, payloadBackend);
-    // Puedes cambiar Promise<void> a Promise<Jugador> si el backend devuelve el objeto actualizado
     },
     async deleteJugador (id) {
         // El ID se pasa como parte de la URL
         await apiClient.delete(`/api/jugadores/${id}`);
-    // No esperamos data, solo la respuesta exitosa (200 o 204)
     },
     // ------------------------------------------------------------------
     // CLUBES (Base Endpoint: /api/clubes)
@@ -111,23 +114,30 @@ const api = {
         const response = await apiClient.get('/api/clubes');
         return response.data;
     },
-    // AÑADIDO: Obtiene un club por su ID
+    // Obtiene un club por su ID
     async getClubPorId (id) {
         const response = await apiClient.get(`/api/clubes/${id}`);
         return response.data;
     },
-    // AÑADIDO: Crea un nuevo club
+    //  Crea un nuevo club
     async createClub (data) {
         const response = await apiClient.post('/api/clubes', data);
         return response.data;
     },
-    // AÑADIDO: Actualiza un club existente
+    // Actualiza un club existente
     async updateClub (id, data) {
         await apiClient.put(`/api/clubes/${id}`, data);
     },
-    // AÑADIDO: Elimina un club (solucionando el primer error)
+    // Elimina un club
     async deleteClub (id) {
         await apiClient.delete(`/api/clubes/${id}`);
+    },
+    async realizarPase (data) {
+        await apiClient.post('/api/pases', data);
+    },
+    async getHistorialPases (jugadorId) {
+        const response = await apiClient.get(`/api/pases/historial/${jugadorId}`);
+        return response.data;
     }
 };
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {

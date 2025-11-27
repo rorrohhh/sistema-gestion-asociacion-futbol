@@ -27,7 +27,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$env$2e$ts__$5b$app$2d
 ;
 ;
 // Configuración del Cliente Axios
-// Se asume que env.apiUrl es "http://localhost:8080" (el host del backend)
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].create({
     baseURL: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$env$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["env"].apiUrl,
     headers: {
@@ -36,20 +35,15 @@ const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2
 });
 const api = {
     // ------------------------------------------------------------------
-    // JUGADORES (Base Endpoint: /api/jugadores)
+    // JUGADORES
     // ------------------------------------------------------------------
-    /**
-     * Obtiene la lista de jugadores con filtros opcionales
-     * Documentación 2.1: GET /api/jugadores
-     */ async getJugadores (filters) {
+    async getJugadores (filters) {
         const params = new URLSearchParams();
-        // Mapeo de filtros según la doc (Query Params)
         if (filters?.club) params.append('club', filters.club);
         if (filters?.nombre) params.append('nombre', filters.nombre);
-        if (filters?.rut) params.append('rut', filters.rut);
+        if (filters?.identificacion) params.append('identificacion', filters.identificacion);
         if (filters?.rol) params.append('rol', filters.rol);
         const queryString = params.toString() ? `?${params.toString()}` : '';
-        // Apuntamos a /api/jugadores
         const response = await apiClient.get(`/api/jugadores${queryString}`);
         return response.data;
     },
@@ -57,77 +51,103 @@ const api = {
         const response = await apiClient.get(`/api/jugadores/${id}`);
         return response.data;
     },
-    /**
-     * Crea un nuevo jugador
-     * Documentación 2.2: POST /api/jugadores
-     */ async createJugador (data) {
-        // TRADUCCIÓN DE DATOS (Frontend -> Backend)
-        const payloadBackend = {
-            numero: data.numero,
-            paterno: data.paterno,
-            materno: data.materno,
-            nombres: data.nombres,
-            nacimiento: data.nacimiento,
-            inscripcion: data.inscripcion,
-            // CORRECCIÓN AQUÍ:
-            // Usamos data.club_id (como lo tienes en tu type)
-            club_id: data.club_id,
-            // Revisa si 'rut' y 'rol' te dan error también. 
-            // Si TypeScript no se queja, déjalos así.
-            run_input: data.rut,
-            rol_input: data.rol
-        };
-        await apiClient.post('/api/jugadores', payloadBackend);
+    async createJugador (data) {
+        const formData = new FormData();
+        // Campos de texto
+        formData.append('numero', data.numero);
+        formData.append('nombres', data.nombres);
+        formData.append('paterno', data.paterno);
+        formData.append('materno', data.materno || '');
+        formData.append('nacimiento', data.nacimiento);
+        formData.append('inscripcion', data.inscripcion);
+        formData.append('club_id', data.club_id);
+        formData.append('rol_input', data.rol);
+        formData.append('nacionalidad', data.nacionalidad || '');
+        formData.append('delegado_input', data.delegado || '');
+        // Identificación
+        formData.append('tipo_identificacion_input', data.tipo_identificacion);
+        if (data.tipo_identificacion === 'RUT') {
+            formData.append('run_input', data.rut);
+        } else {
+            formData.append('passport_input', data.passport);
+        }
+        // NUEVOS CAMPOS
+        // 1. Activo (convertir boolean a string)
+        formData.append('activo', String(data.activo));
+        // 2. Foto (solo si existe y es un archivo)
+        if (data.foto instanceof File) {
+            formData.append('foto', data.foto);
+        }
+        // Enviamos como multipart/form-data
+        await apiClient.post('/api/jugadores', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     },
     async updateJugador (id, data) {
-        // TRADUCCIÓN DE DATOS (Frontend -> Backend)
-        const payloadBackend = {
-            numero: data.numero,
-            paterno: data.paterno,
-            materno: data.materno,
-            nombres: data.nombres,
-            nacimiento: data.nacimiento,
-            inscripcion: data.inscripcion,
-            club_id: data.club_id,
-            run_input: data.rut,
-            rol_input: data.rol
-        };
-        // Realizamos la petición PUT, incluyendo el ID en la URL
-        await apiClient.put(`/api/jugadores/${id}`, payloadBackend);
-    // Puedes cambiar Promise<void> a Promise<Jugador> si el backend devuelve el objeto actualizado
+        const formData = new FormData();
+        formData.append('numero', data.numero);
+        formData.append('nombres', data.nombres);
+        formData.append('paterno', data.paterno);
+        formData.append('materno', data.materno || '');
+        formData.append('nacimiento', data.nacimiento);
+        formData.append('inscripcion', data.inscripcion);
+        formData.append('club_id', data.club_id);
+        formData.append('rol_input', data.rol);
+        formData.append('nacionalidad', data.nacionalidad || '');
+        // El delegado también se puede actualizar si se desea
+        formData.append('delegado_input', data.delegado || '');
+        formData.append('tipo_identificacion_input', data.tipo_identificacion);
+        if (data.tipo_identificacion === 'RUT') {
+            formData.append('run_input', data.rut);
+        } else {
+            formData.append('passport_input', data.passport);
+        }
+        // NUEVOS CAMPOS
+        formData.append('activo', String(data.activo));
+        if (data.foto instanceof File) {
+            formData.append('foto', data.foto);
+        }
+        await apiClient.put(`/api/jugadores/${id}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     },
     async deleteJugador (id) {
-        // El ID se pasa como parte de la URL
         await apiClient.delete(`/api/jugadores/${id}`);
-    // No esperamos data, solo la respuesta exitosa (200 o 204)
     },
     // ------------------------------------------------------------------
-    // CLUBES (Base Endpoint: /api/clubes)
+    // CLUBES
     // ------------------------------------------------------------------
-    /**
-     * Obtiene la lista de clubes
-     * Documentación 1.1: GET /api/clubes
-     */ async getClubes () {
+    async getClubes () {
         const response = await apiClient.get('/api/clubes');
         return response.data;
     },
-    // AÑADIDO: Obtiene un club por su ID
     async getClubPorId (id) {
         const response = await apiClient.get(`/api/clubes/${id}`);
         return response.data;
     },
-    // AÑADIDO: Crea un nuevo club
     async createClub (data) {
         const response = await apiClient.post('/api/clubes', data);
         return response.data;
     },
-    // AÑADIDO: Actualiza un club existente
     async updateClub (id, data) {
         await apiClient.put(`/api/clubes/${id}`, data);
     },
-    // AÑADIDO: Elimina un club (solucionando el primer error)
     async deleteClub (id) {
         await apiClient.delete(`/api/clubes/${id}`);
+    },
+    // ------------------------------------------------------------------
+    // PASES
+    // ------------------------------------------------------------------
+    async realizarPase (data) {
+        await apiClient.post('/api/pases', data);
+    },
+    async getHistorialPases (jugadorId) {
+        const response = await apiClient.get(`/api/pases/historial/${jugadorId}`);
+        return response.data;
     }
 };
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {

@@ -40,7 +40,7 @@ controller.obtener = async (req, res) => {
 controller.actualizar = async (req, res) => {
     try {
         await Club.update(
-            { nombre: req.body.nombre.toUpperCase() },
+            { nombre: req.body.nombre },
             { where: { id: req.params.id } }
         );
         res.json({ message: "Club actualizado" });

@@ -1,73 +1,78 @@
 import { z } from 'zod';
 
-/**
- * Valida RUT chileno
- * @param rutCompleto RUT en formato "12345678-9" o "123456789"
- */
-export function validarRutChileno(rutCompleto: string): boolean {
-    // ... (lógica de validación del RUT permanece igual)
-    const rutLimpio = rutCompleto.replace(/[^0-9kK]/g, '').toUpperCase();
-    if (rutLimpio.length < 2) return false;
-    const dv = rutLimpio.slice(-1);
-    const rutNumero = parseInt(rutLimpio.slice(0, -1));
-    if (isNaN(rutNumero)) return false;
-    let suma = 0;
-    let multiplicador = 2;
-    const rutStr = rutNumero.toString().split('').reverse();
-    for (const digito of rutStr) {
-        suma += parseInt(digito) * multiplicador;
-        multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
+// Función auxiliar para validar RUT Chileno
+function validateRut(rut: string): boolean {
+    if (!rut) return false;
+    const cleanRut = rut.replace(/[^0-9kK]/g, '').toUpperCase();
+    if (cleanRut.length < 2) return false;
+    const body = cleanRut.slice(0, -1);
+    const dv = cleanRut.slice(-1);
+    if (!/^\d+$/.test(body)) return false;
+    let sum = 0;
+    let multiplier = 2;
+    for (let i = body.length - 1; i >= 0; i--) {
+        sum += parseInt(body[i], 10) * multiplier;
+        multiplier = multiplier === 7 ? 2 : multiplier + 1;
     }
-    const dvCalculado = 11 - (suma % 11);
-    let dvEsperado: string;
-    if (dvCalculado === 11) dvEsperado = '0';
-    else if (dvCalculado === 10) dvEsperado = 'K';
-    else dvEsperado = dvCalculado.toString();
-    return dv === dvEsperado;
+    const remainder = sum % 11;
+    const calculatedDv = remainder === 0 ? '0' : remainder === 1 ? 'K' : (11 - remainder).toString();
+    return dv === calculatedDv;
 }
 
-/**
- * Schema Zod para el formulario de inscripción de jugador
- */
+// Esquema de validación para el formulario de Jugador
 export const jugadorSchema = z.object({
-    numero: z.string().min(1, 'Número es requerido'),
-    paterno: z.string().min(1, 'Apellido paterno es requerido'),
-    materno: z.string().min(1, 'Apellido materno es requerido'),
-    nombres: z.string().min(1, 'Nombres son requeridos'),
+    nombres: z.string().min(2, "El nombre es obligatorio (mínimo 2 caracteres)"),
+    paterno: z.string().min(2, "El apellido paterno es obligatorio"),
+    materno: z.string().optional(),
 
-    // NUEVOS CAMPOS DE IDENTIFICACIÓN
-    tipo_identificacion: z.enum(['RUT', 'PASSPORT'], {
-        message: "Debe seleccionar el tipo de identificación (RUT o Pasaporte).",
+    tipo_identificacion: z.enum(['RUT', 'PASSPORT']).default('RUT'),
+
+    rut: z.string().optional(),
+
+    // Validación flexible para número y club_id (string o number)
+    numero: z.union([z.string(), z.number()]).transform((val) => Number(val)),
+    club_id: z.union([z.string(), z.number()]).transform((val) => String(val)).refine((val) => val !== '', "Debes seleccionar un club"),
+
+    rol: z.string().min(1, "El ROL es obligatorio"),
+
+    nacimiento: z.string().refine((val) => !isNaN(Date.parse(val)), {
+        message: "Fecha de nacimiento inválida",
     }),
-    run_input: z.string().nullable().optional(),      // Rut (puede ser nulo)
-    passport_input: z.string().nullable().optional(), // Pasaporte (puede ser nulo)
 
-    rol_input: z.string().min(1, 'ROL es requerido'),
-    nacimiento: z.string().min(1, 'Fecha de nacimiento es requerida'),
-    inscripcion: z.string().min(1, 'Fecha de inscripción es requerida'),
-    club_id: z.number().min(1, 'Debe seleccionar un club'),
-})
-    // Lógica de validación CONDICIONAL
-    .refine((data) => {
-        if (data.tipo_identificacion === 'RUT') {
-            // Validación 1: RUT no puede estar vacío
-            const rut = data.run_input?.trim() || '';
-            if (rut.length === 0) return false;
-            // Validación 2: Chequeo del dígito verificador
-            return validarRutChileno(rut);
+    inscripcion: z.string().refine((val) => !isNaN(Date.parse(val)), {
+        message: "Fecha de inscripción inválida",
+    }),
+
+    passport: z.string().optional(),
+    nacionalidad: z.string().optional(),
+    delegado: z.string().min(2, "El nombre del delegado es obligatorio"),
+
+    // --- NUEVOS CAMPOS ---
+    activo: z.boolean().default(true),
+
+    // La foto es opcional y puede ser cualquier cosa (File o undefined)
+    // Usamos 'any' o 'custom' porque Zod en el cliente maneja File objects
+    foto: z.any().optional(),
+
+}).superRefine((data, ctx) => {
+    if (data.tipo_identificacion === 'RUT') {
+        if (!data.rut || !validateRut(data.rut)) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                path: ['rut'],
+                message: "RUT inválido (Revise el dígito verificador)",
+            });
         }
-
-        if (data.tipo_identificacion === 'PASSPORT') {
-            // Validación: Pasaporte debe ser una cadena no vacía
-            return (data.passport_input?.trim() || '').length > 0;
+    }
+    else if (data.tipo_identificacion === 'PASSPORT') {
+        if (!data.passport || data.passport.length < 3) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                path: ['passport'],
+                message: "Pasaporte obligatorio",
+            });
         }
+    }
+});
 
-        return false;
-    }, {
-        message: 'Identificación requerida o inválida según el tipo seleccionado.',
-
-        // Apuntamos al campo RUT/Pasaporte para que el error sea visible junto al input
-        path: ["run_input"]
-    });
-
-export type JugadorFormData = z.infer<typeof jugadorSchema>;
+export type JugadorFormValues = z.infer<typeof jugadorSchema>;
