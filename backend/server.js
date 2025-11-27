@@ -4,7 +4,7 @@ const sequelize = require('./src/config/database');
 // Importamos modelos para definir relaciones
 const Club = require('./src/models/Club');
 const Jugador = require('./src/models/Jugador');
-
+const Pase = require('./src/models/Pase');
 // Definir Relaciones (Associations)
 Club.hasMany(Jugador, { foreignKey: 'clubId' });
 Jugador.belongsTo(Club, { foreignKey: 'clubId' });

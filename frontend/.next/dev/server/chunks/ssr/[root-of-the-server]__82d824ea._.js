@@ -139,8 +139,7 @@ const api = {
     /**
      * Crea un nuevo jugador
      * Documentación 2.2: POST /api/jugadores
-     */ // CAMBIO: Usamos 'any' para permitir los campos nuevos sin error de TS inmediato
-    async createJugador (data) {
+     */ async createJugador (data) {
         // TRADUCCIÓN DE DATOS (Frontend -> Backend)
         const payloadBackend = {
             numero: data.numero,
@@ -153,14 +152,13 @@ const api = {
             club_id: data.club_id,
             run_input: data.rut,
             rol_input: data.rol,
-            // --- CORRECCIÓN: Agregamos los campos de pasaporte ---
+            // Agregamos los campos de pasaporte ---
             tipo_identificacion_input: data.tipo_identificacion_input,
             passport_input: data.passport_input,
             nacionalidad: data.nacionalidad
         };
         await apiClient.post('/api/jugadores', payloadBackend);
     },
-    // CAMBIO: Usamos 'any' aquí también
     async updateJugador (id, data) {
         // TRADUCCIÓN DE DATOS (Frontend -> Backend)
         const payloadBackend = {
@@ -194,23 +192,30 @@ const api = {
         const response = await apiClient.get('/api/clubes');
         return response.data;
     },
-    // AÑADIDO: Obtiene un club por su ID
+    // Obtiene un club por su ID
     async getClubPorId (id) {
         const response = await apiClient.get(`/api/clubes/${id}`);
         return response.data;
     },
-    // AÑADIDO: Crea un nuevo club
+    //  Crea un nuevo club
     async createClub (data) {
         const response = await apiClient.post('/api/clubes', data);
         return response.data;
     },
-    // AÑADIDO: Actualiza un club existente
+    // Actualiza un club existente
     async updateClub (id, data) {
         await apiClient.put(`/api/clubes/${id}`, data);
     },
-    // AÑADIDO: Elimina un club
+    // Elimina un club
     async deleteClub (id) {
         await apiClient.delete(`/api/clubes/${id}`);
+    },
+    async realizarPase (data) {
+        await apiClient.post('/api/pases', data);
+    },
+    async getHistorialPases (jugadorId) {
+        const response = await apiClient.get(`/api/pases/historial/${jugadorId}`);
+        return response.data;
     }
 };
 }),

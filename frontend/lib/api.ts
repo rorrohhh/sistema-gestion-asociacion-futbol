@@ -45,7 +45,6 @@ export const api = {
      * Crea un nuevo jugador
      * Documentación 2.2: POST /api/jugadores
      */
-    // CAMBIO: Usamos 'any' para permitir los campos nuevos sin error de TS inmediato
     async createJugador(data: any): Promise<void> {
         // TRADUCCIÓN DE DATOS (Frontend -> Backend)
         const payloadBackend = {
@@ -62,7 +61,7 @@ export const api = {
             run_input: data.rut,      // Front: 'rut' -> Back: 'run_input'
             rol_input: data.rol,      // Front: 'rol' -> Back: 'rol_input'
 
-            // --- CORRECCIÓN: Agregamos los campos de pasaporte ---
+            // Agregamos los campos de pasaporte ---
             tipo_identificacion_input: data.tipo_identificacion_input,
             passport_input: data.passport_input,
             nacionalidad: data.nacionalidad
@@ -71,7 +70,6 @@ export const api = {
         await apiClient.post('/api/jugadores', payloadBackend);
     },
 
-    // CAMBIO: Usamos 'any' aquí también
     async updateJugador(id: string, data: any): Promise<void> {
         // TRADUCCIÓN DE DATOS (Frontend -> Backend)
         const payloadBackend = {
@@ -111,25 +109,34 @@ export const api = {
         return response.data;
     },
 
-    // AÑADIDO: Obtiene un club por su ID
+    // Obtiene un club por su ID
     async getClubPorId(id: string): Promise<Club> {
         const response = await apiClient.get<Club>(`/api/clubes/${id}`);
         return response.data;
     },
 
-    // AÑADIDO: Crea un nuevo club
+    //  Crea un nuevo club
     async createClub(data: CreateClubDTO): Promise<Club> {
         const response = await apiClient.post<Club>('/api/clubes', data);
         return response.data;
     },
 
-    // AÑADIDO: Actualiza un club existente
+    // Actualiza un club existente
     async updateClub(id: string, data: CreateClubDTO): Promise<void> {
         await apiClient.put(`/api/clubes/${id}`, data);
     },
 
-    // AÑADIDO: Elimina un club
+    // Elimina un club
     async deleteClub(id: string): Promise<void> {
         await apiClient.delete(`/api/clubes/${id}`);
+    },
+
+    async realizarPase(data: { jugadorId: number | string, clubDestinoId: number | string, fecha: string, comentario: string }): Promise<void> {
+        await apiClient.post('/api/pases', data);
+    },
+
+    async getHistorialPases(jugadorId: string): Promise<any[]> {
+        const response = await apiClient.get(`/api/pases/historial/${jugadorId}`);
+        return response.data;
     },
 };

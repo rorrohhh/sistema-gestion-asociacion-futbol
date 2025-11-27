@@ -3,16 +3,19 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { differenceInYears, parseISO } from 'date-fns';
 import type { Jugador } from '@/types';
-import { Pencil, Trash2, Globe, CreditCard, Flag } from 'lucide-react';
+import { Pencil, Trash2, Globe, CreditCard, Flag, MoreHorizontal, ArrowRightLeft, Eye } from 'lucide-react'; // <--- AGREGADO Eye
 import { Button } from './ui/button';
+import Link from 'next/link'; // <--- AGREGADO Link
 
 interface JugadoresTableProps {
     jugadores: Jugador[];
     isLoading?: boolean;
     onEliminar: (id: string) => void;
     onEditar: (id: string) => void;
+    onTransferir: (jugador: Jugador) => void;
 }
 
 function calcularEdad(fechaNacimiento: string): number {
@@ -31,7 +34,6 @@ function formatearRUT(rut: number | string | undefined | null, dv: string | null
     return `${formatted}-${dv || ''}`;
 }
 
-// CORREGIDO: Eliminados los comentarios entre celdas para evitar error de hidratación
 function LoadingSkeleton() {
     return (
         <>
@@ -52,7 +54,7 @@ function LoadingSkeleton() {
     );
 }
 
-export function JugadoresTable({ jugadores, isLoading = false, onEliminar, onEditar }: JugadoresTableProps) {
+export function JugadoresTable({ jugadores, isLoading = false, onEliminar, onEditar, onTransferir }: JugadoresTableProps) {
     if (isLoading) {
         return (
             <div className="rounded-md border border-slate-200 dark:border-slate-800">
@@ -67,7 +69,7 @@ export function JugadoresTable({ jugadores, isLoading = false, onEliminar, onEdi
                             <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Edad</TableHead>
                             <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Inscripción</TableHead>
                             <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">ROL</TableHead>
-                            <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Acciones</TableHead>
+                            <TableHead className="text-slate-700 dark:text-slate-300 font-semibold text-right">Acciones</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -99,7 +101,7 @@ export function JugadoresTable({ jugadores, isLoading = false, onEliminar, onEdi
                         <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Edad</TableHead>
                         <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Inscripción</TableHead>
                         <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">ROL</TableHead>
-                        <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Acciones</TableHead>
+                        <TableHead className="text-slate-700 dark:text-slate-300 font-semibold text-right">Acciones</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -149,28 +151,48 @@ export function JugadoresTable({ jugadores, isLoading = false, onEliminar, onEdi
                                 <TableCell>
                                     <Badge variant="outline">{jugador.rol}</Badge>
                                 </TableCell>
-                                <TableCell className="w-1/12 min-w-[100px]">
-                                    <div className="flex items-center space-x-2">
-                                        <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            onClick={() => onEditar(jugador.id.toString())}
-                                            title="Editar Jugador"
-                                            className="hover:text-blue-600 dark:hover:text-blue-400"
-                                        >
-                                            <Pencil className="h-4 w-4" />
-                                        </Button>
 
-                                        <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            onClick={() => onEliminar(jugador.id.toString())}
-                                            title="Eliminar Jugador"
-                                            className="hover:text-red-600 dark:hover:text-red-400"
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    </div>
+                                <TableCell className="text-right">
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button variant="ghost" className="h-8 w-8 p-0">
+                                                <span className="sr-only">Abrir menú</span>
+                                                <MoreHorizontal className="h-4 w-4" />
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                            <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+
+                                            {/* --- BOTÓN VER FICHA (NUEVO) --- */}
+                                            <DropdownMenuItem asChild>
+                                                <Link
+                                                    href={`/jugadores/${jugador.id}`}
+                                                    className="flex items-center w-full cursor-pointer"
+                                                >
+                                                    <Eye className="mr-2 h-4 w-4 text-slate-500" />
+                                                    Ver Ficha
+                                                </Link>
+                                            </DropdownMenuItem>
+
+                                            <DropdownMenuItem onClick={() => onTransferir(jugador)}>
+                                                <ArrowRightLeft className="mr-2 h-4 w-4 text-blue-600" />
+                                                Realizar Pase
+                                            </DropdownMenuItem>
+
+                                            <DropdownMenuItem onClick={() => onEditar(jugador.id.toString())}>
+                                                <Pencil className="mr-2 h-4 w-4" />
+                                                Editar
+                                            </DropdownMenuItem>
+
+                                            <DropdownMenuItem
+                                                onClick={() => onEliminar(jugador.id.toString())}
+                                                className="text-red-600 focus:text-red-600 focus:bg-red-50 dark:focus:bg-red-900/10"
+                                            >
+                                                <Trash2 className="mr-2 h-4 w-4" />
+                                                Eliminar
+                                            </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
                                 </TableCell>
 
                             </TableRow>
