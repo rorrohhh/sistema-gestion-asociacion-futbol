@@ -1,78 +1,68 @@
-# Frontend - Sistema de Gestión de Asociación de Fútbol
+# Frontend - Sistema Gestión Asociación Fútbol
 
-Este directorio contiene la interfaz de usuario del sistema, construida con Next.js 15 (App Router), React 19 y Tailwind CSS.
+Interfaz de usuario moderna para la gestión de la asociación de fútbol, construida con Next.js 16 y Tailwind CSS.
 
-## 🛠️ Tecnologías Principales
+## Tecnologías
 
-- **Next.js 15**: Framework de React para producción (App Router).
-- **React 19**: Biblioteca para construir interfaces de usuario.
-- **Tailwind CSS v4**: Framework de utilidades CSS.
-- **Shadcn UI**: Componentes de interfaz reutilizables (basados en Radix UI).
-- **React Hook Form**: Gestión de formularios.
-- **Zod**: Validación de esquemas.
-- **Lucide React**: Iconos.
-- **Axios**: Cliente HTTP para conectar con el backend.
+- **Next.js 16** (App Router)
+- **React 19**
+- **Tailwind CSS 4**
+- **Shadcn UI** (Componentes de UI basados en Radix)
+- **React Hook Form** + **Zod** (Manejo de formularios y validación)
+- **Axios** (Cliente HTTP)
 
-## 📋 Requisitos Previos
+## Requisitos Previos
 
 - Node.js (v18 o superior recomendado)
-- Backend en ejecución (para funcionalidad completa)
+- Backend corriendo en paralelo (por defecto en puerto 4000)
 
-## 🚀 Instalación
+## Configuración y Ejecución
 
-1. Navega al directorio del frontend:
-   ```bash
-   cd frontend
-   ```
+1.  **Instalar dependencias:**
 
-2. Instala las dependencias:
-   ```bash
-   npm install
-   ```
+    ```bash
+    npm install
+    ```
 
-## ⚙️ Configuración
+2.  **Configurar variables de entorno:**
+    Crea un archivo `.env.local` en la raíz del frontend si no existe.
+    
+    ```env
+    NEXT_PUBLIC_API_URL=http://localhost:4000/api
+    ```
 
-Crea un archivo `.env.local` en la raíz del directorio `frontend` si necesitas configurar variables de entorno específicas (por ejemplo, la URL del backend si es diferente a la predeterminada).
+3.  **Ejecutar en desarrollo:**
 
-Ejemplo:
-```env
-NEXT_PUBLIC_API_URL=http://localhost:4000/api
-```
+    ```bash
+    npm run dev
+    ```
+    La aplicación estará disponible en `http://localhost:3000`.
 
-## ▶️ Ejecución
+4.  **Construir para producción:**
 
-### Desarrollo
-Para iniciar el servidor de desarrollo:
-```bash
-npm run dev
-```
-La aplicación estará disponible en `http://localhost:3000`.
+    ```bash
+    npm run build
+    npm start
+    ```
 
-### Producción
-Para construir y ejecutar la versión de producción:
-```bash
-npm run build
-npm start
-```
+## Estructura del Proyecto
 
-## 📂 Estructura del Proyecto
+- `app/`: Rutas y páginas (App Router).
+- `components/`: Componentes reutilizables (UI, Tablas, Formularios).
+- `lib/`: Utilidades y configuración (Axios, Utils).
+- `hooks/`: Custom hooks (ej: `useCountdown`).
+- `public/`: Archivos estáticos.
 
-```
-frontend/
-├── app/                # Páginas y rutas (App Router)
-├── components/         # Componentes reutilizables (UI, Tablas, Formularios)
-│   ├── ui/             # Componentes base de Shadcn UI
-│   └── ...
-├── lib/                # Utilidades y funciones auxiliares
-├── public/             # Archivos estáticos
-├── types/              # Definiciones de tipos TypeScript
-├── package.json        # Dependencias y scripts
-└── ...
-```
+## Funcionalidades Principales
 
-## 🎨 Características
-
-- **Diseño Responsivo**: Adaptable a diferentes tamaños de pantalla.
-- **Modo Oscuro**: Soporte nativo para temas claro y oscuro.
-- **Validación de Formularios**: Implementada con Zod y React Hook Form.
-- **Tablas Interactivas**: Listados con filtros y acciones.
+- **Gestión de Clubes:** Alta, baja y modificación de clubes.
+- **Gestión de Jugadores:**
+  - Inscripción con validación de RUT/Pasaporte.
+  - Subida de fotografía.
+  - Listado con filtros avanzados (Club, Nombre, RUT).
+- **Pases:** Sistema de transferencias entre clubes con historial.
+- **Campeonato:**
+  - Generación automática de Fixture (Todos contra todos).
+  - Programación de partidos.
+  - Registro de resultados y suspensiones.
+  - Tabla de posiciones automática.

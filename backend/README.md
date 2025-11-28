@@ -1,82 +1,102 @@
-# Backend - Sistema de Gestión de Asociación de Fútbol
+# Sistema de Gestión para Asociación de Fútbol - Backend
 
-Este directorio contiene la API RESTful para el sistema de gestión, construida con Node.js, Express y Sequelize (MySQL).
+Este proyecto es el núcleo (API RESTful) de una plataforma integral diseñada para digitalizar y administrar las operaciones de una asociación de fútbol amateur o profesional. Su objetivo principal es centralizar la información de clubes, jugadores y el desarrollo de los campeonatos.
 
-## 🛠️ Tecnologías
+El sistema permite llevar un control riguroso desde la inscripción de un jugador hasta la generación automática de la tabla de posiciones tras cada fecha.
 
-- **Node.js**: Entorno de ejecución.
-- **Express**: Framework web.
-- **Sequelize**: ORM para base de datos SQL.
-- **MySQL**: Base de datos relacional.
-- **Dotenv**: Gestión de variables de entorno.
+## 🚀 Funcionalidades Principales
 
-## 📋 Requisitos Previos
+### 1. Gestión de Clubes
+Administración completa de las entidades deportivas que participan en la asociación.
+- **Registro y Edición:** Alta de nuevos clubes y actualización de sus datos básicos.
+- **Visualización:** Listado ordenado para fácil acceso.
 
-- Node.js (v18 o superior recomendado)
-- MySQL Server en ejecución
+### 2. Gestión de Jugadores (Ficha Digital)
+El sistema maneja un expediente digital completo para cada deportista.
+- **Identificación Flexible:** Soporte para **RUT** (con validación de dígito verificador) y **Pasaporte** para jugadores extranjeros.
+- **Datos Personales:** Registro de nombres, fecha de nacimiento, nacionalidad y fotografía digital.
+- **Control de Roles:** Clasificación de jugadores (ej. Jugador, Arquero, Capitán).
+- **Estado:** Control de jugadores activos/inactivos.
+- **Validaciones:** Evita duplicidad de registros mediante validación estricta de identificación.
 
-## 🚀 Instalación
+### 3. Sistema de Pases y Transferencias
+Módulo dedicado al movimiento de jugadores entre clubes, asegurando la integridad de la competencia.
+- **Historial de Transferencias:** Registro inmutable de todos los movimientos de un jugador a lo largo de su carrera en la asociación.
+- **Transacciones Seguras:** El sistema garantiza que un jugador no pueda estar en dos clubes al mismo tiempo.
+- **Registro de Delegados:** Se almacena quién autorizó o realizó el trámite del pase.
 
-1. Navega al directorio del backend:
-   ```bash
-   cd backend
-   ```
+### 4. Gestión de Campeonatos y Partidos
+Motor de gestión deportiva que administra el ciclo de vida del torneo.
+- **Generación de Fixture:** Herramienta para crear el calendario de partidos (todos contra todos), permitiendo ajustes manuales antes de oficializarlo.
+- **Programación:** Definición de fechas, horarios y series para cada encuentro.
+- **Control de Resultados:** Carga de goles locales y visitantes.
+- **Suspensiones:** Capacidad para suspender partidos, asignar responsabilidad a un equipo (si aplica) y registrar los motivos.
+- **Reprogramación:** Funcionalidad para cambiar la fecha/hora de partidos postergados.
 
-2. Instala las dependencias:
-   ```bash
-   npm install
-   ```
+### 5. Tabla de Posiciones Automatizada
+Cálculo automático de la tabla de posiciones en tiempo real basado en los resultados registrados.
+- **Criterios:** Puntos, Partidos Jugados (PJ), Ganados (PG), Empatados (PE), Perdidos (PP), Goles a Favor (GF), Goles en Contra (GC) y Diferencia de Gol (DIF).
+- **Reglas de Puntuación:** Configurable por serie (ej. 3 puntos por victoria).
+- **Manejo de Suspensiones:** La tabla refleja correctamente los puntos otorgados o quitados en caso de partidos suspendidos con culpa de un equipo.
 
-## ⚙️ Configuración
+---
 
-Crea un archivo `.env` en la raíz del directorio `backend` con las siguientes variables:
+## 🛠️ Tecnologías Utilizadas
 
-```env
-DB_NAME=nombre_de_tu_base_de_datos
-DB_USER=tu_usuario_mysql
-DB_PASS=tu_contraseña_mysql
-DB_HOST=localhost
-PORT=4000
-```
+El backend está construido con tecnologías robustas y escalables:
 
-> **Nota**: Sequelize sincronizará automáticamente los modelos (`force: false`), creando las tablas si no existen sin borrar datos.
+- **Node.js & Express:** Para el servidor y manejo de rutas API.
+- **Sequelize ORM:** Para la interacción segura y estructurada con la base de datos.
+- **MySQL:** Motor de base de datos relacional.
+- **Multer:** Gestión de subida de archivos (fotografías de jugadores).
 
-## ▶️ Ejecución
+---
 
-### Desarrollo
-Para ejecutar el servidor con recarga automática (nodemon):
-```bash
-npm run dev
-```
+## ⚙️ Instalación y Configuración
 
-### Producción
-Para iniciar el servidor normalmente:
-```bash
-npm start
-```
+Si deseas levantar este proyecto en tu entorno local:
 
-El servidor se iniciará por defecto en `http://localhost:4000`.
+1.  **Instalar dependencias:**
+    ```bash
+    npm install
+    ```
 
-## 📂 Estructura del Proyecto
+2.  **Configuración de Entorno:**
+    Crea un archivo `.env` en la raíz con las credenciales de tu base de datos y puerto:
+    ```env
+    PORT=4000
+    DB_NAME=nombre_base_datos
+    DB_USER=usuario
+    DB_PASS=contraseña
+    DB_HOST=localhost
+    ```
 
-```
-backend/
-├── src/
-│   ├── config/         # Configuración de DB (Sequelize)
-│   ├── models/         # Modelos de datos (Club, Jugador)
-│   ├── routes/         # Definición de rutas de la API
-│   ├── app.js          # Configuración de Express y Middlewares
-│   └── ...
-├── server.js           # Punto de entrada del servidor
-├── package.json        # Dependencias y scripts
-└── ...
-```
+3.  **Base de Datos:**
+    Ejecuta las migraciones para crear la estructura de tablas:
+    ```bash
+    npm run migrate
+    ```
 
-## 🔌 Endpoints Principales
+4.  **Iniciar Servidor:**
+    ```bash
+    npm run dev  # Modo desarrollo
+    npm start    # Modo producción
+    ```
 
-La API expone los siguientes recursos base:
+---
 
-- **Clubes**: `/api/clubes`
-- **Jugadores**: `/api/jugadores`
+## 📡 Documentación Rápida de API
 
-Para más detalles sobre los endpoints, consulta el archivo `API_DOCUMENTATION.md` (si está disponible) o revisa los archivos en `src/routes/`.
+A continuación, un resumen de los endpoints disponibles para integración:
+
+| Recurso | Método | Endpoint | Descripción |
+| :--- | :--- | :--- | :--- |
+| **Clubes** | GET | `/api/clubes` | Listar todos los clubes |
+| | POST | `/api/clubes` | Crear un nuevo club |
+| **Jugadores** | GET | `/api/jugadores` | Listar con filtros (club, rut, nombre) |
+| | POST | `/api/jugadores` | Inscribir jugador (Multipart/form-data) |
+| **Pases** | POST | `/api/pases` | Realizar transferencia de jugador |
+| | GET | `/api/pases/historial/:id` | Ver historial de un jugador |
+| **Partidos** | GET | `/api/partidos` | Ver fixture |
+| | GET | `/api/partidos/tabla` | Obtener tabla de posiciones calculada |
+| | PUT | `/api/partidos/:id/resultado` | Cargar resultado de partido |
