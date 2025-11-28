@@ -6,13 +6,8 @@ export interface Jugador {
     paterno: string;
     materno: string;
     nombres: string;
-
-    // ACTUALIZADO: El RUT puede ser nulo si es extranjero
     rut: number | null;
     dv: string | null;
-
-    // NUEVOS CAMPOS: Soporte para pasaporte
-    tipoIdentificacion: string; // 'RUT' | 'PASSPORT'
     pasaporte: string | null;
     nacionalidad: string | null;
     delegadoInscripcion: string | null;
@@ -26,6 +21,12 @@ export interface Jugador {
 export interface Club {
     id: number;
     nombre: string;
+    logo?: string;
+    division?: string;
+    tiene_super_senior?: boolean;
+    tiene_2da?: boolean;
+    tiene_1era?: boolean;
+
 }
 
 export interface FilterParams {
@@ -41,18 +42,11 @@ export interface CreateJugadorDTO {
     paterno: string;
     materno: string;
     nombres: string;
-
-    // RUT ahora es opcional en el DTO
     rut?: string;
-
     rol: string;
     nacimiento: string; // YYYY-MM-DD
     inscripcion: string; // YYYY-MM-DD
-
-    // Flexibilidad para el select
     club_id: number | string;
-
-    // NUEVOS CAMPOS para el envío al backend
     tipo_identificacion_input?: string;
     passport_input?: string;
     nacionalidad?: string;
@@ -93,12 +87,14 @@ export interface Partido {
     id: number;
     fecha_numero: number;
     dia_hora: string;
-    serie: '1era' | '2da' | '3era';
+    serie: '1era' | '2da' | 'super_senior';
     clubLocalId: number;
     clubVisitaId: number;
     goles_local: number;
     goles_visita: number;
     estado: 'programado' | 'finalizado' | 'suspendido';
+    equipo_culpable_id?: number | null;
+    motivo_suspension?: string | null;
     local?: Club;
     visita?: Club;
 }

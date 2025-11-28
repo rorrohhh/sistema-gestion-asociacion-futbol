@@ -71,14 +71,10 @@ const api = {
         } else {
             formData.append('passport_input', data.passport);
         }
-        // NUEVOS CAMPOS
-        // 1. Activo (convertir boolean a string)
         formData.append('activo', String(data.activo));
-        // 2. Foto (solo si existe y es un archivo)
         if (data.foto instanceof File) {
             formData.append('foto', data.foto);
         }
-        // Enviamos como multipart/form-data
         await apiClient.post('/api/jugadores', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -150,7 +146,8 @@ const api = {
         return response.data;
     },
     async getPartidos (filters) {
-        const response = await apiClient.get('/api/partidos');
+        const q = filters?.division ? `?division=${filters.division}` : '';
+        const response = await apiClient.get(`/api/partidos${q}`);
         return response.data;
     },
     async updateResultado (id, goles_local, goles_visita) {
@@ -159,28 +156,39 @@ const api = {
             goles_visita
         });
     },
-    async getTablaPosiciones (serie) {
-        const response = await apiClient.get(`/api/partidos/tabla?serie=${serie}`);
+    async getTablaPosiciones (serie, division) {
+        const response = await apiClient.get(`/api/partidos/tabla?serie=${serie}&division=${division}`);
         return response.data;
+    },
+    async reportarIncidente (partidoId, culpableId, motivo) {
+        await apiClient.put(`/api/partidos/${partidoId}/suspender`, {
+            equipo_culpable_id: culpableId,
+            motivo_suspension: motivo
+        });
     },
     async generarFixturePreview (data) {
         const response = await apiClient.post('/api/partidos/preview', data);
         return response.data;
     },
-    // 2. Guardar Fixture Confirmado
-    async guardarFixtureMasivo (fixture) {
+    async guardarFixtureMasivo (fixture, division) {
         await apiClient.post('/api/partidos/masivo', {
-            fixtureConfirmado: fixture
+            fixtureConfirmado: fixture,
+            division
         });
     },
-    async eliminarFixture () {
-        await apiClient.delete('/api/partidos');
+    async eliminarFixture (division) {
+        await apiClient.delete(`/api/partidos?division=${division}`);
     },
-    async reprogramarFecha (fechaNumero, nuevaFecha) {
+    async reprogramarFecha (fechaNumero, nuevaFecha, division) {
         await apiClient.post('/api/partidos/reprogramar', {
             fecha_numero: fechaNumero,
-            nueva_fecha: nuevaFecha
+            nueva_fecha: nuevaFecha,
+            division
         });
+    },
+    async checkTorneo (division) {
+        const response = await apiClient.get(`/api/partidos/check?division=${division}`);
+        return response.data;
     }
 };
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
@@ -2294,7 +2302,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/api.ts [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$format$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/date-fns/format.js [app-client] (ecmascript) <locals>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/sonner/dist/index.mjs [app-client] (ecmascript)");
 // UI Components
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/tabs.tsx [app-client] (ecmascript)");
@@ -2302,17 +2309,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/input.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/select.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trophy$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trophy$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/trophy.js [app-client] (ecmascript) <export default as Trophy>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2d$days$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CalendarDays$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/calendar-days.js [app-client] (ecmascript) <export default as CalendarDays>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__PlusCircle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-plus.js [app-client] (ecmascript) <export default as PlusCircle>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$save$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Save$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/save.js [app-client] (ecmascript) <export default as Save>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$left$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronLeft$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chevron-left.js [app-client] (ecmascript) <export default as ChevronLeft>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chevron-right.js [app-client] (ecmascript) <export default as ChevronRight>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$funnel$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Filter$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/funnel.js [app-client] (ecmascript) <export default as Filter>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/trash-2.js [app-client] (ecmascript) <export default as Trash2>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$triangle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertTriangle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/triangle-alert.js [app-client] (ecmascript) <export default as AlertTriangle>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/badge.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/utils.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/alert-dialog.tsx [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
@@ -2329,23 +2331,53 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
-;
-;
 function TorneoDashboard() {
     _s();
     const [activeTab, setActiveTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("fixture");
+    // --- SELECTOR MAESTRO DE TORNEO ---
+    const [torneoSeleccionado, setTorneoSeleccionado] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("A");
+    // Filtros secundarios
     const [serieTabla, setSerieTabla] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("1era");
     const [allPartidos, setAllPartidos] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [tabla, setTabla] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
     const [fechaActual, setFechaActual] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(1);
-    // --- CARGAR DATOS ---
+    // Estados de Modales (Reprogramar, PDF, Seguridad)
+    const [isReprogramarOpen, setIsReprogramarOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [nuevaFechaReprogramacion, setNuevaFechaReprogramacion] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [isPdfOpen, setIsPdfOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [pdfAlcance, setPdfAlcance] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("fecha_actual");
+    const [pdfSerie, setPdfSerie] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("todas");
+    const [securityModalOpen, setSecurityModalOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [partidoSeguridad, setPartidoSeguridad] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [equipoCulpableId, setEquipoCulpableId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [motivoSuspension, setMotivoSuspension] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    // Helpers
+    const getNombreSerie = (serie)=>{
+        if (!serie) return "S/N";
+        const s = serie.toLowerCase().trim();
+        if (s === 'super_senior' || s === '3era' || s.includes('super')) return 'Super Senior';
+        if (s === '2da') return '2da Serie';
+        if (s === '1era') return '1era Serie';
+        return serie;
+    };
+    const getOrdenSerie = (serie_0)=>{
+        if (!serie_0) return 99;
+        const s_0 = serie_0.toLowerCase().trim();
+        if (s_0 === 'super_senior' || s_0 === '3era' || s_0.includes('super')) return 1;
+        if (s_0 === '2da') return 2;
+        if (s_0 === '1era') return 3;
+        return 99;
+    };
+    // Cargar Datos
     const fetchData = async ()=>{
         setLoading(true);
         try {
             const [partidosData, tablaData] = await Promise.all([
-                __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getPartidos(),
-                __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getTablaPosiciones(serieTabla)
+                __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getPartidos({
+                    division: torneoSeleccionado
+                }),
+                __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getTablaPosiciones(serieTabla, torneoSeleccionado)
             ]);
             setAllPartidos(partidosData);
             setTabla(tablaData);
@@ -2359,11 +2391,13 @@ function TorneoDashboard() {
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "TorneoDashboard.useEffect": ()=>{
             fetchData();
+            setFechaActual(1); // Resetear al cambiar de torneo
         }
     }["TorneoDashboard.useEffect"], [
+        torneoSeleccionado,
         serieTabla
     ]);
-    // --- GUARDAR RESULTADO ---
+    // Acciones (UpdateScore, Eliminar, etc. - Mismo código que tenías antes)
     const handleUpdateScore = async (id)=>{
         const inputLocal = document.getElementById(`local-${id}`);
         const inputVisita = document.getElementById(`visita-${id}`);
@@ -2371,40 +2405,39 @@ function TorneoDashboard() {
         try {
             await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].updateResultado(id, Number(inputLocal.value), Number(inputVisita.value));
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success("Actualizado");
-            // Recargar datos suavemente
-            const [pData, tData] = await Promise.all([
-                __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getPartidos(),
-                __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getTablaPosiciones(serieTabla)
-            ]);
-            setAllPartidos(pData);
-            setTabla(tData);
-        } catch (error_0) {
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error("Error al guardar");
+            fetchData();
+        } catch (e) {
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error("Error");
         }
     };
-    // --- ELIMINAR FIXTURE ---
     const handleEliminarFixture = async ()=>{
-        // YA NO USAMOS window.confirm AQUÍ. 
-        // La confirmación la maneja el componente <AlertDialog> en el JSX.
         try {
-            await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].eliminarFixture();
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success("Torneo eliminado correctamente");
+            await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].eliminarFixture(torneoSeleccionado);
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success(`Torneo Serie ${torneoSeleccionado} eliminado`);
             setAllPartidos([]);
             setTabla([]);
             setFechaActual(1);
-        } catch (error_1) {
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error("No se pudo eliminar el fixture");
+        } catch (e_0) {
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error("Error al eliminar");
         }
     };
-    // --- LÓGICA DE AGRUPACIÓN VISUAL ---
+    const handleReprogramar = async ()=>{
+        if (!nuevaFechaReprogramacion) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error("Falta fecha");
+        try {
+            await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].reprogramarFecha(fechaActual, nuevaFechaReprogramacion, torneoSeleccionado);
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success("Reprogramado");
+            setIsReprogramarOpen(false);
+            fetchData();
+        } catch (e_1) {
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error("Error");
+        }
+    };
+    // Lógica Visual
     const fechasDisponibles = Array.from(new Set(allPartidos.map((p)=>p.fecha_numero))).sort((a, b)=>a - b);
     const partidosDeLaFecha = allPartidos.filter((p_0)=>p_0.fecha_numero === fechaActual);
-    // Agrupar por enfrentamiento usando IDs directos para mayor seguridad
     const enfrentamientos = [];
     partidosDeLaFecha.forEach((p_1)=>{
-        // Si faltan datos vitales, saltamos
         if (!p_1.local || !p_1.visita) return;
-        // Usamos los IDs directos para la clave única (Ej: "10-15")
         const key = `${p_1.clubLocalId}-${p_1.clubVisitaId}`;
         let grupo = enfrentamientos.find((g)=>g.id === key);
         if (!grupo) {
@@ -2418,43 +2451,92 @@ function TorneoDashboard() {
         }
         grupo.partidos.push(p_1);
     });
-    // Ordenar series dentro de la tarjeta (3era -> 2da -> 1era)
     enfrentamientos.forEach((g_0)=>{
-        const orden = {
-            '3era': 1,
-            '2da': 2,
-            '1era': 3
-        };
-        g_0.partidos.sort((a_0, b_0)=>orden[a_0.serie] - orden[b_0.serie]);
+        g_0.partidos.sort((a_0, b_0)=>getOrdenSerie(a_0.serie) - getOrdenSerie(b_0.serie));
     });
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "container mx-auto py-8 max-w-6xl space-y-8",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-xl border border-slate-100 shadow-sm",
+                className: "flex flex-col md:flex-row justify-between items-center gap-4 bg-white p-6 rounded-xl border shadow-sm",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                className: "text-2xl font-bold text-slate-900",
+                                className: "text-2xl font-bold",
                                 children: "Panel del Torneo"
                             }, void 0, false, {
                                 fileName: "[project]/app/torneo/page.tsx",
-                                lineNumber: 134,
+                                lineNumber: 167,
                                 columnNumber: 21
                             }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-slate-500 text-sm",
-                                children: "Gestiona resultados y revisa la tabla."
-                            }, void 0, false, {
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex items-center gap-2 mt-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "font-bold text-slate-500",
+                                        children: "Torneo:"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/torneo/page.tsx",
+                                        lineNumber: 169,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
+                                        value: torneoSeleccionado,
+                                        onValueChange: setTorneoSeleccionado,
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectTrigger"], {
+                                                className: "w-[200px] font-bold text-blue-700 bg-blue-50 border-blue-200",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {}, void 0, false, {
+                                                    fileName: "[project]/app/torneo/page.tsx",
+                                                    lineNumber: 171,
+                                                    columnNumber: 117
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/torneo/page.tsx",
+                                                lineNumber: 171,
+                                                columnNumber: 29
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                        value: "A",
+                                                        children: "🏆 Serie A (Sábados)"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/torneo/page.tsx",
+                                                        lineNumber: 173,
+                                                        columnNumber: 33
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                        value: "B",
+                                                        children: "🥈 Serie B (Domingos)"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/torneo/page.tsx",
+                                                        lineNumber: 174,
+                                                        columnNumber: 33
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/app/torneo/page.tsx",
+                                                lineNumber: 172,
+                                                columnNumber: 29
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/app/torneo/page.tsx",
+                                        lineNumber: 170,
+                                        columnNumber: 25
+                                    }, this)
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/app/torneo/page.tsx",
-                                lineNumber: 135,
+                                lineNumber: 168,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/torneo/page.tsx",
-                        lineNumber: 133,
+                        lineNumber: 166,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2466,25 +2548,25 @@ function TorneoDashboard() {
                                         asChild: true,
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                             variant: "outline",
-                                            className: "text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200",
+                                            className: "text-red-600 border-red-200",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__["Trash2"], {
                                                     className: "mr-2 h-4 w-4"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/torneo/page.tsx",
-                                                    lineNumber: 141,
-                                                    columnNumber: 37
+                                                    lineNumber: 182,
+                                                    columnNumber: 123
                                                 }, this),
-                                                " Eliminar Torneo"
+                                                " Eliminar"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/torneo/page.tsx",
-                                            lineNumber: 140,
-                                            columnNumber: 33
+                                            lineNumber: 182,
+                                            columnNumber: 57
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/torneo/page.tsx",
-                                        lineNumber: 139,
+                                        lineNumber: 182,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogContent"], {
@@ -2492,43 +2574,27 @@ function TorneoDashboard() {
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogHeader"], {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogTitle"], {
-                                                        className: "flex items-center gap-2 text-red-600",
                                                         children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$triangle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertTriangle$3e$__["AlertTriangle"], {
-                                                                className: "h-5 w-5"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/app/torneo/page.tsx",
-                                                                lineNumber: 147,
-                                                                columnNumber: 41
-                                                            }, this),
-                                                            " ¿Estás absolutamente seguro?"
+                                                            "¿Eliminar Torneo ",
+                                                            torneoSeleccionado,
+                                                            "?"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/torneo/page.tsx",
-                                                        lineNumber: 146,
-                                                        columnNumber: 37
+                                                        lineNumber: 184,
+                                                        columnNumber: 52
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogDescription"], {
-                                                        children: [
-                                                            "Esta acción eliminará ",
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
-                                                                children: "todos los partidos y resultados"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/app/torneo/page.tsx",
-                                                                lineNumber: 150,
-                                                                columnNumber: 63
-                                                            }, this),
-                                                            " del torneo actual. Esta acción no se puede deshacer."
-                                                        ]
-                                                    }, void 0, true, {
+                                                        children: "Se borrarán todos los datos de esta serie."
+                                                    }, void 0, false, {
                                                         fileName: "[project]/app/torneo/page.tsx",
-                                                        lineNumber: 149,
-                                                        columnNumber: 37
+                                                        lineNumber: 184,
+                                                        columnNumber: 127
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/torneo/page.tsx",
-                                                lineNumber: 145,
+                                                lineNumber: 184,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogFooter"], {
@@ -2537,70 +2603,70 @@ function TorneoDashboard() {
                                                         children: "Cancelar"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/torneo/page.tsx",
-                                                        lineNumber: 155,
-                                                        columnNumber: 37
+                                                        lineNumber: 185,
+                                                        columnNumber: 52
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogAction"], {
                                                         onClick: handleEliminarFixture,
-                                                        className: "bg-red-600 hover:bg-red-700",
-                                                        children: "Sí, eliminar todo"
+                                                        className: "bg-red-600",
+                                                        children: "Eliminar"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/torneo/page.tsx",
-                                                        lineNumber: 156,
-                                                        columnNumber: 37
+                                                        lineNumber: 185,
+                                                        columnNumber: 99
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/torneo/page.tsx",
-                                                lineNumber: 154,
+                                                lineNumber: 185,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/torneo/page.tsx",
-                                        lineNumber: 144,
+                                        lineNumber: 183,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/torneo/page.tsx",
-                                lineNumber: 138,
+                                lineNumber: 181,
                                 columnNumber: 48
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                 href: "/torneo/generar",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                    className: allPartidos.length > 0 ? "hidden" : "bg-blue-600",
+                                    className: "bg-blue-600",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__PlusCircle$3e$__["PlusCircle"], {
                                             className: "mr-2 h-4 w-4"
                                         }, void 0, false, {
                                             fileName: "[project]/app/torneo/page.tsx",
-                                            lineNumber: 165,
-                                            columnNumber: 29
+                                            lineNumber: 188,
+                                            columnNumber: 82
                                         }, this),
                                         " Nuevo Torneo"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/torneo/page.tsx",
-                                    lineNumber: 164,
-                                    columnNumber: 25
+                                    lineNumber: 188,
+                                    columnNumber: 50
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/torneo/page.tsx",
-                                lineNumber: 163,
+                                lineNumber: 188,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/torneo/page.tsx",
-                        lineNumber: 137,
+                        lineNumber: 180,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/torneo/page.tsx",
-                lineNumber: 132,
+                lineNumber: 165,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Tabs"], {
@@ -2613,772 +2679,426 @@ function TorneoDashboard() {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
                                 value: "fixture",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2d$days$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CalendarDays$3e$__["CalendarDays"], {
-                                        className: "mr-2 h-4 w-4"
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/torneo/page.tsx",
-                                        lineNumber: 173,
-                                        columnNumber: 50
-                                    }, this),
-                                    " Fixture"
-                                ]
-                            }, void 0, true, {
+                                children: "Fixture"
+                            }, void 0, false, {
                                 fileName: "[project]/app/torneo/page.tsx",
-                                lineNumber: 173,
+                                lineNumber: 194,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
                                 value: "tabla",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trophy$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trophy$3e$__["Trophy"], {
-                                        className: "mr-2 h-4 w-4"
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/torneo/page.tsx",
-                                        lineNumber: 174,
-                                        columnNumber: 48
-                                    }, this),
-                                    " Tabla de Posiciones"
-                                ]
-                            }, void 0, true, {
+                                children: "Tabla de Posiciones"
+                            }, void 0, false, {
                                 fileName: "[project]/app/torneo/page.tsx",
-                                lineNumber: 174,
+                                lineNumber: 195,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/torneo/page.tsx",
-                        lineNumber: 172,
+                        lineNumber: 193,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsContent"], {
                         value: "fixture",
-                        className: "space-y-6 animate-in fade-in duration-500",
+                        className: "space-y-6",
                         children: fechasDisponibles.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex items-center justify-center gap-4 bg-white p-3 rounded-xl shadow-sm border border-slate-200 sticky top-4 z-10",
+                                    className: "flex items-center justify-center gap-4 bg-white p-3 rounded-xl border mb-4",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                             variant: "ghost",
-                                            size: "icon",
-                                            onClick: ()=>setFechaActual((prev)=>Math.max(prev - 1, fechasDisponibles[0])),
+                                            onClick: ()=>setFechaActual((p_2)=>Math.max(p_2 - 1, fechasDisponibles[0])),
                                             disabled: fechaActual === fechasDisponibles[0],
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$left$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronLeft$3e$__["ChevronLeft"], {
-                                                className: "h-5 w-5 text-slate-500"
-                                            }, void 0, false, {
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$left$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronLeft$3e$__["ChevronLeft"], {}, void 0, false, {
                                                 fileName: "[project]/app/torneo/page.tsx",
-                                                lineNumber: 184,
-                                                columnNumber: 37
+                                                lineNumber: 204,
+                                                columnNumber: 184
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/torneo/page.tsx",
-                                            lineNumber: 183,
+                                            lineNumber: 204,
                                             columnNumber: 33
                                         }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "text-center min-w-[140px]",
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "font-bold text-lg",
                                             children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "block text-[10px] text-slate-400 font-bold uppercase tracking-wider",
-                                                    children: "Visualizando"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                    lineNumber: 188,
-                                                    columnNumber: 37
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "text-xl font-black text-slate-800",
-                                                    children: [
-                                                        "Fecha ",
-                                                        fechaActual
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                    lineNumber: 189,
-                                                    columnNumber: 37
-                                                }, this)
+                                                "Fecha ",
+                                                fechaActual
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/torneo/page.tsx",
-                                            lineNumber: 187,
+                                            lineNumber: 205,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                             variant: "ghost",
-                                            size: "icon",
-                                            onClick: ()=>setFechaActual((prev_0)=>Math.min(prev_0 + 1, fechasDisponibles[fechasDisponibles.length - 1])),
+                                            onClick: ()=>setFechaActual((p_3)=>Math.min(p_3 + 1, fechasDisponibles[fechasDisponibles.length - 1])),
                                             disabled: fechaActual === fechasDisponibles[fechasDisponibles.length - 1],
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
-                                                className: "h-5 w-5 text-slate-500"
-                                            }, void 0, false, {
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {}, void 0, false, {
                                                 fileName: "[project]/app/torneo/page.tsx",
-                                                lineNumber: 193,
-                                                columnNumber: 37
+                                                lineNumber: 206,
+                                                columnNumber: 238
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/torneo/page.tsx",
-                                            lineNumber: 192,
+                                            lineNumber: 206,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/torneo/page.tsx",
-                                    lineNumber: 182,
+                                    lineNumber: 203,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "grid md:grid-cols-2 xl:grid-cols-3 gap-6",
+                                    className: "grid grid-cols-1 lg:grid-cols-2 gap-6",
                                     children: enfrentamientos.map((cruce)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
-                                            className: "overflow-hidden border-slate-200 shadow-sm hover:shadow-md transition-all",
+                                            className: "overflow-hidden border shadow-sm",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "bg-gradient-to-r from-slate-50 to-white p-4 border-b flex justify-between items-center relative overflow-hidden",
+                                                    className: "bg-slate-50 p-3 border-b flex justify-between font-bold text-sm",
                                                     children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "absolute top-0 left-0 w-1 h-full bg-blue-500"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                            lineNumber: 203,
-                                                            columnNumber: 45
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "w-[42%] text-right pr-2",
-                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "font-bold text-slate-800 text-sm md:text-base leading-tight block truncate",
-                                                                title: cruce.local.nombre,
-                                                                children: cruce.local.nombre
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/app/torneo/page.tsx",
-                                                                lineNumber: 205,
-                                                                columnNumber: 49
-                                                            }, this)
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                            lineNumber: 204,
-                                                            columnNumber: 45
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "z-10 bg-white border px-2 py-1 rounded text-[10px] font-black text-slate-400 shadow-sm",
-                                                            children: "VS"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                            lineNumber: 210,
-                                                            columnNumber: 45
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "w-[42%] text-left pl-2",
-                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "font-bold text-slate-800 text-sm md:text-base leading-tight block truncate",
-                                                                title: cruce.visita.nombre,
-                                                                children: cruce.visita.nombre
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/app/torneo/page.tsx",
-                                                                lineNumber: 213,
-                                                                columnNumber: 49
-                                                            }, this)
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "text-right w-1/2 pr-2",
+                                                            children: cruce.local.nombre
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/torneo/page.tsx",
                                                             lineNumber: 212,
+                                                            columnNumber: 45
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            children: "VS"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/torneo/page.tsx",
+                                                            lineNumber: 213,
+                                                            columnNumber: 45
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "text-left w-1/2 pl-2",
+                                                            children: cruce.visita.nombre
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/torneo/page.tsx",
+                                                            lineNumber: 214,
                                                             columnNumber: 45
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/torneo/page.tsx",
-                                                    lineNumber: 202,
+                                                    lineNumber: 211,
                                                     columnNumber: 41
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
-                                                    className: "p-0",
-                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "divide-y divide-slate-100",
-                                                        children: cruce.partidos.map((partido)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "p-3 hover:bg-slate-50 transition-colors",
-                                                                children: [
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                        className: "flex items-center justify-between mb-2",
-                                                                        children: [
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
-                                                                                variant: "outline",
-                                                                                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("text-[10px] px-2 py-0 h-5 border-0 font-bold", partido.serie === '1era' ? "bg-blue-100 text-blue-700" : partido.serie === '2da' ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700"),
-                                                                                children: partido.serie
+                                                    className: "p-0 divide-y",
+                                                    children: cruce.partidos.map((p_4)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "p-3 flex justify-between items-center text-sm hover:bg-slate-50",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
+                                                                    variant: "outline",
+                                                                    className: "w-24 justify-center",
+                                                                    children: getNombreSerie(p_4.serie)
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/app/torneo/page.tsx",
+                                                                    lineNumber: 218,
+                                                                    columnNumber: 53
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "flex gap-2 items-center",
+                                                                    children: [
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
+                                                                            className: "w-10 h-8 text-center p-0",
+                                                                            defaultValue: p_4.goles_local,
+                                                                            id: `local-${p_4.id}`
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/app/torneo/page.tsx",
+                                                                            lineNumber: 220,
+                                                                            columnNumber: 57
+                                                                        }, this),
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            children: "-"
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/app/torneo/page.tsx",
+                                                                            lineNumber: 221,
+                                                                            columnNumber: 57
+                                                                        }, this),
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
+                                                                            className: "w-10 h-8 text-center p-0",
+                                                                            defaultValue: p_4.goles_visita,
+                                                                            id: `visita-${p_4.id}`
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/app/torneo/page.tsx",
+                                                                            lineNumber: 222,
+                                                                            columnNumber: 57
+                                                                        }, this),
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                                            size: "icon",
+                                                                            variant: "ghost",
+                                                                            className: "h-8 w-8",
+                                                                            onClick: ()=>handleUpdateScore(p_4.id),
+                                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$save$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Save$3e$__["Save"], {
+                                                                                className: "w-4 h-4"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/torneo/page.tsx",
                                                                                 lineNumber: 223,
-                                                                                columnNumber: 61
-                                                                            }, this),
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                className: "flex items-center gap-1",
-                                                                                children: [
-                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                        className: "text-[10px] text-slate-400 font-mono",
-                                                                                        children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$format$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["format"])(new Date(partido.dia_hora), "HH:mm")
-                                                                                    }, void 0, false, {
-                                                                                        fileName: "[project]/app/torneo/page.tsx",
-                                                                                        lineNumber: 227,
-                                                                                        columnNumber: 65
-                                                                                    }, this),
-                                                                                    partido.estado === 'finalizado' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                        className: "h-1.5 w-1.5 rounded-full bg-green-500",
-                                                                                        title: "Finalizado"
-                                                                                    }, void 0, false, {
-                                                                                        fileName: "[project]/app/torneo/page.tsx",
-                                                                                        lineNumber: 230,
-                                                                                        columnNumber: 101
-                                                                                    }, this)
-                                                                                ]
-                                                                            }, void 0, true, {
-                                                                                fileName: "[project]/app/torneo/page.tsx",
-                                                                                lineNumber: 226,
-                                                                                columnNumber: 61
+                                                                                columnNumber: 155
                                                                             }, this)
-                                                                        ]
-                                                                    }, void 0, true, {
-                                                                        fileName: "[project]/app/torneo/page.tsx",
-                                                                        lineNumber: 222,
-                                                                        columnNumber: 57
-                                                                    }, this),
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                        className: "flex items-center gap-3",
-                                                                        children: [
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                className: "flex-1 flex items-center justify-center gap-2",
-                                                                                children: [
-                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
-                                                                                        id: `local-${partido.id}`,
-                                                                                        type: "number",
-                                                                                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("h-9 w-12 text-center font-bold p-0 bg-white border-slate-200 focus:border-blue-500", partido.goles_local > partido.goles_visita && "text-blue-600 bg-blue-50/50"),
-                                                                                        defaultValue: partido.goles_local
-                                                                                    }, void 0, false, {
-                                                                                        fileName: "[project]/app/torneo/page.tsx",
-                                                                                        lineNumber: 236,
-                                                                                        columnNumber: 65
-                                                                                    }, this),
-                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                        className: "text-slate-300",
-                                                                                        children: "-"
-                                                                                    }, void 0, false, {
-                                                                                        fileName: "[project]/app/torneo/page.tsx",
-                                                                                        lineNumber: 237,
-                                                                                        columnNumber: 65
-                                                                                    }, this),
-                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
-                                                                                        id: `visita-${partido.id}`,
-                                                                                        type: "number",
-                                                                                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("h-9 w-12 text-center font-bold p-0 bg-white border-slate-200 focus:border-blue-500", partido.goles_visita > partido.goles_local && "text-blue-600 bg-blue-50/50"),
-                                                                                        defaultValue: partido.goles_visita
-                                                                                    }, void 0, false, {
-                                                                                        fileName: "[project]/app/torneo/page.tsx",
-                                                                                        lineNumber: 238,
-                                                                                        columnNumber: 65
-                                                                                    }, this)
-                                                                                ]
-                                                                            }, void 0, true, {
-                                                                                fileName: "[project]/app/torneo/page.tsx",
-                                                                                lineNumber: 235,
-                                                                                columnNumber: 61
-                                                                            }, this),
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                                                                size: "icon",
-                                                                                variant: "ghost",
-                                                                                className: "h-9 w-9 text-slate-400 hover:text-green-600 hover:bg-green-50 rounded-full",
-                                                                                onClick: ()=>handleUpdateScore(partido.id),
-                                                                                title: "Guardar Resultado",
-                                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$save$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Save$3e$__["Save"], {
-                                                                                    className: "w-4 h-4"
-                                                                                }, void 0, false, {
-                                                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                                                    lineNumber: 241,
-                                                                                    columnNumber: 65
-                                                                                }, this)
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/app/torneo/page.tsx",
-                                                                                lineNumber: 240,
-                                                                                columnNumber: 61
-                                                                            }, this)
-                                                                        ]
-                                                                    }, void 0, true, {
-                                                                        fileName: "[project]/app/torneo/page.tsx",
-                                                                        lineNumber: 234,
-                                                                        columnNumber: 57
-                                                                    }, this)
-                                                                ]
-                                                            }, partido.id, true, {
-                                                                fileName: "[project]/app/torneo/page.tsx",
-                                                                lineNumber: 221,
-                                                                columnNumber: 80
-                                                            }, this))
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/app/torneo/page.tsx",
-                                                        lineNumber: 220,
-                                                        columnNumber: 45
-                                                    }, this)
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/app/torneo/page.tsx",
+                                                                            lineNumber: 223,
+                                                                            columnNumber: 57
+                                                                        }, this)
+                                                                    ]
+                                                                }, void 0, true, {
+                                                                    fileName: "[project]/app/torneo/page.tsx",
+                                                                    lineNumber: 219,
+                                                                    columnNumber: 53
+                                                                }, this)
+                                                            ]
+                                                        }, p_4.id, true, {
+                                                            fileName: "[project]/app/torneo/page.tsx",
+                                                            lineNumber: 217,
+                                                            columnNumber: 72
+                                                        }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/torneo/page.tsx",
-                                                    lineNumber: 219,
+                                                    lineNumber: 216,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, cruce.id, true, {
                                             fileName: "[project]/app/torneo/page.tsx",
-                                            lineNumber: 199,
+                                            lineNumber: 210,
                                             columnNumber: 63
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/app/torneo/page.tsx",
-                                    lineNumber: 198,
+                                    lineNumber: 209,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex flex-col items-center justify-center py-20 bg-slate-50 rounded-xl border border-dashed border-slate-300",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-white p-4 rounded-full shadow-sm mb-4",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2d$days$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CalendarDays$3e$__["CalendarDays"], {
-                                        className: "h-8 w-8 text-slate-400"
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/torneo/page.tsx",
-                                        lineNumber: 251,
-                                        columnNumber: 33
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "[project]/app/torneo/page.tsx",
-                                    lineNumber: 250,
-                                    columnNumber: 29
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                    className: "text-lg font-semibold text-slate-900",
-                                    children: "No hay torneo activo"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/torneo/page.tsx",
-                                    lineNumber: 253,
-                                    columnNumber: 29
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-slate-500 text-sm max-w-sm text-center mb-6",
-                                    children: "Genera un nuevo fixture para comenzar a gestionar los partidos y resultados."
-                                }, void 0, false, {
-                                    fileName: "[project]/app/torneo/page.tsx",
-                                    lineNumber: 254,
-                                    columnNumber: 29
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                    href: "/torneo/generar",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                        children: "Comenzar Nuevo Torneo"
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/torneo/page.tsx",
-                                        lineNumber: 258,
-                                        columnNumber: 33
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "[project]/app/torneo/page.tsx",
-                                    lineNumber: 257,
-                                    columnNumber: 29
-                                }, this)
-                            ]
-                        }, void 0, true, {
+                            className: "text-center py-20 bg-slate-50 rounded border-dashed border",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                children: [
+                                    "No hay torneo activo para la Serie ",
+                                    torneoSeleccionado
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/app/torneo/page.tsx",
+                                lineNumber: 230,
+                                columnNumber: 29
+                            }, this)
+                        }, void 0, false, {
                             fileName: "[project]/app/torneo/page.tsx",
-                            lineNumber: 249,
+                            lineNumber: 229,
                             columnNumber: 31
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/torneo/page.tsx",
-                        lineNumber: 178,
+                        lineNumber: 198,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsContent"], {
                         value: "tabla",
-                        className: "animate-in fade-in duration-500 space-y-4",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex justify-end bg-white p-2 rounded-lg border shadow-sm",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex items-center gap-2",
+                                className: "flex justify-end mb-4",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
+                                    value: serieTabla,
+                                    onValueChange: setSerieTabla,
                                     children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$funnel$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Filter$3e$__["Filter"], {
-                                            className: "w-4 h-4 text-slate-500"
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectTrigger"], {
+                                            className: "w-[180px]",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {}, void 0, false, {
+                                                fileName: "[project]/app/torneo/page.tsx",
+                                                lineNumber: 238,
+                                                columnNumber: 66
+                                            }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/torneo/page.tsx",
-                                            lineNumber: 267,
+                                            lineNumber: 238,
                                             columnNumber: 29
                                         }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "text-sm font-medium text-slate-600",
-                                            children: "Filtrar por:"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/torneo/page.tsx",
-                                            lineNumber: 268,
-                                            columnNumber: 29
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
-                                            value: serieTabla,
-                                            onValueChange: setSerieTabla,
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
                                             children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectTrigger"], {
-                                                    className: "w-[160px] h-9 bg-slate-50 border-slate-200",
-                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {}, void 0, false, {
-                                                        fileName: "[project]/app/torneo/page.tsx",
-                                                        lineNumber: 271,
-                                                        columnNumber: 37
-                                                    }, this)
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                    value: "super_senior",
+                                                    children: "Super Senior"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/torneo/page.tsx",
-                                                    lineNumber: 270,
+                                                    lineNumber: 240,
                                                     columnNumber: 33
                                                 }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
-                                                            value: "1era",
-                                                            children: "Primera Serie"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                            lineNumber: 274,
-                                                            columnNumber: 37
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
-                                                            value: "2da",
-                                                            children: "Segunda Serie"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                            lineNumber: 275,
-                                                            columnNumber: 37
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
-                                                            value: "3era",
-                                                            children: "Tercera Serie"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                            lineNumber: 276,
-                                                            columnNumber: 37
-                                                        }, this)
-                                                    ]
-                                                }, void 0, true, {
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                    value: "2da",
+                                                    children: "2da Serie"
+                                                }, void 0, false, {
                                                     fileName: "[project]/app/torneo/page.tsx",
-                                                    lineNumber: 273,
+                                                    lineNumber: 241,
+                                                    columnNumber: 33
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                    value: "1era",
+                                                    children: "1era Serie"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/app/torneo/page.tsx",
+                                                    lineNumber: 242,
                                                     columnNumber: 33
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/torneo/page.tsx",
-                                            lineNumber: 269,
+                                            lineNumber: 239,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/torneo/page.tsx",
-                                    lineNumber: 266,
+                                    lineNumber: 237,
                                     columnNumber: 25
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/torneo/page.tsx",
-                                lineNumber: 265,
+                                lineNumber: 236,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
-                                className: "border-slate-200 shadow-sm",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardHeader"], {
-                                        className: "pb-2 border-b border-slate-100 bg-slate-50/50",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
-                                            className: "text-lg flex items-center gap-2",
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trophy$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trophy$3e$__["Trophy"], {
-                                                    className: "w-5 h-5 text-amber-500"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                    lineNumber: 285,
-                                                    columnNumber: 33
-                                                }, this),
-                                                "Tabla de Posiciones"
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/app/torneo/page.tsx",
-                                            lineNumber: 284,
-                                            columnNumber: 29
-                                        }, this)
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/torneo/page.tsx",
-                                        lineNumber: 283,
-                                        columnNumber: 25
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
-                                        className: "p-0",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "overflow-x-auto",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
-                                                className: "w-full text-sm text-left",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
-                                                        className: "bg-slate-50 text-slate-500 font-semibold",
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                                            children: [
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                                    className: "px-4 py-3 text-center w-12",
-                                                                    children: "#"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                                    lineNumber: 294,
-                                                                    columnNumber: 45
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                                    className: "px-4 py-3",
-                                                                    children: "Club"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                                    lineNumber: 295,
-                                                                    columnNumber: 45
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                                    className: "px-4 py-3 text-center font-bold text-slate-800 bg-slate-100",
-                                                                    children: "PTS"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                                    lineNumber: 296,
-                                                                    columnNumber: 45
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                                    className: "px-4 py-3 text-center",
-                                                                    children: "PJ"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                                    lineNumber: 297,
-                                                                    columnNumber: 45
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                                    className: "px-4 py-3 text-center hidden sm:table-cell",
-                                                                    children: "PG"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                                    lineNumber: 298,
-                                                                    columnNumber: 45
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                                    className: "px-4 py-3 text-center hidden sm:table-cell",
-                                                                    children: "PE"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                                    lineNumber: 299,
-                                                                    columnNumber: 45
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                                    className: "px-4 py-3 text-center hidden sm:table-cell",
-                                                                    children: "PP"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                                    lineNumber: 300,
-                                                                    columnNumber: 45
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                                    className: "px-4 py-3 text-center hidden md:table-cell",
-                                                                    children: "GF"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                                    lineNumber: 301,
-                                                                    columnNumber: 45
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                                    className: "px-4 py-3 text-center hidden md:table-cell",
-                                                                    children: "GC"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                                    lineNumber: 302,
-                                                                    columnNumber: 45
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                                    className: "px-4 py-3 text-center",
-                                                                    children: "DIF"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                                    lineNumber: 303,
-                                                                    columnNumber: 45
-                                                                }, this)
-                                                            ]
-                                                        }, void 0, true, {
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
+                                    className: "p-0",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
+                                        className: "w-full text-sm text-left",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
+                                                className: "bg-slate-50 font-bold text-xs uppercase",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                            className: "p-3",
+                                                            children: "Pos"
+                                                        }, void 0, false, {
                                                             fileName: "[project]/app/torneo/page.tsx",
-                                                            lineNumber: 293,
-                                                            columnNumber: 41
+                                                            lineNumber: 250,
+                                                            columnNumber: 96
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                            className: "p-3",
+                                                            children: "Club"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/torneo/page.tsx",
+                                                            lineNumber: 250,
+                                                            columnNumber: 124
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                            className: "p-3",
+                                                            children: "Pts"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/torneo/page.tsx",
+                                                            lineNumber: 250,
+                                                            columnNumber: 153
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                            className: "p-3",
+                                                            children: "PJ"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/torneo/page.tsx",
+                                                            lineNumber: 250,
+                                                            columnNumber: 181
                                                         }, this)
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/app/torneo/page.tsx",
-                                                        lineNumber: 292,
-                                                        columnNumber: 37
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
-                                                        className: "divide-y divide-slate-100",
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/app/torneo/page.tsx",
+                                                    lineNumber: 250,
+                                                    columnNumber: 92
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/torneo/page.tsx",
+                                                lineNumber: 250,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
+                                                children: tabla.map((t, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                                        className: "border-b",
                                                         children: [
-                                                            tabla.map((fila, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                                                    className: "hover:bg-blue-50/30 transition-colors",
-                                                                    children: [
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                            className: "px-4 py-3 text-center font-bold text-slate-400",
-                                                                            children: index + 1
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                                            lineNumber: 308,
-                                                                            columnNumber: 49
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                            className: "px-4 py-3 font-medium text-slate-700 flex items-center gap-3",
-                                                                            children: [
-                                                                                fila.logo ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                                                                    src: fila.logo,
-                                                                                    alt: fila.club,
-                                                                                    className: "w-8 h-8 object-contain"
-                                                                                }, void 0, false, {
-                                                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                                                    lineNumber: 310,
-                                                                                    columnNumber: 66
-                                                                                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                    className: "w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center text-[10px] text-slate-500 font-bold",
-                                                                                    children: fila.club.substring(0, 2).toUpperCase()
-                                                                                }, void 0, false, {
-                                                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                                                    lineNumber: 310,
-                                                                                    columnNumber: 143
-                                                                                }, this),
-                                                                                fila.club
-                                                                            ]
-                                                                        }, void 0, true, {
-                                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                                            lineNumber: 309,
-                                                                            columnNumber: 49
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                            className: "px-4 py-3 text-center font-bold text-blue-700 bg-blue-50/50 text-base border-x border-slate-100",
-                                                                            children: fila.pts
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                                            lineNumber: 315,
-                                                                            columnNumber: 49
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                            className: "px-4 py-3 text-center text-slate-600",
-                                                                            children: fila.pj
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                                            lineNumber: 316,
-                                                                            columnNumber: 49
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                            className: "px-4 py-3 text-center hidden sm:table-cell text-slate-400",
-                                                                            children: fila.pg
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                                            lineNumber: 317,
-                                                                            columnNumber: 49
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                            className: "px-4 py-3 text-center hidden sm:table-cell text-slate-400",
-                                                                            children: fila.pe
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                                            lineNumber: 318,
-                                                                            columnNumber: 49
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                            className: "px-4 py-3 text-center hidden sm:table-cell text-slate-400",
-                                                                            children: fila.pp
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                                            lineNumber: 319,
-                                                                            columnNumber: 49
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                            className: "px-4 py-3 text-center hidden md:table-cell text-slate-400",
-                                                                            children: fila.gf
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                                            lineNumber: 320,
-                                                                            columnNumber: 49
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                            className: "px-4 py-3 text-center hidden md:table-cell text-slate-400",
-                                                                            children: fila.gc
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                                            lineNumber: 321,
-                                                                            columnNumber: 49
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("px-4 py-3 text-center font-bold", fila.dif > 0 ? "text-green-600" : fila.dif < 0 ? "text-red-500" : "text-slate-400"),
-                                                                            children: fila.dif > 0 ? `+${fila.dif}` : fila.dif
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/app/torneo/page.tsx",
-                                                                            lineNumber: 322,
-                                                                            columnNumber: 49
-                                                                        }, this)
-                                                                    ]
-                                                                }, index, true, {
-                                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                                    lineNumber: 307,
-                                                                    columnNumber: 69
-                                                                }, this)),
-                                                            tabla.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                    colSpan: 10,
-                                                                    className: "text-center py-12 text-gray-400",
-                                                                    children: "Sin datos registrados"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/app/torneo/page.tsx",
-                                                                    lineNumber: 326,
-                                                                    columnNumber: 68
-                                                                }, this)
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                                className: "p-3",
+                                                                children: i + 1
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/torneo/page.tsx",
-                                                                lineNumber: 326,
-                                                                columnNumber: 64
+                                                                lineNumber: 252,
+                                                                columnNumber: 91
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                                className: "p-3 font-medium",
+                                                                children: t.club
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/app/torneo/page.tsx",
+                                                                lineNumber: 252,
+                                                                columnNumber: 123
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                                className: "p-3 font-bold",
+                                                                children: t.pts
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/app/torneo/page.tsx",
+                                                                lineNumber: 252,
+                                                                columnNumber: 168
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                                className: "p-3",
+                                                                children: t.pj
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/app/torneo/page.tsx",
+                                                                lineNumber: 252,
+                                                                columnNumber: 210
                                                             }, this)
                                                         ]
-                                                    }, void 0, true, {
+                                                    }, i, true, {
                                                         fileName: "[project]/app/torneo/page.tsx",
-                                                        lineNumber: 306,
-                                                        columnNumber: 37
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
+                                                        lineNumber: 252,
+                                                        columnNumber: 58
+                                                    }, this))
+                                            }, void 0, false, {
                                                 fileName: "[project]/app/torneo/page.tsx",
-                                                lineNumber: 291,
+                                                lineNumber: 251,
                                                 columnNumber: 33
                                             }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/torneo/page.tsx",
-                                            lineNumber: 290,
-                                            columnNumber: 29
-                                        }, this)
-                                    }, void 0, false, {
+                                        ]
+                                    }, void 0, true, {
                                         fileName: "[project]/app/torneo/page.tsx",
-                                        lineNumber: 289,
-                                        columnNumber: 25
+                                        lineNumber: 249,
+                                        columnNumber: 29
                                     }, this)
-                                ]
-                            }, void 0, true, {
+                                }, void 0, false, {
+                                    fileName: "[project]/app/torneo/page.tsx",
+                                    lineNumber: 247,
+                                    columnNumber: 25
+                                }, this)
+                            }, void 0, false, {
                                 fileName: "[project]/app/torneo/page.tsx",
-                                lineNumber: 282,
+                                lineNumber: 246,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/torneo/page.tsx",
-                        lineNumber: 264,
+                        lineNumber: 234,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/torneo/page.tsx",
-                lineNumber: 171,
+                lineNumber: 192,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/torneo/page.tsx",
-        lineNumber: 129,
+        lineNumber: 163,
         columnNumber: 10
     }, this);
 }
-_s(TorneoDashboard, "UEkxiz/u2kunhay5WXDOru5z0ww=");
+_s(TorneoDashboard, "uSJmAnq8vQJN1XYliY1lI5O3+eo=");
 _c = TorneoDashboard;
 var _c;
 __turbopack_context__.k.register(_c, "TorneoDashboard");

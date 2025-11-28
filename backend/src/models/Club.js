@@ -12,12 +12,18 @@ const Club = sequelize.define('Club', {
         allowNull: false,
         unique: true
     },
-    logo: { // Agregamos campo para el escudo/logo
+    logo: { 
         type: DataTypes.STRING,
         allowNull: true
     },
-    // --- CAMPOS DE SERIES ---
-    tiene_1era: {
+
+    division: { 
+        type: DataTypes.ENUM('A', 'B'),
+        allowNull: false,
+        defaultValue: 'A'
+    },
+
+    tiene_super_senior: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
         allowNull: false
@@ -27,7 +33,7 @@ const Club = sequelize.define('Club', {
         defaultValue: true,
         allowNull: false
     },
-    tiene_3era: {
+    tiene_1era: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
         allowNull: false

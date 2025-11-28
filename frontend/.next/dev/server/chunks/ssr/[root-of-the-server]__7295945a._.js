@@ -151,14 +151,10 @@ const api = {
         } else {
             formData.append('passport_input', data.passport);
         }
-        // NUEVOS CAMPOS
-        // 1. Activo (convertir boolean a string)
         formData.append('activo', String(data.activo));
-        // 2. Foto (solo si existe y es un archivo)
         if (data.foto instanceof File) {
             formData.append('foto', data.foto);
         }
-        // Enviamos como multipart/form-data
         await apiClient.post('/api/jugadores', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -230,7 +226,8 @@ const api = {
         return response.data;
     },
     async getPartidos (filters) {
-        const response = await apiClient.get('/api/partidos');
+        const q = filters?.division ? `?division=${filters.division}` : '';
+        const response = await apiClient.get(`/api/partidos${q}`);
         return response.data;
     },
     async updateResultado (id, goles_local, goles_visita) {
@@ -239,28 +236,39 @@ const api = {
             goles_visita
         });
     },
-    async getTablaPosiciones (serie) {
-        const response = await apiClient.get(`/api/partidos/tabla?serie=${serie}`);
+    async getTablaPosiciones (serie, division) {
+        const response = await apiClient.get(`/api/partidos/tabla?serie=${serie}&division=${division}`);
         return response.data;
+    },
+    async reportarIncidente (partidoId, culpableId, motivo) {
+        await apiClient.put(`/api/partidos/${partidoId}/suspender`, {
+            equipo_culpable_id: culpableId,
+            motivo_suspension: motivo
+        });
     },
     async generarFixturePreview (data) {
         const response = await apiClient.post('/api/partidos/preview', data);
         return response.data;
     },
-    // 2. Guardar Fixture Confirmado
-    async guardarFixtureMasivo (fixture) {
+    async guardarFixtureMasivo (fixture, division) {
         await apiClient.post('/api/partidos/masivo', {
-            fixtureConfirmado: fixture
+            fixtureConfirmado: fixture,
+            division
         });
     },
-    async eliminarFixture () {
-        await apiClient.delete('/api/partidos');
+    async eliminarFixture (division) {
+        await apiClient.delete(`/api/partidos?division=${division}`);
     },
-    async reprogramarFecha (fechaNumero, nuevaFecha) {
+    async reprogramarFecha (fechaNumero, nuevaFecha, division) {
         await apiClient.post('/api/partidos/reprogramar', {
             fecha_numero: fechaNumero,
-            nueva_fecha: nuevaFecha
+            nueva_fecha: nuevaFecha,
+            division
         });
+    },
+    async checkTorneo (division) {
+        const response = await apiClient.get(`/api/partidos/check?division=${division}`);
+        return response.data;
     }
 };
 }),
@@ -572,13 +580,12 @@ function GenerarFixturePage() {
     // Configuración
     const [fechaInicio, setFechaInicio] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
     const [horarios, setHorarios] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
-        "3era": "09:00",
+        "super_senior": "09:00",
         "2da": "11:00",
         "1era": "13:00"
     });
     // Datos del Fixture
     const [fixtureData, setFixtureData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
-    // --- NUEVO: Estado para paginar en el preview ---
     const [jornadaIndexVisual, setJornadaIndexVisual] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
     const handleGenerar = async ()=>{
         if (!fechaInicio) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toast"].error("Selecciona una fecha de inicio");
@@ -825,7 +832,7 @@ function GenerarFixturePage() {
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "grid grid-cols-1 md:grid-cols-3 gap-6",
                                         children: [
-                                            "3era",
+                                            "super_senior",
                                             "2da",
                                             "1era"
                                         ].map((serie)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {

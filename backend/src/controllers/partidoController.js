@@ -1,27 +1,37 @@
 const { Partido, Club } = require('../models/associations');
 const { generarFixtureHibrido } = require('../services/fixtureService');
+const { Op } = require('sequelize'); // <--- ¡CRÍTICO! Esto faltaba o se borró
 
 const partidoController = {
-    // 1. Previsualización (No guarda en DB)
+
     generarPreview: async (req, res) => {
         try {
-            const { fechaInicio, horariosBase } = req.body;
-            const clubes = await Club.findAll(); 
+            const { fechaInicio, horariosBase, equiposIds } = req.body;
 
-            if (clubes.length < 2) return res.status(400).json({ error: "Faltan equipos" });
+            if (!equiposIds || !Array.isArray(equiposIds) || equiposIds.length < 2) {
+                return res.status(400).json({ error: "Selecciona al menos 2 equipos." });
+            }
 
-            const fixture = generarFixtureHibrido(clubes, fechaInicio, horariosBase);
+            const clubesSeleccionados = await Club.findAll({
+                where: {
+                    id: { [Op.in]: equiposIds }
+                }
+            });
+
+            const fixture = generarFixtureHibrido(clubesSeleccionados, fechaInicio, horariosBase);
+            
             res.json(fixture);
         } catch (error) {
-            console.error(error);
             res.status(500).json({ error: error.message });
         }
     },
 
-    // 2. Guardado Masivo
     guardarFixtureMasivo: async (req, res) => {
         try {
-            const { fixtureConfirmado } = req.body;
+            const { fixtureConfirmado, division } = req.body; // division = 'A' o 'B'
+
+            if (!division) return res.status(400).json({ error: "Falta la división (A o B)" });
+
             const inserts = [];
 
             fixtureConfirmado.forEach(jornada => {
@@ -33,24 +43,27 @@ const partidoController = {
                             clubVisitaId: cruce.visita.id,
                             serie: p.serie,
                             dia_hora: p.fechaFull,
-                            estado: 'programado'
+                            estado: 'programado',
+                            campeonato: division // <--- LA CLAVE DE LA INDEPENDENCIA
                         });
                     });
                 });
             });
 
             await Partido.bulkCreate(inserts);
-            res.status(201).json({ message: "Fixture creado exitosamente" });
+            res.status(201).json({ message: "Torneo guardado" });
         } catch (error) {
-            console.error(error);
             res.status(500).json({ error: error.message });
         }
     },
 
-    // 3. Obtener todos (ESTA ES LA QUE FALTABA O FALLABA)
     getAll: async (req, res) => {
         try {
+            const { division } = req.query; // ?division=A
+            const whereClause = division ? { campeonato: division } : {};
+
             const partidos = await Partido.findAll({
+                where: whereClause,
                 include: [
                     { model: Club, as: 'local' },
                     { model: Club, as: 'visita' }
@@ -59,7 +72,6 @@ const partidoController = {
             });
             res.json(partidos);
         } catch (error) {
-            console.error(error);
             res.status(500).json({ error: error.message });
         }
     },
@@ -70,12 +82,14 @@ const partidoController = {
             const { goles_local, goles_visita } = req.body;
             
             const partido = await Partido.findByPk(id);
-            if (!partido) return res.status(404).json({ error: "Partido no encontrado" });
+            if (!partido) return res.status(404).json({ error: "No encontrado" });
 
             partido.goles_local = goles_local;
             partido.goles_visita = goles_visita;
-            partido.estado = 'finalizado'; // Al guardar goles, finalizamos el partido
-            
+            partido.estado = 'finalizado'; 
+            partido.equipo_culpable_id = null; // Reset suspension
+            partido.motivo_suspension = null;
+
             await partido.save();
             res.json(partido);
         } catch (error) {
@@ -83,32 +97,86 @@ const partidoController = {
         }
     },
 
-    // 5. CALCULAR TABLA DE POSICIONES
+    suspenderPartido: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { equipo_culpable_id, motivo_suspension } = req.body;
+
+            const partido = await Partido.findByPk(id);
+            if (!partido) return res.status(404).json({ error: "No encontrado" });
+
+            partido.estado = 'suspendido';
+            partido.equipo_culpable_id = equipo_culpable_id;
+            partido.motivo_suspension = motivo_suspension;
+
+            await partido.save();
+            res.json(partido);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+
+    eliminarFixture: async (req, res) => {
+        try {
+            const { division } = req.query; // ?division=A
+            if (!division) return res.status(400).json({error: "Especifica la división a borrar"});
+
+            await Partido.destroy({
+                where: { campeonato: division }
+            });
+            res.json({ message: `Fixture Serie ${division} eliminado` });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+
+    reprogramarFecha: async (req, res) => {
+        try {
+            const { fecha_numero, nueva_fecha, division } = req.body;
+            
+            // Buscamos solo partidos de esa fecha Y de esa división
+            const partidos = await Partido.findAll({ 
+                where: { fecha_numero, campeonato: division } 
+            });
+
+            const [anio, mes, dia] = nueva_fecha.split('-').map(Number);
+            
+            for (const partido of partidos) {
+                if (partido.dia_hora) {
+                    const original = new Date(partido.dia_hora);
+                    const nueva = new Date(anio, mes - 1, dia);
+                    nueva.setHours(original.getHours(), original.getMinutes(), 0);
+                    partido.dia_hora = nueva;
+                    await partido.save();
+                }
+            }
+            res.json({ message: "Fecha reprogramada" });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+
     getTablaPosiciones: async (req, res) => {
         try {
-            const { serie } = req.query; // Ej: ?serie=1era
+            const { serie, division } = req.query; 
             
-            if (!serie) return res.status(400).json({ error: "Debes especificar la serie" });
-
-            // 1. Traer todos los clubes que participan en esa serie
-            // (Usamos el flag correspondiente para filtrar, ej: tiene_1era = true)
-            const campoSerie = `tiene_${serie}`; // tiene_1era
-            const whereClub = {};
-            whereClub[campoSerie] = true;
-
-            const clubes = await Club.findAll({ where: whereClub });
-
-            // 2. Traer solo los partidos FINALIZADOS de esa serie
+            // Filtramos partidos de esa división y serie
             const partidos = await Partido.findAll({
                 where: { 
-                    estado: 'finalizado',
-                    serie: serie 
+                    estado: { [Op.or]: ['finalizado', 'suspendido'] },
+                    serie: serie,
+                    campeonato: division 
                 }
             });
 
-            // 3. Inicializar estructura de tabla
+            // Para la tabla, usamos TODOS los clubes, pero los filtramos después
+            // para mostrar solo los que tienen puntos o pertenecen a la división.
+            // Una estrategia simple: Traer todos y la tabla se llena solo con los que juegan.
+            const clubes = await Club.findAll(); 
+
             let tabla = {};
-            clubes.forEach(c => {
+            // Inicializar tabla SOLO con clubes de la división solicitada (para que no salgan todos)
+            clubes.filter(c => c.division === division).forEach(c => {
                 tabla[c.id] = {
                     club: c.nombre,
                     logo: c.logo,
@@ -116,108 +184,58 @@ const partidoController = {
                 };
             });
 
-            // 4. Calcular estadísticas
+            const ptsWin = serie === '1era' ? 3 : 2; // Regla de puntos
+
             partidos.forEach(p => {
                 const local = tabla[p.clubLocalId];
                 const visita = tabla[p.clubVisitaId];
 
-                // Solo procesamos si ambos clubes existen en la tabla (seguridad)
                 if (local && visita) {
-                    // Partidos Jugados
-                    local.pj++; visita.pj++;
-                    // Goles
-                    local.gf += p.goles_local; local.gc += p.goles_visita;
-                    visita.gf += p.goles_visita; visita.gc += p.goles_local;
-                    // Diferencia
-                    local.dif = local.gf - local.gc;
-                    visita.dif = visita.gf - visita.gc;
+                    if (p.equipo_culpable_id) { // Suspendido
+                        local.pj++; visita.pj++;
+                        local.gf += p.goles_local; local.gc += p.goles_visita;
+                        visita.gf += p.goles_visita; visita.gc += p.goles_local;
+                        if (p.equipo_culpable_id === p.clubLocalId) { 
+                            visita.pts += ptsWin; visita.pg++; local.pp++; 
+                        } else { 
+                            local.pts += ptsWin; local.pg++; visita.pp++; 
+                        }
+                    } else if (p.estado === 'finalizado') { // Normal
+                        local.pj++; visita.pj++;
+                        local.gf += p.goles_local; local.gc += p.goles_visita;
+                        visita.gf += p.goles_visita; visita.gc += p.goles_local;
+                        local.dif = local.gf - local.gc; visita.dif = visita.gf - visita.gc;
 
-                    // Puntos
-                    if (p.goles_local > p.goles_visita) {
-                        local.pts += 3; local.pg++; visita.pp++;
-                    } else if (p.goles_local < p.goles_visita) {
-                        visita.pts += 3; visita.pg++; local.pp++;
-                    } else {
-                        local.pts += 1; local.pe++;
-                        visita.pts += 1; visita.pe++;
+                        if (p.goles_local > p.goles_visita) { 
+                            local.pts += ptsWin; local.pg++; visita.pp++; 
+                        } else if (p.goles_local < p.goles_visita) { 
+                            visita.pts += ptsWin; visita.pg++; local.pp++; 
+                        } else { 
+                            local.pts += 1; local.pe++; visita.pts += 1; visita.pe++; 
+                        }
                     }
                 }
             });
 
-            // 5. Convertir a array y ordenar (Puntos > Diferencia > Goles Favor)
-            const tablaOrdenada = Object.values(tabla).sort((a, b) => {
-                if (b.pts !== a.pts) return b.pts - a.pts;
-                if (b.dif !== a.dif) return b.dif - a.dif;
-                return b.gf - a.gf;
-            });
-
+            const tablaOrdenada = Object.values(tabla).sort((a, b) => b.pts - a.pts || b.dif - a.dif);
             res.json(tablaOrdenada);
 
         } catch (error) {
-            console.error(error);
             res.status(500).json({ error: error.message });
         }
     },
 
-    eliminarFixture: async (req, res) => {
+    checkTorneo: async (req, res) => {
         try {
-            // "truncate: true" borra todo y resetea los IDs autoincrementables a 1
-            await Partido.destroy({
-                where: {},
-                truncate: true 
+            const { division } = req.query; // 'A' o 'B'
+            const count = await Partido.count({ 
+                where: { campeonato: division } 
             });
-            res.json({ message: "Fixture eliminado correctamente" });
+            res.json({ existe: count > 0, cantidad: count });
         } catch (error) {
-            console.error(error);
             res.status(500).json({ error: error.message });
         }
     },
-    
-    reprogramarFecha: async (req, res) => {
-        try {
-            const { fecha_numero, nueva_fecha } = req.body; // nueva_fecha viene como "YYYY-MM-DD"
-
-            if (!fecha_numero || !nueva_fecha) {
-                return res.status(400).json({ error: "Faltan datos requeridos" });
-            }
-
-            // 1. Buscamos todos los partidos de esa jornada
-            const partidos = await Partido.findAll({
-                where: { fecha_numero: fecha_numero }
-            });
-
-            if (partidos.length === 0) {
-                return res.status(404).json({ error: "No hay partidos en esa fecha" });
-            }
-
-            // 2. Parseamos la nueva fecha base (asegurando hora local)
-            const [anio, mes, dia] = nueva_fecha.split('-').map(Number);
-            
-            // 3. Actualizamos uno por uno para conservar la HORA original
-            for (const partido of partidos) {
-                if (partido.dia_hora) {
-                    const fechaOriginal = new Date(partido.dia_hora);
-                    const horas = fechaOriginal.getHours();
-                    const minutos = fechaOriginal.getMinutes();
-
-                    // Crear nueva fecha combinando el día nuevo + hora original
-                    const nuevaFechaFull = new Date(anio, mes - 1, dia);
-                    nuevaFechaFull.setHours(horas, minutos, 0);
-
-                    partido.dia_hora = nuevaFechaFull;
-                    // Opcional: Si estaban finalizados, podríamos pasarlos a 'programado' o 'suspendido'
-                    // partido.estado = 'programado'; 
-                    await partido.save();
-                }
-            }
-
-            res.json({ message: `Fecha ${fecha_numero} reprogramada al ${nueva_fecha} exitosamente.` });
-
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ error: error.message });
-        }
-    }
 };
 
 module.exports = partidoController;

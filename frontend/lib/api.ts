@@ -56,16 +56,12 @@ export const api = {
             formData.append('passport_input', data.passport);
         }
 
-        // NUEVOS CAMPOS
-        // 1. Activo (convertir boolean a string)
         formData.append('activo', String(data.activo));
 
-        // 2. Foto (solo si existe y es un archivo)
         if (data.foto instanceof File) {
             formData.append('foto', data.foto);
         }
 
-        // Enviamos como multipart/form-data
         await apiClient.post('/api/jugadores', formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
         });
@@ -149,9 +145,9 @@ export const api = {
         return response.data;
     },
 
-    async getPartidos(filters?: { fecha?: number; serie?: string }): Promise<Partido[]> {
-
-        const response = await apiClient.get<Partido[]>('/api/partidos');
+    async getPartidos(filters?: { division?: string }): Promise<Partido[]> {
+        const q = filters?.division ? `?division=${filters.division}` : '';
+        const response = await apiClient.get<Partido[]>(`/api/partidos${q}`);
         return response.data;
     },
 
@@ -159,26 +155,34 @@ export const api = {
         await apiClient.put(`/api/partidos/${id}/resultado`, { goles_local, goles_visita });
     },
 
-    async getTablaPosiciones(serie: string): Promise<PosicionTabla[]> {
-        const response = await apiClient.get<PosicionTabla[]>(`/api/partidos/tabla?serie=${serie}`);
+    async getTablaPosiciones(serie: string, division: string): Promise<PosicionTabla[]> {
+        const response = await apiClient.get<PosicionTabla[]>(`/api/partidos/tabla?serie=${serie}&division=${division}`);
         return response.data;
     },
 
-    async generarFixturePreview(data: { fechaInicio: string; horariosBase: any }): Promise<JornadaPreview[]> {
+    async reportarIncidente(partidoId: number, culpableId: number, motivo: string): Promise<void> {
+        await apiClient.put(`/api/partidos/${partidoId}/suspender`, { equipo_culpable_id: culpableId, motivo_suspension: motivo });
+    },
+
+    async generarFixturePreview(data: { fechaInicio: string; horariosBase: any; equiposIds: number[] }): Promise<JornadaPreview[]> {
         const response = await apiClient.post<JornadaPreview[]>('/api/partidos/preview', data);
         return response.data;
     },
 
-    // 2. Guardar Fixture Confirmado
-    async guardarFixtureMasivo(fixture: JornadaPreview[]): Promise<void> {
-        await apiClient.post('/api/partidos/masivo', { fixtureConfirmado: fixture });
+    async guardarFixtureMasivo(fixture: JornadaPreview[], division: string): Promise<void> {
+        await apiClient.post('/api/partidos/masivo', { fixtureConfirmado: fixture, division });
     },
 
-    async eliminarFixture(): Promise<void> {
-        await apiClient.delete('/api/partidos');
+    async eliminarFixture(division: string): Promise<void> {
+        await apiClient.delete(`/api/partidos?division=${division}`);
     },
 
-    async reprogramarFecha(fechaNumero: number, nuevaFecha: string): Promise<void> {
-        await apiClient.post('/api/partidos/reprogramar', { fecha_numero: fechaNumero, nueva_fecha: nuevaFecha });
+    async reprogramarFecha(fechaNumero: number, nuevaFecha: string, division: string): Promise<void> {
+        await apiClient.post('/api/partidos/reprogramar', { fecha_numero: fechaNumero, nueva_fecha: nuevaFecha, division });
+    },
+
+    async checkTorneo(division: string) {
+        const response = await apiClient.get(`/api/partidos/check?division=${division}`);
+        return response.data;
     },
 };

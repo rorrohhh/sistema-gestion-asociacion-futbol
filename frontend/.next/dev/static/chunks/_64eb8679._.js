@@ -71,14 +71,10 @@ const api = {
         } else {
             formData.append('passport_input', data.passport);
         }
-        // NUEVOS CAMPOS
-        // 1. Activo (convertir boolean a string)
         formData.append('activo', String(data.activo));
-        // 2. Foto (solo si existe y es un archivo)
         if (data.foto instanceof File) {
             formData.append('foto', data.foto);
         }
-        // Enviamos como multipart/form-data
         await apiClient.post('/api/jugadores', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -150,7 +146,8 @@ const api = {
         return response.data;
     },
     async getPartidos (filters) {
-        const response = await apiClient.get('/api/partidos');
+        const q = filters?.division ? `?division=${filters.division}` : '';
+        const response = await apiClient.get(`/api/partidos${q}`);
         return response.data;
     },
     async updateResultado (id, goles_local, goles_visita) {
@@ -159,28 +156,39 @@ const api = {
             goles_visita
         });
     },
-    async getTablaPosiciones (serie) {
-        const response = await apiClient.get(`/api/partidos/tabla?serie=${serie}`);
+    async getTablaPosiciones (serie, division) {
+        const response = await apiClient.get(`/api/partidos/tabla?serie=${serie}&division=${division}`);
         return response.data;
+    },
+    async reportarIncidente (partidoId, culpableId, motivo) {
+        await apiClient.put(`/api/partidos/${partidoId}/suspender`, {
+            equipo_culpable_id: culpableId,
+            motivo_suspension: motivo
+        });
     },
     async generarFixturePreview (data) {
         const response = await apiClient.post('/api/partidos/preview', data);
         return response.data;
     },
-    // 2. Guardar Fixture Confirmado
-    async guardarFixtureMasivo (fixture) {
+    async guardarFixtureMasivo (fixture, division) {
         await apiClient.post('/api/partidos/masivo', {
-            fixtureConfirmado: fixture
+            fixtureConfirmado: fixture,
+            division
         });
     },
-    async eliminarFixture () {
-        await apiClient.delete('/api/partidos');
+    async eliminarFixture (division) {
+        await apiClient.delete(`/api/partidos?division=${division}`);
     },
-    async reprogramarFecha (fechaNumero, nuevaFecha) {
+    async reprogramarFecha (fechaNumero, nuevaFecha, division) {
         await apiClient.post('/api/partidos/reprogramar', {
             fecha_numero: fechaNumero,
-            nueva_fecha: nuevaFecha
+            nueva_fecha: nuevaFecha,
+            division
         });
+    },
+    async checkTorneo (division) {
+        const response = await apiClient.get(`/api/partidos/check?division=${division}`);
+        return response.data;
     }
 };
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
@@ -960,13 +968,12 @@ function GenerarFixturePage() {
     // Configuración
     const [fechaInicio, setFechaInicio] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [horarios, setHorarios] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
-        "3era": "09:00",
+        "super_senior": "09:00",
         "2da": "11:00",
         "1era": "13:00"
     });
     // Datos del Fixture
     const [fixtureData, setFixtureData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    // --- NUEVO: Estado para paginar en el preview ---
     const [jornadaIndexVisual, setJornadaIndexVisual] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
     const handleGenerar = async ()=>{
         if (!fechaInicio) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error("Selecciona una fecha de inicio");
@@ -1032,12 +1039,12 @@ function GenerarFixturePage() {
                                     className: "h-6 w-6"
                                 }, void 0, false, {
                                     fileName: "[project]/app/torneo/generar/page.tsx",
-                                    lineNumber: 89,
+                                    lineNumber: 88,
                                     columnNumber: 25
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                lineNumber: 88,
+                                lineNumber: 87,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1047,7 +1054,7 @@ function GenerarFixturePage() {
                                         children: "Nuevo Torneo"
                                     }, void 0, false, {
                                         fileName: "[project]/app/torneo/generar/page.tsx",
-                                        lineNumber: 92,
+                                        lineNumber: 91,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1055,19 +1062,19 @@ function GenerarFixturePage() {
                                         children: "Asistente de creación de fixture automático"
                                     }, void 0, false, {
                                         fileName: "[project]/app/torneo/generar/page.tsx",
-                                        lineNumber: 93,
+                                        lineNumber: 92,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                lineNumber: 91,
+                                lineNumber: 90,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/torneo/generar/page.tsx",
-                        lineNumber: 87,
+                        lineNumber: 86,
                         columnNumber: 17
                     }, this),
                     step === "preview" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1079,14 +1086,14 @@ function GenerarFixturePage() {
                                 className: "mr-2 h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                lineNumber: 98,
+                                lineNumber: 97,
                                 columnNumber: 25
                             }, this),
                             " Volver a Configuración"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/torneo/generar/page.tsx",
-                        lineNumber: 97,
+                        lineNumber: 96,
                         columnNumber: 40
                     }, this),
                     step === "config" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1095,13 +1102,13 @@ function GenerarFixturePage() {
                         children: "Cancelar"
                     }, void 0, false, {
                         fileName: "[project]/app/torneo/generar/page.tsx",
-                        lineNumber: 100,
+                        lineNumber: 99,
                         columnNumber: 39
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/torneo/generar/page.tsx",
-                lineNumber: 86,
+                lineNumber: 85,
                 columnNumber: 13
             }, this),
             step === "config" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -1113,20 +1120,20 @@ function GenerarFixturePage() {
                                 children: "Paso 1: Configuración Inicial"
                             }, void 0, false, {
                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                lineNumber: 106,
+                                lineNumber: 105,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
                                 children: "Define cuándo comienza el torneo y los horarios base para cada serie."
                             }, void 0, false, {
                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                lineNumber: 107,
+                                lineNumber: 106,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/torneo/generar/page.tsx",
-                        lineNumber: 105,
+                        lineNumber: 104,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1140,7 +1147,7 @@ function GenerarFixturePage() {
                                         children: "Fecha de Inicio (Primera Fecha)"
                                     }, void 0, false, {
                                         fileName: "[project]/app/torneo/generar/page.tsx",
-                                        lineNumber: 111,
+                                        lineNumber: 110,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1150,7 +1157,7 @@ function GenerarFixturePage() {
                                                 className: "absolute left-3 top-3 h-5 w-5 text-gray-400"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                                lineNumber: 113,
+                                                lineNumber: 112,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1160,13 +1167,13 @@ function GenerarFixturePage() {
                                                 onChange: (e)=>setFechaInicio(e.target.value)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                                lineNumber: 114,
+                                                lineNumber: 113,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/torneo/generar/page.tsx",
-                                        lineNumber: 112,
+                                        lineNumber: 111,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1174,13 +1181,13 @@ function GenerarFixturePage() {
                                         children: "Generalmente se selecciona un Sábado. El sistema calculará las siguientes fechas automáticamente."
                                     }, void 0, false, {
                                         fileName: "[project]/app/torneo/generar/page.tsx",
-                                        lineNumber: 116,
+                                        lineNumber: 115,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                lineNumber: 110,
+                                lineNumber: 109,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1193,7 +1200,7 @@ function GenerarFixturePage() {
                                                 className: "h-5 w-5 text-blue-600"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                                lineNumber: 121,
+                                                lineNumber: 120,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1201,19 +1208,19 @@ function GenerarFixturePage() {
                                                 children: "Horarios por defecto"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                                lineNumber: 122,
+                                                lineNumber: 121,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/torneo/generar/page.tsx",
-                                        lineNumber: 120,
+                                        lineNumber: 119,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "grid grid-cols-1 md:grid-cols-3 gap-6",
                                         children: [
-                                            "3era",
+                                            "super_senior",
                                             "2da",
                                             "1era"
                                         ].map((serie)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1227,7 +1234,7 @@ function GenerarFixturePage() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/torneo/generar/page.tsx",
-                                                        lineNumber: 126,
+                                                        lineNumber: 125,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1240,24 +1247,24 @@ function GenerarFixturePage() {
                                                         className: "bg-white"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/torneo/generar/page.tsx",
-                                                        lineNumber: 127,
+                                                        lineNumber: 126,
                                                         columnNumber: 41
                                                     }, this)
                                                 ]
                                             }, serie, true, {
                                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                                lineNumber: 125,
-                                                columnNumber: 71
+                                                lineNumber: 124,
+                                                columnNumber: 79
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/app/torneo/generar/page.tsx",
-                                        lineNumber: 124,
+                                        lineNumber: 123,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                lineNumber: 119,
+                                lineNumber: 118,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1269,26 +1276,26 @@ function GenerarFixturePage() {
                                         className: "mr-2 h-5 w-5 animate-spin"
                                     }, void 0, false, {
                                         fileName: "[project]/app/torneo/generar/page.tsx",
-                                        lineNumber: 136,
+                                        lineNumber: 135,
                                         columnNumber: 41
                                     }, this),
                                     "Generar Previsualización"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                lineNumber: 135,
+                                lineNumber: 134,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/torneo/generar/page.tsx",
-                        lineNumber: 109,
+                        lineNumber: 108,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/torneo/generar/page.tsx",
-                lineNumber: 104,
+                lineNumber: 103,
                 columnNumber: 35
             }, this),
             step === "preview" && fixtureData.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1306,12 +1313,12 @@ function GenerarFixturePage() {
                                             className: "h-5 w-5 text-amber-600"
                                         }, void 0, false, {
                                             fileName: "[project]/app/torneo/generar/page.tsx",
-                                            lineNumber: 148,
+                                            lineNumber: 147,
                                             columnNumber: 76
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/torneo/generar/page.tsx",
-                                        lineNumber: 148,
+                                        lineNumber: 147,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1321,7 +1328,7 @@ function GenerarFixturePage() {
                                                 children: "Modo Borrador"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                                lineNumber: 150,
+                                                lineNumber: 149,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1329,19 +1336,19 @@ function GenerarFixturePage() {
                                                 children: "Revisa fecha por fecha antes de guardar."
                                             }, void 0, false, {
                                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                                lineNumber: 151,
+                                                lineNumber: 150,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/torneo/generar/page.tsx",
-                                        lineNumber: 149,
+                                        lineNumber: 148,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                lineNumber: 147,
+                                lineNumber: 146,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1354,20 +1361,20 @@ function GenerarFixturePage() {
                                         className: "mr-2 h-5 w-5"
                                     }, void 0, false, {
                                         fileName: "[project]/app/torneo/generar/page.tsx",
-                                        lineNumber: 155,
+                                        lineNumber: 154,
                                         columnNumber: 29
                                     }, this),
                                     loading ? "Guardando..." : "Confirmar Torneo"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                lineNumber: 154,
+                                lineNumber: 153,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/torneo/generar/page.tsx",
-                        lineNumber: 146,
+                        lineNumber: 145,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1382,12 +1389,12 @@ function GenerarFixturePage() {
                                     className: "h-5 w-5"
                                 }, void 0, false, {
                                     fileName: "[project]/app/torneo/generar/page.tsx",
-                                    lineNumber: 163,
+                                    lineNumber: 162,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                lineNumber: 162,
+                                lineNumber: 161,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1401,7 +1408,7 @@ function GenerarFixturePage() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/torneo/generar/page.tsx",
-                                        lineNumber: 167,
+                                        lineNumber: 166,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1411,13 +1418,13 @@ function GenerarFixturePage() {
                                         })
                                     }, void 0, false, {
                                         fileName: "[project]/app/torneo/generar/page.tsx",
-                                        lineNumber: 168,
+                                        lineNumber: 167,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                lineNumber: 166,
+                                lineNumber: 165,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1429,18 +1436,18 @@ function GenerarFixturePage() {
                                     className: "h-5 w-5"
                                 }, void 0, false, {
                                     fileName: "[project]/app/torneo/generar/page.tsx",
-                                    lineNumber: 176,
+                                    lineNumber: 175,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                lineNumber: 175,
+                                lineNumber: 174,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/torneo/generar/page.tsx",
-                        lineNumber: 161,
+                        lineNumber: 160,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1458,7 +1465,7 @@ function GenerarFixturePage() {
                                                     children: cruce_0.local.nombre
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/torneo/generar/page.tsx",
-                                                    lineNumber: 186,
+                                                    lineNumber: 185,
                                                     columnNumber: 41
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1466,7 +1473,7 @@ function GenerarFixturePage() {
                                                     children: "VS"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/torneo/generar/page.tsx",
-                                                    lineNumber: 187,
+                                                    lineNumber: 186,
                                                     columnNumber: 41
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1474,13 +1481,13 @@ function GenerarFixturePage() {
                                                     children: cruce_0.visita.nombre
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/torneo/generar/page.tsx",
-                                                    lineNumber: 188,
+                                                    lineNumber: 187,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/torneo/generar/page.tsx",
-                                            lineNumber: 185,
+                                            lineNumber: 184,
                                             columnNumber: 37
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1494,7 +1501,7 @@ function GenerarFixturePage() {
                                                             children: partido.serie
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/torneo/generar/page.tsx",
-                                                            lineNumber: 194,
+                                                            lineNumber: 193,
                                                             columnNumber: 49
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1502,18 +1509,18 @@ function GenerarFixturePage() {
                                                             children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$format$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["format"])(new Date(partido.fechaFull), "HH:mm")
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/torneo/generar/page.tsx",
-                                                            lineNumber: 197,
+                                                            lineNumber: 196,
                                                             columnNumber: 49
                                                         }, this)
                                                     ]
                                                 }, pIndex, true, {
                                                     fileName: "[project]/app/torneo/generar/page.tsx",
-                                                    lineNumber: 193,
+                                                    lineNumber: 192,
                                                     columnNumber: 84
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/app/torneo/generar/page.tsx",
-                                            lineNumber: 192,
+                                            lineNumber: 191,
                                             columnNumber: 37
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1526,44 +1533,44 @@ function GenerarFixturePage() {
                                                 children: "Pasar bloque al Domingo ➡️"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                                lineNumber: 205,
+                                                lineNumber: 204,
                                                 columnNumber: 41
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/torneo/generar/page.tsx",
-                                            lineNumber: 204,
+                                            lineNumber: 203,
                                             columnNumber: 37
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/torneo/generar/page.tsx",
-                                    lineNumber: 183,
+                                    lineNumber: 182,
                                     columnNumber: 33
                                 }, this)
                             }, `${cruce_0.local.id}-vs-${cruce_0.visita.id}`, false, {
                                 fileName: "[project]/app/torneo/generar/page.tsx",
-                                lineNumber: 182,
+                                lineNumber: 181,
                                 columnNumber: 99
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/app/torneo/generar/page.tsx",
-                        lineNumber: 181,
+                        lineNumber: 180,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/torneo/generar/page.tsx",
-                lineNumber: 143,
+                lineNumber: 142,
                 columnNumber: 62
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/torneo/generar/page.tsx",
-        lineNumber: 83,
+        lineNumber: 82,
         columnNumber: 10
     }, this);
 }
-_s(GenerarFixturePage, "V7IvPhSFbCVFe0+HS0a7ztJtjSs=", false, function() {
+_s(GenerarFixturePage, "hWmPwx16NL0D8IHC6vhem3ZZMAg=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];
