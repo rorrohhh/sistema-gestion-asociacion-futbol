@@ -1,6 +1,7 @@
 const Jugador = require('./Jugador');
 const Club = require('./Club');
 const Pase = require('./Pase');
+const Partido = require('./Partido');
 
 //  Relación Jugador - Historial
 // Un jugador tiene muchos pases
@@ -20,4 +21,10 @@ Club.hasMany(Pase, { foreignKey: 'clubDestinoId', as: 'PasesEntrada' });
 // Un pase pertenece a un Club de Destino
 Pase.belongsTo(Club, { foreignKey: 'clubDestinoId', as: 'ClubDestino' });
 
-module.exports = { Jugador, Club, Pase };
+Club.hasMany(Partido, { foreignKey: 'clubLocalId', as: 'partidosLocal' });
+Club.hasMany(Partido, { foreignKey: 'clubVisitaId', as: 'partidosVisita' });
+
+Partido.belongsTo(Club, { foreignKey: 'clubLocalId', as: 'local' });
+Partido.belongsTo(Club, { foreignKey: 'clubVisitaId', as: 'visita' });
+
+module.exports = { Jugador, Club, Pase, Partido };

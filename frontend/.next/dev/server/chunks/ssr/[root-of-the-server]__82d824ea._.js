@@ -228,6 +228,39 @@ const api = {
     async getHistorialPases (jugadorId) {
         const response = await apiClient.get(`/api/pases/historial/${jugadorId}`);
         return response.data;
+    },
+    async getPartidos (filters) {
+        const response = await apiClient.get('/api/partidos');
+        return response.data;
+    },
+    async updateResultado (id, goles_local, goles_visita) {
+        await apiClient.put(`/api/partidos/${id}/resultado`, {
+            goles_local,
+            goles_visita
+        });
+    },
+    async getTablaPosiciones (serie) {
+        const response = await apiClient.get(`/api/partidos/tabla?serie=${serie}`);
+        return response.data;
+    },
+    async generarFixturePreview (data) {
+        const response = await apiClient.post('/api/partidos/preview', data);
+        return response.data;
+    },
+    // 2. Guardar Fixture Confirmado
+    async guardarFixtureMasivo (fixture) {
+        await apiClient.post('/api/partidos/masivo', {
+            fixtureConfirmado: fixture
+        });
+    },
+    async eliminarFixture () {
+        await apiClient.delete('/api/partidos');
+    },
+    async reprogramarFecha (fechaNumero, nuevaFecha) {
+        await apiClient.post('/api/partidos/reprogramar', {
+            fecha_numero: fechaNumero,
+            nueva_fecha: nuevaFecha
+        });
     }
 };
 }),

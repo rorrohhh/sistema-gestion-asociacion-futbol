@@ -11,6 +11,26 @@ const Club = sequelize.define('Club', {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
+    },
+    logo: { // Agregamos campo para el escudo/logo
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    // --- CAMPOS DE SERIES ---
+    tiene_1era: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        allowNull: false
+    },
+    tiene_2da: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        allowNull: false
+    },
+    tiene_3era: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        allowNull: false
     }
 }, {
     tableName: 'clubes',

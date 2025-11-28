@@ -1,3 +1,10 @@
-[00:00:01.885] Server  LOG      ✓ Ready in 1304ms
-[00:00:20.817] Server  LOG      ○ Compiling / ...
-[00:00:37.470] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:02.067] Server  LOG      ✓ Ready in 1363ms
+[00:00:07.003] Server  LOG      ○ Compiling /torneo ...
+[00:00:09.242] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:03.766] Server  LOG      ✓ Compiled in 240ms
+[00:09:36.328] Server  LOG      ✓ Compiled in 151ms
+[00:55:58.649] Server  LOG      ✓ Compiled in 87ms
+[00:57:01.120] Server  LOG      ✓ Compiled in 347ms
+[00:57:11.225] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:17:09.755] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:24:22.956] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold

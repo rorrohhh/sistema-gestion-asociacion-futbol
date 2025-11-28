@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { env } from './env';
-import type { Jugador, Club, FilterParams, CreateJugadorDTO, CreateClubDTO } from '@/types';
+import type { Jugador, Club, FilterParams, CreateJugadorDTO, CreateClubDTO, Partido, PosicionTabla, PartidoPreview, EnfrentamientoPreview, JornadaPreview } from '@/types';
 
 // Configuración del Cliente Axios
 const apiClient = axios.create({
@@ -147,5 +147,38 @@ export const api = {
     async getHistorialPases(jugadorId: string): Promise<any[]> {
         const response = await apiClient.get(`/api/pases/historial/${jugadorId}`);
         return response.data;
+    },
+
+    async getPartidos(filters?: { fecha?: number; serie?: string }): Promise<Partido[]> {
+
+        const response = await apiClient.get<Partido[]>('/api/partidos');
+        return response.data;
+    },
+
+    async updateResultado(id: number, goles_local: number, goles_visita: number): Promise<void> {
+        await apiClient.put(`/api/partidos/${id}/resultado`, { goles_local, goles_visita });
+    },
+
+    async getTablaPosiciones(serie: string): Promise<PosicionTabla[]> {
+        const response = await apiClient.get<PosicionTabla[]>(`/api/partidos/tabla?serie=${serie}`);
+        return response.data;
+    },
+
+    async generarFixturePreview(data: { fechaInicio: string; horariosBase: any }): Promise<JornadaPreview[]> {
+        const response = await apiClient.post<JornadaPreview[]>('/api/partidos/preview', data);
+        return response.data;
+    },
+
+    // 2. Guardar Fixture Confirmado
+    async guardarFixtureMasivo(fixture: JornadaPreview[]): Promise<void> {
+        await apiClient.post('/api/partidos/masivo', { fixtureConfirmado: fixture });
+    },
+
+    async eliminarFixture(): Promise<void> {
+        await apiClient.delete('/api/partidos');
+    },
+
+    async reprogramarFecha(fechaNumero: number, nuevaFecha: string): Promise<void> {
+        await apiClient.post('/api/partidos/reprogramar', { fecha_numero: fechaNumero, nueva_fecha: nuevaFecha });
     },
 };

@@ -297,11 +297,11 @@ const Form = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$rea
 const FormFieldContext = /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"]({});
 const FormField = (t0)=>{
     const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(10);
-    if ($[0] !== "1c2c8081bc102c4b8c9eb356a0ab08c92e63c3c832710d65dc19da042fc4006f") {
+    if ($[0] !== "940dc812750e460bc80d3655489677faab2c394d825f2e37ea9d9820f9f1a5b0") {
         for(let $i = 0; $i < 10; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "1c2c8081bc102c4b8c9eb356a0ab08c92e63c3c832710d65dc19da042fc4006f";
+        $[0] = "940dc812750e460bc80d3655489677faab2c394d825f2e37ea9d9820f9f1a5b0";
     }
     let props;
     if ($[1] !== t0) {
@@ -357,11 +357,11 @@ _c = FormField;
 const useFormField = ()=>{
     _s();
     const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(14);
-    if ($[0] !== "1c2c8081bc102c4b8c9eb356a0ab08c92e63c3c832710d65dc19da042fc4006f") {
+    if ($[0] !== "940dc812750e460bc80d3655489677faab2c394d825f2e37ea9d9820f9f1a5b0") {
         for(let $i = 0; $i < 14; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "1c2c8081bc102c4b8c9eb356a0ab08c92e63c3c832710d65dc19da042fc4006f";
+        $[0] = "940dc812750e460bc80d3655489677faab2c394d825f2e37ea9d9820f9f1a5b0";
     }
     const fieldContext = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"](FormFieldContext);
     const itemContext = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"](FormItemContext);
@@ -427,11 +427,11 @@ const FormItemContext = /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project
 function FormItem(t0) {
     _s1();
     const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(14);
-    if ($[0] !== "1c2c8081bc102c4b8c9eb356a0ab08c92e63c3c832710d65dc19da042fc4006f") {
+    if ($[0] !== "940dc812750e460bc80d3655489677faab2c394d825f2e37ea9d9820f9f1a5b0") {
         for(let $i = 0; $i < 14; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "1c2c8081bc102c4b8c9eb356a0ab08c92e63c3c832710d65dc19da042fc4006f";
+        $[0] = "940dc812750e460bc80d3655489677faab2c394d825f2e37ea9d9820f9f1a5b0";
     }
     let className;
     let props;
@@ -503,11 +503,11 @@ _c1 = FormItem;
 function FormLabel(t0) {
     _s2();
     const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(11);
-    if ($[0] !== "1c2c8081bc102c4b8c9eb356a0ab08c92e63c3c832710d65dc19da042fc4006f") {
+    if ($[0] !== "940dc812750e460bc80d3655489677faab2c394d825f2e37ea9d9820f9f1a5b0") {
         for(let $i = 0; $i < 11; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "1c2c8081bc102c4b8c9eb356a0ab08c92e63c3c832710d65dc19da042fc4006f";
+        $[0] = "940dc812750e460bc80d3655489677faab2c394d825f2e37ea9d9820f9f1a5b0";
     }
     let className;
     let props;
@@ -562,11 +562,11 @@ _c2 = FormLabel;
 function FormControl(t0) {
     _s3();
     const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(8);
-    if ($[0] !== "1c2c8081bc102c4b8c9eb356a0ab08c92e63c3c832710d65dc19da042fc4006f") {
+    if ($[0] !== "940dc812750e460bc80d3655489677faab2c394d825f2e37ea9d9820f9f1a5b0") {
         for(let $i = 0; $i < 8; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "1c2c8081bc102c4b8c9eb356a0ab08c92e63c3c832710d65dc19da042fc4006f";
+        $[0] = "940dc812750e460bc80d3655489677faab2c394d825f2e37ea9d9820f9f1a5b0";
     }
     let props;
     if ($[1] !== t0) {
@@ -611,11 +611,11 @@ _c3 = FormControl;
 function FormDescription(t0) {
     _s4();
     const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(10);
-    if ($[0] !== "1c2c8081bc102c4b8c9eb356a0ab08c92e63c3c832710d65dc19da042fc4006f") {
+    if ($[0] !== "940dc812750e460bc80d3655489677faab2c394d825f2e37ea9d9820f9f1a5b0") {
         for(let $i = 0; $i < 10; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "1c2c8081bc102c4b8c9eb356a0ab08c92e63c3c832710d65dc19da042fc4006f";
+        $[0] = "940dc812750e460bc80d3655489677faab2c394d825f2e37ea9d9820f9f1a5b0";
     }
     let className;
     let props;
@@ -667,11 +667,11 @@ _c4 = FormDescription;
 function FormMessage(t0) {
     _s5();
     const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(11);
-    if ($[0] !== "1c2c8081bc102c4b8c9eb356a0ab08c92e63c3c832710d65dc19da042fc4006f") {
+    if ($[0] !== "940dc812750e460bc80d3655489677faab2c394d825f2e37ea9d9820f9f1a5b0") {
         for(let $i = 0; $i < 11; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "1c2c8081bc102c4b8c9eb356a0ab08c92e63c3c832710d65dc19da042fc4006f";
+        $[0] = "940dc812750e460bc80d3655489677faab2c394d825f2e37ea9d9820f9f1a5b0";
     }
     let className;
     let props;
@@ -1431,11 +1431,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$
 ;
 function RadioGroup(t0) {
     const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(9);
-    if ($[0] !== "a8a021d9573c7a000ac61c95285a6c1a92fb54386f03005089133da7d30d5a32") {
+    if ($[0] !== "730f349c6c6c9ff9ed542c0715696b581cde912faaa2d75532106654f1a3d566") {
         for(let $i = 0; $i < 9; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "a8a021d9573c7a000ac61c95285a6c1a92fb54386f03005089133da7d30d5a32";
+        $[0] = "730f349c6c6c9ff9ed542c0715696b581cde912faaa2d75532106654f1a3d566";
     }
     let className;
     let props;
@@ -1478,11 +1478,11 @@ function RadioGroup(t0) {
 _c = RadioGroup;
 function RadioGroupItem(t0) {
     const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(10);
-    if ($[0] !== "a8a021d9573c7a000ac61c95285a6c1a92fb54386f03005089133da7d30d5a32") {
+    if ($[0] !== "730f349c6c6c9ff9ed542c0715696b581cde912faaa2d75532106654f1a3d566") {
         for(let $i = 0; $i < 10; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "a8a021d9573c7a000ac61c95285a6c1a92fb54386f03005089133da7d30d5a32";
+        $[0] = "730f349c6c6c9ff9ed542c0715696b581cde912faaa2d75532106654f1a3d566";
     }
     let className;
     let props;
@@ -1938,11 +1938,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$
 ;
 function Switch(t0) {
     const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(10);
-    if ($[0] !== "2321e4f99ea357b45467f36f752ea6dc581ac497b0e46e7915666684bb83a247") {
+    if ($[0] !== "d24025162b2c559efcd14511f924ecc000d4e8e5ad0e5624afcb091f7da2d354") {
         for(let $i = 0; $i < 10; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "2321e4f99ea357b45467f36f752ea6dc581ac497b0e46e7915666684bb83a247";
+        $[0] = "d24025162b2c559efcd14511f924ecc000d4e8e5ad0e5624afcb091f7da2d354";
     }
     let className;
     let props;
@@ -2153,6 +2153,20 @@ const api = {
     },
     async getHistorialPases (jugadorId) {
         const response = await apiClient.get(`/api/pases/historial/${jugadorId}`);
+        return response.data;
+    },
+    async getPartidos (filters) {
+        const response = await apiClient.get('/api/partidos');
+        return response.data;
+    },
+    async updateResultado (id, goles_local, goles_visita) {
+        await apiClient.put(`/api/partidos/${id}/resultado`, {
+            goles_local,
+            goles_visita
+        });
+    },
+    async getTablaPosiciones (serie) {
+        const response = await apiClient.get(`/api/partidos/tabla?serie=${serie}`);
         return response.data;
     }
 };

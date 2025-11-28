@@ -70,3 +70,67 @@ export interface ApiResponse<T> {
     error?: string;
     message?: string;
 }
+
+export interface PartidoPreview {
+    serie: '1era' | '2da' | '3era';
+    horario: string;
+    fechaFull: string;
+}
+
+export interface EnfrentamientoPreview {
+    local: { id: number; nombre: string; logo?: string };
+    visita: { id: number; nombre: string; logo?: string };
+    partidos: PartidoPreview[];
+}
+
+export interface JornadaPreview {
+    numero: number;
+    fecha_calendario: string;
+    enfrentamientos: EnfrentamientoPreview[];
+}
+
+export interface Partido {
+    id: number;
+    fecha_numero: number;
+    dia_hora: string;
+    serie: '1era' | '2da' | '3era';
+    clubLocalId: number;
+    clubVisitaId: number;
+    goles_local: number;
+    goles_visita: number;
+    estado: 'programado' | 'finalizado' | 'suspendido';
+    local?: Club;
+    visita?: Club;
+}
+
+export interface PosicionTabla {
+    club: string;
+    logo?: string;
+    pts: number;
+    pj: number;
+    pg: number;
+    pe: number;
+    pp: number;
+    gf: number;
+    gc: number;
+    dif: number;
+}
+
+// Tipos para el Generador (Preview)
+export interface PartidoPreview {
+    serie: '1era' | '2da' | '3era';
+    horario: string;
+    fechaFull: string;
+}
+
+export interface EnfrentamientoPreview {
+    local: { id: number; nombre: string; logo?: string };
+    visita: { id: number; nombre: string; logo?: string };
+    partidos: PartidoPreview[];
+}
+
+export interface JornadaPreview {
+    numero: number;
+    fecha_calendario: string;
+    enfrentamientos: EnfrentamientoPreview[];
+}

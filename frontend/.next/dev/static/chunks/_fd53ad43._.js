@@ -597,11 +597,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$
 ;
 function Separator(t0) {
     const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(13);
-    if ($[0] !== "273b17e7fdbf12c2fdaa97f45150d52eaa32cdd546adda1800a5f562f5660e7c") {
+    if ($[0] !== "7277a373ac2df8ac3e6e66b4164796490c52b96707dd67a1b4c49c219c6d1802") {
         for(let $i = 0; $i < 13; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "273b17e7fdbf12c2fdaa97f45150d52eaa32cdd546adda1800a5f562f5660e7c";
+        $[0] = "7277a373ac2df8ac3e6e66b4164796490c52b96707dd67a1b4c49c219c6d1802";
     }
     let className;
     let props;
@@ -1592,6 +1592,20 @@ const api = {
     },
     async getHistorialPases (jugadorId) {
         const response = await apiClient.get(`/api/pases/historial/${jugadorId}`);
+        return response.data;
+    },
+    async getPartidos (filters) {
+        const response = await apiClient.get('/api/partidos');
+        return response.data;
+    },
+    async updateResultado (id, goles_local, goles_visita) {
+        await apiClient.put(`/api/partidos/${id}/resultado`, {
+            goles_local,
+            goles_visita
+        });
+    },
+    async getTablaPosiciones (serie) {
+        const response = await apiClient.get(`/api/partidos/tabla?serie=${serie}`);
         return response.data;
     }
 };

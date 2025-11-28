@@ -889,6 +889,20 @@ const api = {
     async getHistorialPases (jugadorId) {
         const response = await apiClient.get(`/api/pases/historial/${jugadorId}`);
         return response.data;
+    },
+    async getPartidos (filters) {
+        const response = await apiClient.get('/api/partidos');
+        return response.data;
+    },
+    async updateResultado (id, goles_local, goles_visita) {
+        await apiClient.put(`/api/partidos/${id}/resultado`, {
+            goles_local,
+            goles_visita
+        });
+    },
+    async getTablaPosiciones (serie) {
+        const response = await apiClient.get(`/api/partidos/tabla?serie=${serie}`);
+        return response.data;
     }
 };
 }),
