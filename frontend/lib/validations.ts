@@ -29,11 +29,7 @@ export const jugadorSchema = z.object({
 
     rut: z.string().optional(),
 
-    // Validación flexible para número y club_id (string o number)
-    numero: z.union([z.string(), z.number()]).transform((val) => Number(val)),
     club_id: z.union([z.string(), z.number()]).transform((val) => String(val)).refine((val) => val !== '', "Debes seleccionar un club"),
-
-    rol: z.string().min(1, "El ROL es obligatorio"),
 
     nacimiento: z.string().refine((val) => !isNaN(Date.parse(val)), {
         message: "Fecha de nacimiento inválida",

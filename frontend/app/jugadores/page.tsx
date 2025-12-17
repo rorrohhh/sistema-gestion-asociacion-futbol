@@ -2,10 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'; // Usamos el router de Next.js para navegación fluida
+import { useRouter } from 'next/navigation';
 import { Filtros } from '@/components/filtros';
 import { JugadoresTable } from '@/components/jugadores-table';
-import { PaseModal } from '@/components/pase-modal'; // <--- IMPORTACIÓN DEL NUEVO MODAL
+import { PaseModal } from '@/components/pase-modal';
 import { Button } from '@/components/ui/button';
 import { useDebounce } from '@/hooks/use-debounce';
 import { api } from '@/lib/api';
@@ -15,6 +15,8 @@ import {
     Users,
     UserPlus,
     Filter,
+    ChevronLeft,
+    ChevronRight,
 } from 'lucide-react';
 
 export default function JugadoresPage() {
@@ -23,6 +25,13 @@ export default function JugadoresPage() {
     const [clubes, setClubes] = useState<Club[]>([]);
     const [filters, setFilters] = useState<FilterParams>({});
     const [isLoading, setIsLoading] = useState(true);
+
+    // --- ESTADOS PARA PAGINACIÓN ---
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const [totalItems, setTotalItems] = useState(0);
+    const pageSize = 10;
+    // -------------------------------
 
     // --- ESTADOS PARA EL PASE (TRANSFERENCIA) ---
     const [isPaseModalOpen, setIsPaseModalOpen] = useState(false);
@@ -49,14 +58,39 @@ export default function JugadoresPage() {
     const loadJugadores = useCallback(async () => {
         setIsLoading(true);
         try {
-            const data = await api.getJugadores(debouncedFilters);
-            setJugadores(data);
+            // 1. Clonamos los filtros
+            const filtersToSend: any = { ...debouncedFilters };
+
+            console.log("Enviando filtros al backend:", filtersToSend);
+
+            // 2. Simplificación: Solo quitamos puntos visuales si es RUT.
+            // No separamos nada más. El backend hará el trabajo pesado.
+            if (filtersToSend.identificacion) {
+                // Solo quitamos puntos para enviar "12345678-9" o "123456789"
+                filtersToSend.identificacion = filtersToSend.identificacion.replace(/\./g, '');
+            }
+
+            // 3. Enviamos la petición
+            const data = await api.getJugadores(filtersToSend, currentPage, pageSize);
+
+            console.log("Datos recibidos del backend:", data);
+
+            setJugadores(data.jugadores || []);
+            setTotalItems(data.totalItems || 0);
+            setTotalPages(data.totalPages || 0);
+
         } catch (error) {
             console.error('Error cargando jugadores:', error);
             toast.error('Error al cargar jugadores');
+            setJugadores([]);
         } finally {
             setIsLoading(false);
         }
+    }, [debouncedFilters, currentPage]);
+
+    // Resetear página al filtrar
+    useEffect(() => {
+        setCurrentPage(0);
     }, [debouncedFilters]);
 
     useEffect(() => {
@@ -100,15 +134,13 @@ export default function JugadoresPage() {
         setFilters({});
     };
 
-    const totalResultados = jugadores.length;
-
     return (
         <div className="p-8 space-y-8">
             {/* Header Section */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Gestión de Jugadores</h1>
-                    <p className="text-slate-500 dark:text-slate-400">Filtra, edita y administra los jugadores inscritos.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 daark:text-white">Jugadores</h1>
+                    <p className="text-slate-500 dark:text-slate-400">Administra los jugadores de la asociación.</p>
                 </div>
                 <div className="flex items-center gap-4">
                     {/* Botón Inscribir Jugador */}
@@ -147,7 +179,7 @@ export default function JugadoresPage() {
                             Resultados de Búsqueda
                         </h2>
                         <span className="text-sm px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full font-medium">
-                            {isLoading ? 'Cargando...' : `${totalResultados} resultados`}
+                            {isLoading ? 'Cargando...' : `${totalItems} resultados`}
                         </span>
                     </div>
 
@@ -159,6 +191,35 @@ export default function JugadoresPage() {
                             onEditar={handleEditarJugador}
                             onTransferir={handleTransferirJugador} // <--- Conectamos la acción
                         />
+
+                        {/* --- CONTROLES DE PAGINACIÓN (NUEVO) --- */}
+                        <div className="flex items-center justify-between px-4 py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
+                            <div className="text-sm text-slate-500">
+                                Página {currentPage + 1} de {totalPages || 1}
+                            </div>
+                            <div className="flex gap-2">
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => setCurrentPage((prev) => Math.max(0, prev - 1))}
+                                    disabled={currentPage === 0 || isLoading}
+                                >
+                                    <ChevronLeft className="h-4 w-4 mr-1" />
+                                    Anterior
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1))}
+                                    disabled={currentPage >= totalPages - 1 || isLoading}
+                                >
+                                    Siguiente
+                                    <ChevronRight className="h-4 w-4 ml-1" />
+                                </Button>
+                            </div>
+                        </div>
+                        {/* ----------------------------------------- */}
+
                     </div>
                 </div>
             </div>

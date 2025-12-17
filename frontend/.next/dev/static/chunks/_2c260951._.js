@@ -42,7 +42,7 @@ const api = {
         if (filters?.club) params.append('club', filters.club);
         if (filters?.nombre) params.append('nombre', filters.nombre);
         if (filters?.identificacion) params.append('identificacion', filters.identificacion);
-        if (filters?.rol) params.append('rol', filters.rol);
+        if (filters?.folio) params.append('folio', filters.folio);
         const queryString = params.toString() ? `?${params.toString()}` : '';
         const response = await apiClient.get(`/api/jugadores${queryString}`);
         return response.data;
@@ -71,14 +71,10 @@ const api = {
         } else {
             formData.append('passport_input', data.passport);
         }
-        // NUEVOS CAMPOS
-        // 1. Activo (convertir boolean a string)
         formData.append('activo', String(data.activo));
-        // 2. Foto (solo si existe y es un archivo)
         if (data.foto instanceof File) {
             formData.append('foto', data.foto);
         }
-        // Enviamos como multipart/form-data
         await apiClient.post('/api/jugadores', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -150,7 +146,8 @@ const api = {
         return response.data;
     },
     async getPartidos (filters) {
-        const response = await apiClient.get('/api/partidos');
+        const q = filters?.division ? `?division=${filters.division}` : '';
+        const response = await apiClient.get(`/api/partidos${q}`);
         return response.data;
     },
     async updateResultado (id, goles_local, goles_visita) {
@@ -159,8 +156,38 @@ const api = {
             goles_visita
         });
     },
-    async getTablaPosiciones (serie) {
-        const response = await apiClient.get(`/api/partidos/tabla?serie=${serie}`);
+    async getTablaPosiciones (serie, division) {
+        const response = await apiClient.get(`/api/partidos/tabla?serie=${serie}&division=${division}`);
+        return response.data;
+    },
+    async reportarIncidente (partidoId, culpableId, motivo) {
+        await apiClient.put(`/api/partidos/${partidoId}/suspender`, {
+            equipo_culpable_id: culpableId,
+            motivo_suspension: motivo
+        });
+    },
+    async generarFixturePreview (data) {
+        const response = await apiClient.post('/api/partidos/preview', data);
+        return response.data;
+    },
+    async guardarFixtureMasivo (fixture, division) {
+        await apiClient.post('/api/partidos/masivo', {
+            fixtureConfirmado: fixture,
+            division
+        });
+    },
+    async eliminarFixture (division) {
+        await apiClient.delete(`/api/partidos?division=${division}`);
+    },
+    async reprogramarFecha (fechaNumero, nuevaFecha, division) {
+        await apiClient.post('/api/partidos/reprogramar', {
+            fecha_numero: fechaNumero,
+            nueva_fecha: nuevaFecha,
+            division
+        });
+    },
+    async checkTorneo (division) {
+        const response = await apiClient.get(`/api/partidos/check?division=${division}`);
         return response.data;
     }
 };

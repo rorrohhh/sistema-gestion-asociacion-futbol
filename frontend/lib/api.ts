@@ -15,15 +15,21 @@ export const api = {
     // JUGADORES
     // ------------------------------------------------------------------
 
-    async getJugadores(filters?: FilterParams): Promise<Jugador[]> {
+    // AHORA RECIBE PAGE Y SIZE, Y DEVUELVE UN OBJETO PAGINADO
+    async getJugadores(filters?: FilterParams, page = 0, size = 10): Promise<{ jugadores: Jugador[], totalItems: number, totalPages: number }> {
         const params = new URLSearchParams();
         if (filters?.club) params.append('club', filters.club);
         if (filters?.nombre) params.append('nombre', filters.nombre);
         if (filters?.identificacion) params.append('identificacion', filters.identificacion);
-        if (filters?.rol) params.append('rol', filters.rol);
+        if (filters?.folio) params.append('folio', filters.folio); // CAMBIADO ROL POR FOLIO
+
+        // PAGINACIÓN
+        params.append('page', page.toString());
+        params.append('size', size.toString());
 
         const queryString = params.toString() ? `?${params.toString()}` : '';
-        const response = await apiClient.get<Jugador[]>(`/api/jugadores${queryString}`);
+        // Usamos any temporalmente para ajustar la respuesta
+        const response = await apiClient.get<any>(`/api/jugadores${queryString}`);
         return response.data;
     },
 
@@ -44,7 +50,7 @@ export const api = {
         formData.append('nacimiento', data.nacimiento);
         formData.append('inscripcion', data.inscripcion);
         formData.append('club_id', data.club_id);
-        formData.append('rol_input', data.rol);
+        // formData.append('rol_input', data.rol); // ELIMINADO (Folio es automático)
         formData.append('nacionalidad', data.nacionalidad || '');
         formData.append('delegado_input', data.delegado || '');
 
@@ -77,9 +83,8 @@ export const api = {
         formData.append('nacimiento', data.nacimiento);
         formData.append('inscripcion', data.inscripcion);
         formData.append('club_id', data.club_id);
-        formData.append('rol_input', data.rol);
+        // formData.append('rol_input', data.rol); // ELIMINADO
         formData.append('nacionalidad', data.nacionalidad || '');
-        // El delegado también se puede actualizar si se desea
         formData.append('delegado_input', data.delegado || '');
 
         formData.append('tipo_identificacion_input', data.tipo_identificacion);

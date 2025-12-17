@@ -37,13 +37,18 @@ const api = {
     // ------------------------------------------------------------------
     // JUGADORES
     // ------------------------------------------------------------------
-    async getJugadores (filters) {
+    // AHORA RECIBE PAGE Y SIZE, Y DEVUELVE UN OBJETO PAGINADO
+    async getJugadores (filters, page = 0, size = 10) {
         const params = new URLSearchParams();
         if (filters?.club) params.append('club', filters.club);
         if (filters?.nombre) params.append('nombre', filters.nombre);
         if (filters?.identificacion) params.append('identificacion', filters.identificacion);
-        if (filters?.rol) params.append('rol', filters.rol);
+        if (filters?.folio) params.append('folio', filters.folio); // CAMBIADO ROL POR FOLIO
+        // PAGINACIÓN
+        params.append('page', page.toString());
+        params.append('size', size.toString());
         const queryString = params.toString() ? `?${params.toString()}` : '';
+        // Usamos any temporalmente para ajustar la respuesta
         const response = await apiClient.get(`/api/jugadores${queryString}`);
         return response.data;
     },
@@ -61,7 +66,7 @@ const api = {
         formData.append('nacimiento', data.nacimiento);
         formData.append('inscripcion', data.inscripcion);
         formData.append('club_id', data.club_id);
-        formData.append('rol_input', data.rol);
+        // formData.append('rol_input', data.rol); // ELIMINADO (Folio es automático)
         formData.append('nacionalidad', data.nacionalidad || '');
         formData.append('delegado_input', data.delegado || '');
         // Identificación
@@ -90,9 +95,8 @@ const api = {
         formData.append('nacimiento', data.nacimiento);
         formData.append('inscripcion', data.inscripcion);
         formData.append('club_id', data.club_id);
-        formData.append('rol_input', data.rol);
+        // formData.append('rol_input', data.rol); // ELIMINADO
         formData.append('nacionalidad', data.nacionalidad || '');
-        // El delegado también se puede actualizar si se desea
         formData.append('delegado_input', data.delegado || '');
         formData.append('tipo_identificacion_input', data.tipo_identificacion);
         if (data.tipo_identificacion === 'RUT') {
@@ -570,7 +574,6 @@ __turbopack_context__.s([
     ()=>DashboardPage
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/compiler-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/api.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/users.js [app-client] (ecmascript) <export default as Users>");
@@ -584,211 +587,162 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
-;
 function DashboardPage() {
     _s();
-    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(17);
-    if ($[0] !== "bf8e4e0742405f2a4b3a2af7d76a80099672d284f9581fb44377695eafec67b7") {
-        for(let $i = 0; $i < 17; $i += 1){
-            $[$i] = Symbol.for("react.memo_cache_sentinel");
-        }
-        $[0] = "bf8e4e0742405f2a4b3a2af7d76a80099672d284f9581fb44377695eafec67b7";
-    }
-    const [totalJugadores, setTotalJugadores] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("...");
-    const [totalClubes, setTotalClubes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("...");
+    const [totalJugadores, setTotalJugadores] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('...');
+    const [totalClubes, setTotalClubes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('...');
     const [systemOnline, setSystemOnline] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    let t0;
-    let t1;
-    if ($[1] === Symbol.for("react.memo_cache_sentinel")) {
-        t0 = ({
-            "DashboardPage[useEffect()]": ()=>{
-                const loadData = async function loadData() {
-                    ;
-                    try {
-                        const jugadoresData = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getJugadores();
-                        setTotalJugadores(jugadoresData.length.toString());
-                        const clubesData = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getClubes();
-                        setTotalClubes(clubesData.length.toString());
-                        setSystemOnline(true);
-                    } catch (t2) {
-                        const error = t2;
-                        console.error("Error cargando datos del Dashboard:", error);
-                        setSystemOnline(false);
-                        setTotalJugadores("N/A");
-                        setTotalClubes("N/A");
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "DashboardPage.useEffect": ()=>{
+            async function loadData() {
+                try {
+                    console.log("Cargando datos...");
+                    // --- 1. PROCESAR JUGADORES ---
+                    const resJugadores = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getJugadores();
+                    // TRUCO: Convertimos a 'any' para que TypeScript no se queje
+                    // al buscar 'totalItems', pero mantenemos la seguridad en ejecución.
+                    const jugadoresAny = resJugadores;
+                    if (jugadoresAny && jugadoresAny.totalItems !== undefined) {
+                        // Caso: Respuesta Paginada
+                        setTotalJugadores(jugadoresAny.totalItems.toString());
+                    } else if (Array.isArray(resJugadores)) {
+                        // Caso: Array Simple
+                        setTotalJugadores(resJugadores.length.toString());
+                    } else {
+                        setTotalJugadores('0');
                     }
-                };
-                loadData();
+                    // --- 2. PROCESAR CLUBES ---
+                    const resClubes = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getClubes();
+                    const clubesAny = resClubes; // Bypass de TypeScript
+                    if (clubesAny && clubesAny.totalItems !== undefined) {
+                        setTotalClubes(clubesAny.totalItems.toString());
+                    } else if (Array.isArray(resClubes)) {
+                        setTotalClubes(resClubes.length.toString());
+                    } else {
+                        setTotalClubes('0');
+                    }
+                    // Si llegamos aquí, hubo conexión exitosa
+                    setSystemOnline(true);
+                } catch (error) {
+                    console.error('Error en Dashboard:', error);
+                    setSystemOnline(false);
+                    setTotalJugadores('N/A');
+                    setTotalClubes('N/A');
+                }
             }
-        })["DashboardPage[useEffect()]"];
-        t1 = [];
-        $[1] = t0;
-        $[2] = t1;
-    } else {
-        t0 = $[1];
-        t1 = $[2];
-    }
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])(t0, t1);
-    const renderStatCard = _DashboardPageRenderStatCard;
-    let t2;
-    if ($[3] === Symbol.for("react.memo_cache_sentinel")) {
-        t2 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "flex items-center justify-between",
-            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            loadData();
+        }
+    }["DashboardPage.useEffect"], []);
+    // Función auxiliar para renderizar la Card
+    const renderStatCard = (title, value, Icon, iconBgColor, iconTextColor, valueTextColor)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
+            className: "border-0 shadow-sm bg-white dark:bg-slate-900 ring-1 ring-slate-200 dark:ring-slate-800",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
+                className: "p-6 flex items-center justify-between",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                        className: "text-3xl font-bold text-slate-900 dark:text-white",
-                        children: "Dashboard de Gestión"
-                    }, void 0, false, {
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-sm font-medium text-slate-500 dark:text-slate-400",
+                                children: title
+                            }, void 0, false, {
+                                fileName: "[project]/app/page.tsx",
+                                lineNumber: 60,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                className: `text-2xl font-bold text-slate-900 dark:text-white mt-1 ${valueTextColor || ''}`,
+                                children: value
+                            }, void 0, false, {
+                                fileName: "[project]/app/page.tsx",
+                                lineNumber: 61,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 55,
-                        columnNumber: 66
+                        lineNumber: 59,
+                        columnNumber: 9
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        className: "text-slate-500 dark:text-slate-400",
-                        children: "Métricas clave del sistema de asociación de fútbol."
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: `p-3 rounded-full ${iconBgColor}`,
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Icon, {
+                            className: `h-6 w-6 ${iconTextColor}`
+                        }, void 0, false, {
+                            fileName: "[project]/app/page.tsx",
+                            lineNumber: 66,
+                            columnNumber: 11
+                        }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 55,
-                        columnNumber: 157
+                        lineNumber: 65,
+                        columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 55,
-                columnNumber: 61
+                lineNumber: 58,
+                columnNumber: 7
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/page.tsx",
-            lineNumber: 55,
-            columnNumber: 10
+            lineNumber: 57,
+            columnNumber: 140
         }, this);
-        $[3] = t2;
-    } else {
-        t2 = $[3];
-    }
-    let t3;
-    if ($[4] !== totalJugadores) {
-        t3 = renderStatCard("Total Jugadores", totalJugadores, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"], "bg-blue-50 dark:bg-blue-900/20", "text-blue-600 dark:text-blue-400");
-        $[4] = totalJugadores;
-        $[5] = t3;
-    } else {
-        t3 = $[5];
-    }
-    let t4;
-    if ($[6] !== totalClubes) {
-        t4 = renderStatCard("Clubes Activos", totalClubes, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$layout$2d$grid$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__LayoutGrid$3e$__["LayoutGrid"], "bg-indigo-50 dark:bg-indigo-900/20", "text-indigo-600 dark:text-indigo-400");
-        $[6] = totalClubes;
-        $[7] = t4;
-    } else {
-        t4 = $[7];
-    }
-    const t5 = systemOnline ? "En L\xEDnea" : "Sin Conexi\xF3n";
-    const t6 = systemOnline ? "bg-green-50 dark:bg-green-900/20" : "bg-red-50 dark:bg-red-900/20";
-    const t7 = systemOnline ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400";
-    const t8 = systemOnline ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400";
-    let t9;
-    if ($[8] !== t5 || $[9] !== t6 || $[10] !== t7 || $[11] !== t8) {
-        t9 = renderStatCard("Estado del Sistema", t5, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$activity$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Activity$3e$__["Activity"], t6, t7, t8);
-        $[8] = t5;
-        $[9] = t6;
-        $[10] = t7;
-        $[11] = t8;
-        $[12] = t9;
-    } else {
-        t9 = $[12];
-    }
-    let t10;
-    if ($[13] !== t3 || $[14] !== t4 || $[15] !== t9) {
-        t10 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "p-8 space-y-8",
-            children: [
-                t2,
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "grid grid-cols-1 md:grid-cols-3 gap-4",
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "p-8 space-y-8",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex items-center justify-between",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     children: [
-                        t3,
-                        t4,
-                        t9
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/app/page.tsx",
-                    lineNumber: 93,
-                    columnNumber: 46
-                }, this)
-            ]
-        }, void 0, true, {
-            fileName: "[project]/app/page.tsx",
-            lineNumber: 93,
-            columnNumber: 11
-        }, this);
-        $[13] = t3;
-        $[14] = t4;
-        $[15] = t9;
-        $[16] = t10;
-    } else {
-        t10 = $[16];
-    }
-    return t10;
-}
-_s(DashboardPage, "5v/iMyOY3iw3wurmaLQAqgGCRNw=");
-_c = DashboardPage;
-function _DashboardPageRenderStatCard(title, value, Icon, iconBgColor, iconTextColor, valueTextColor) {
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
-        className: "border-0 shadow-sm bg-white dark:bg-slate-900 ring-1 ring-slate-200 dark:ring-slate-800",
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
-            className: "p-6 flex items-center justify-between",
-            children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-sm font-medium text-slate-500 dark:text-slate-400",
-                            children: title
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                            className: "text-3xl font-bold text-slate-900 dark:text-white",
+                            children: "Dashboard de Gestión"
                         }, void 0, false, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 104,
-                            columnNumber: 184
+                            lineNumber: 74,
+                            columnNumber: 11
                         }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                            className: `text-2xl font-bold text-slate-900 dark:text-white mt-1 ${valueTextColor || ""}`,
-                            children: value
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-slate-500 dark:text-slate-400",
+                            children: "Métricas clave del sistema de asociación de fútbol."
                         }, void 0, false, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 104,
-                            columnNumber: 265
+                            lineNumber: 75,
+                            columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/page.tsx",
-                    lineNumber: 104,
-                    columnNumber: 179
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: `p-3 rounded-full ${iconBgColor}`,
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Icon, {
-                        className: `h-6 w-6 ${iconTextColor}`
-                    }, void 0, false, {
-                        fileName: "[project]/app/page.tsx",
-                        lineNumber: 104,
-                        columnNumber: 431
-                    }, this)
-                }, void 0, false, {
-                    fileName: "[project]/app/page.tsx",
-                    lineNumber: 104,
-                    columnNumber: 380
+                    lineNumber: 73,
+                    columnNumber: 9
                 }, this)
-            ]
-        }, void 0, true, {
-            fileName: "[project]/app/page.tsx",
-            lineNumber: 104,
-            columnNumber: 116
-        }, this)
-    }, void 0, false, {
+            }, void 0, false, {
+                fileName: "[project]/app/page.tsx",
+                lineNumber: 72,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "grid grid-cols-1 md:grid-cols-3 gap-4",
+                children: [
+                    renderStatCard("Total Jugadores", totalJugadores, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"], "bg-blue-50 dark:bg-blue-900/20", "text-blue-600 dark:text-blue-400"),
+                    renderStatCard("Clubes Activos", totalClubes, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$layout$2d$grid$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__LayoutGrid$3e$__["LayoutGrid"], "bg-indigo-50 dark:bg-indigo-900/20", "text-indigo-600 dark:text-indigo-400"),
+                    renderStatCard("Estado del Sistema", systemOnline ? "En Línea" : "Sin Conexión", __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$activity$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Activity$3e$__["Activity"], systemOnline ? "bg-green-50 dark:bg-green-900/20" : "bg-red-50 dark:bg-red-900/20", systemOnline ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400", systemOnline ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400")
+                ]
+            }, void 0, true, {
+                fileName: "[project]/app/page.tsx",
+                lineNumber: 80,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
         fileName: "[project]/app/page.tsx",
-        lineNumber: 104,
+        lineNumber: 70,
         columnNumber: 10
     }, this);
 }
+_s(DashboardPage, "S8w50ietaLRYCehM8bOLp4UU3lQ=");
+_c = DashboardPage;
 var _c;
 __turbopack_context__.k.register(_c, "DashboardPage");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {

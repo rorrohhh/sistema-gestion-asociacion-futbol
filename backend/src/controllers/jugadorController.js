@@ -7,88 +7,130 @@ const path = require('path');
 
 const controller = {};
 
-// LISTAR
-controller.listar = async (req, res) => {
+const getNextFolio = async () => {
     try {
-        const { club, identificacion, rol, nombre } = req.query;
-        let where = {};
+        const result = await Jugador.findOne({
+            attributes: [
+                [sequelize.fn('MAX', sequelize.cast(sequelize.col('folio'), 'UNSIGNED')), 'maxFolio']
+            ],
+            raw: true
+        });
 
-        if (club) where.clubId = club;
-
-        if (rol) {
-            where.rol = { [Op.like]: `%${rol}%` };
+        let maxFolio = 0;
+        if (result && result.maxFolio) {
+            maxFolio = parseInt(result.maxFolio, 10);
         }
 
-        // BÚSQUEDA HÍBRIDA
-        if (identificacion) {
-            const terminoBusqueda = identificacion.trim();
-            const rutSearch = terminoBusqueda.replace(/[^0-9kK]/g, '');
+        if (isNaN(maxFolio) || maxFolio < 10000) {
+            return "10000";
+        }
 
+        return (maxFolio + 1).toString();
+
+    } catch (error) {
+        console.error("Error generando folio, fallback a timestamp:", error);
+        return Date.now().toString().slice(-6); 
+    }
+};
+
+controller.listar = async (req, res) => {
+    try {
+        const { club, identificacion, folio, nombre, page, size } = req.query;
+        const limit = size ? parseInt(size) : 10;
+        const pagina = page ? parseInt(page) : 0;
+        const offset = pagina * limit;
+
+        let where = {};
+
+        
+        if (club && club !== 'undefined') where.clubId = club;
+
+        
+        if (folio) {
+            where.folio = { [Op.like]: `%${folio}%` };
+        }
+
+       
+        if (identificacion) {
+ 
+            const termino = identificacion.trim().replace(/\./g, '');
+            
             const condicionesIdentificacion = [];
 
+   
             condicionesIdentificacion.push({
-                pasaporte: { [Op.like]: `%${terminoBusqueda}%` }
+                pasaporte: { [Op.like]: `%${termino}%` }
             });
 
-            if (rutSearch.length > 0) {
+        
+            if (termino.length > 0) {
                 condicionesIdentificacion.push(
-                    sequelize.where(
-                        sequelize.fn('CONCAT', 
-                            sequelize.cast(sequelize.col('Jugador.rut'), 'char'),
-                            sequelize.col('Jugador.dv')
-                        ),
-                        { [Op.like]: `%${rutSearch}%` }
-                    )
+                    sequelize.literal(`
+                        CONCAT(IFNULL(rut, ''), IFNULL(dv, '')) 
+                        COLLATE utf8mb4_unicode_ci 
+                        LIKE '%${termino}%'
+                    `)
                 );
             }
 
-            where = {
-                ...where,
-                [Op.and]: [
-                    { [Op.or]: condicionesIdentificacion }
-                ]
-            };
-        }
-
-        if (nombre) {
-            where[Op.or] = [
-                { nombres: { [Op.substring]: nombre } },
-                { paterno: { [Op.substring]: nombre } },
-                { materno: { [Op.substring]: nombre } }
+            where[Op.and] = [
+                { [Op.or]: condicionesIdentificacion }
             ];
         }
 
-        const jugadores = await Jugador.findAll({
+        // 4. Filtro Nombre
+        if (nombre) {
+            const nombreLimpio = nombre.trim();
+            where[Op.and] = [
+                sequelize.where(
+                    sequelize.literal(`
+                        CONCAT(
+                            IFNULL(nombres, ''), ' ', 
+                            IFNULL(paterno, ''), ' ', 
+                            IFNULL(materno, '')
+                        ) COLLATE utf8mb4_unicode_ci
+                    `),
+                    { [Op.like]: `%${nombreLimpio}%` }
+                )
+            ];
+        }
+
+        const data = await Jugador.findAndCountAll({
             where: where,
             include: [{ model: Club }], 
-            order: [['paterno', 'ASC']]
+            order: [['paterno', 'ASC']],
+            limit: limit,
+            offset: offset
         });
 
-        res.json(jugadores);
+        res.json({
+            totalItems: data.count,
+            totalPages: Math.ceil(data.count / limit),
+            currentPage: pagina,
+            jugadores: data.rows
+        });
+
     } catch (error) {
         console.error("Error listar:", error);
         res.status(500).json({ error: error.message });
     }
 };
 
-// GUARDAR
 controller.guardar = async (req, res) => {
     try {
         const { 
-            numero, paterno, materno, nombres, 
-            run_input, rol_input, 
+            paterno, materno, nombres, 
+            run_input, 
             nacimiento, inscripcion, club_id,
             tipo_identificacion_input, 
             passport_input,
             nacionalidad,
             delegado_input,
-            activo // Recibimos el estado activo
+            activo 
         } = req.body;
 
-        // 1. Procesar la imagen si existe
         let fotoPath = null;
         if (req.file) {
-            // Guardamos la ruta relativa para servirla después
             fotoPath = `/uploads/${req.file.filename}`;
         }
 
@@ -99,8 +141,9 @@ controller.guardar = async (req, res) => {
         if (tipoIdentificacion === 'RUT') {
             let rutString = (run_input || '').toString().replace(/[^0-9kK]/g, '').toUpperCase();
             let dv = rutString.slice(-1);
-            let rutNum = parseInt(rutString.slice(0, -1));
+            let rutNum = rutString.slice(0, -1); // Lo guardamos como String según tu cambio anterior
 
+            // Validación básica
             if (!rutNum) return res.status(400).json({ error: "RUT Inválido" });
             
             rutData.rut = rutNum;
@@ -113,22 +156,23 @@ controller.guardar = async (req, res) => {
              return res.status(400).json({ error: "Tipo de identificación no válido." });
         }
 
+
+        const nuevoFolio = await getNextFolio();
+
         const nuevo = await Jugador.create({
-            numero, paterno, materno, nombres,
+            paterno, materno, nombres,
             rut: rutData.rut,
             dv: rutData.dv,
             pasaporte: pasaporte,
             tipoIdentificacion: tipoIdentificacion,
             nacionalidad: nacionalidad, 
-            rol: rol_input,
+            folio: nuevoFolio, 
             nacimiento,
             inscripcion,
             clubId: club_id,
             delegadoInscripcion: delegado_input,
-            
-            // Nuevos campos
             foto: fotoPath,
-            activo: activo === 'true' || activo === true // Convertir string a boolean
+            activo: activo === 'true' || activo === true
         });
 
         res.status(201).json(nuevo);
@@ -138,7 +182,6 @@ controller.guardar = async (req, res) => {
     }
 };
 
-// OBTENER UNO
 controller.obtener = async (req, res) => {
     try {
         const jugador = await Jugador.findByPk(req.params.id, { include: Club }); 
@@ -149,12 +192,11 @@ controller.obtener = async (req, res) => {
     }
 };
 
-// ACTUALIZAR
 controller.actualizar = async (req, res) => {
     try {
         const { 
-            numero, paterno, materno, nombres, 
-            run_input, rol_input, 
+            paterno, materno, nombres, 
+            run_input, 
             nacimiento, inscripcion, club_id,
             tipo_identificacion_input, 
             passport_input,
@@ -177,7 +219,7 @@ controller.actualizar = async (req, res) => {
             
             let rutString = run_input.toString().replace(/[^0-9kK]/g, '').toUpperCase();
             updateData.dv = rutString.slice(-1);
-            updateData.rut = parseInt(rutString.slice(0, -1));
+            updateData.rut = rutString.slice(0, -1); // String
             
             if (!updateData.rut) return res.status(400).json({ error: "RUT Inválido." });
 
@@ -188,12 +230,10 @@ controller.actualizar = async (req, res) => {
              return res.status(400).json({ error: "Tipo de identificación no válido." });
         }
 
-        // Objeto base con los datos a actualizar
         const camposActualizar = {
-            numero, paterno, materno, nombres,
+            paterno, materno, nombres,
             ...updateData,
             nacionalidad: nacionalidad,
-            rol: rol_input,
             nacimiento,
             inscripcion,
             clubId: club_id,
@@ -201,12 +241,7 @@ controller.actualizar = async (req, res) => {
             activo: activo === 'true' || activo === true
         };
 
-        // Si se subió una nueva foto, la agregamos al objeto
         if (req.file) {
-            // Opcional: Podrías borrar la foto antigua aquí si quisieras ahorrar espacio
-            // const jugadorAntiguo = await Jugador.findByPk(req.params.id);
-            // if(jugadorAntiguo.foto) fs.unlink(...)
-
             camposActualizar.foto = `/uploads/${req.file.filename}`;
         }
 
@@ -218,7 +253,6 @@ controller.actualizar = async (req, res) => {
     }
 };
 
-// ELIMINAR
 controller.eliminar = async (req, res) => {
     try {
         await Jugador.destroy({ where: { id: req.params.id } });
