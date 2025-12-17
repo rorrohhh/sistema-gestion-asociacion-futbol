@@ -2,13 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { api } from '@/lib/api';
-import { toast } from 'sonner';
 import {
   Users,
   LayoutGrid,
   Activity
 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 
 export default function DashboardPage() {
   const [totalJugadores, setTotalJugadores] = useState('...');
@@ -18,28 +17,56 @@ export default function DashboardPage() {
   useEffect(() => {
     async function loadData() {
       try {
-        // Obtiene la cuenta de jugadores y clubes para las métricas
-        const jugadoresData = await api.getJugadores();
-        setTotalJugadores(jugadoresData.length.toString());
+        console.log("Cargando datos...");
 
-        const clubesData = await api.getClubes();
-        setTotalClubes(clubesData.length.toString());
+        // --- 1. PROCESAR JUGADORES ---
+        const resJugadores = await api.getJugadores();
 
+        // TRUCO: Convertimos a 'any' para que TypeScript no se queje
+        // al buscar 'totalItems', pero mantenemos la seguridad en ejecución.
+        const jugadoresAny = resJugadores as any;
+
+        if (jugadoresAny && jugadoresAny.totalItems !== undefined) {
+          // Caso: Respuesta Paginada
+          setTotalJugadores(jugadoresAny.totalItems.toString());
+        }
+        else if (Array.isArray(resJugadores)) {
+          // Caso: Array Simple
+          setTotalJugadores(resJugadores.length.toString());
+        }
+        else {
+          setTotalJugadores('0');
+        }
+
+        // --- 2. PROCESAR CLUBES ---
+        const resClubes = await api.getClubes();
+        const clubesAny = resClubes as any; // Bypass de TypeScript
+
+        if (clubesAny && clubesAny.totalItems !== undefined) {
+          setTotalClubes(clubesAny.totalItems.toString());
+        }
+        else if (Array.isArray(resClubes)) {
+          setTotalClubes(resClubes.length.toString());
+        }
+        else {
+          setTotalClubes('0');
+        }
+
+        // Si llegamos aquí, hubo conexión exitosa
         setSystemOnline(true);
+
       } catch (error) {
-        console.error('Error cargando datos del Dashboard:', error);
+        console.error('Error en Dashboard:', error);
         setSystemOnline(false);
         setTotalJugadores('N/A');
         setTotalClubes('N/A');
-        // No mostramos toast de error en el dashboard para que se vea limpio, 
-        // solo indicamos el estado.
       }
     }
     loadData();
   }, []);
 
-  // Función auxiliar para renderizar la Card (usando la estructura de Card del código anterior)
-  const renderStatCard = (title: string, value: string, Icon: React.ElementType, iconBgColor: string, iconTextColor: string, valueTextColor?: string) => (
+  // Función auxiliar para renderizar la Card
+  const renderStatCard = (title: string, value: string, Icon: any, iconBgColor: string, iconTextColor: string, valueTextColor?: string) => (
     <Card className="border-0 shadow-sm bg-white dark:bg-slate-900 ring-1 ring-slate-200 dark:ring-slate-800">
       <CardContent className="p-6 flex items-center justify-between">
         <div>
@@ -55,10 +82,9 @@ export default function DashboardPage() {
     </Card>
   );
 
-
   return (
     <div className="p-8 space-y-8">
-      {/* Header Section (Minimalista) */}
+      {/* Header Section */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Dashboard de Gestión</h1>
@@ -68,7 +94,6 @@ export default function DashboardPage() {
 
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-
         {/* Total Jugadores */}
         {renderStatCard(
           "Total Jugadores",
@@ -94,7 +119,7 @@ export default function DashboardPage() {
           Activity,
           systemOnline ? "bg-green-50 dark:bg-green-900/20" : "bg-red-50 dark:bg-red-900/20",
           systemOnline ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400",
-          systemOnline ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400" // Color del valor
+          systemOnline ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"
         )}
       </div>
     </div>

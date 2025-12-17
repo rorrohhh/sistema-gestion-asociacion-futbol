@@ -7,57 +7,74 @@ const Jugador = sequelize.define('Jugador', {
         primaryKey: true,
         autoIncrement: true
     },
-    numero: DataTypes.INTEGER,
-    paterno: DataTypes.STRING,
-    materno: DataTypes.STRING,
-    nombres: DataTypes.STRING,
+    paterno: {
+        type: DataTypes.STRING,
+        collate: 'utf8mb4_unicode_ci' // <--- Agregamos esto
+    },
+    materno: {
+        type: DataTypes.STRING,
+        collate: 'utf8mb4_unicode_ci'
+    },
+    nombres: {
+        type: DataTypes.STRING,
+        collate: 'utf8mb4_unicode_ci'
+    },
+    // CORRECCIÓN PRINCIPAL: Cambiamos INTEGER a STRING
     rut: {
-        type: DataTypes.INTEGER,
-        allowNull: true
+        type: DataTypes.STRING(20), 
+        allowNull: true,
+        collate: 'utf8mb4_unicode_ci' // Para evitar el error de collation
     },
     dv: {
         type: DataTypes.STRING(1),
-        allowNull: true
+        allowNull: true,
+        collate: 'utf8mb4_unicode_ci' // Importante para búsquedas de 'K'
     },
     pasaporte: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
+        collate: 'utf8mb4_unicode_ci'
     },
-    
     tipoIdentificacion: {
-        type: DataTypes.STRING(10), // 'RUT' o 'PASSPORT'
-        allowNull: false, // Debe existir en ambos casos
-        defaultValue: 'RUT' // Valor por defecto
+        type: DataTypes.STRING(10),
+        allowNull: false,
+        defaultValue: 'RUT',
+        collate: 'utf8mb4_unicode_ci'
     },
     nacionalidad: {
         type: DataTypes.STRING,
-        allowNull: true // Puede ser opcional al principio
+        allowNull: true,
+        collate: 'utf8mb4_unicode_ci'
     },
     delegadoInscripcion: {
         type: DataTypes.STRING,
-        allowNull: true // Opcional para registros antiguos
+        allowNull: true,
+        collate: 'utf8mb4_unicode_ci'
     },
-    foto: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
+    foto: DataTypes.STRING,
     activo: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: true
     },
-    rol: DataTypes.STRING,
+    folio: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        collate: 'utf8mb4_unicode_ci'
+    },
     nacimiento: DataTypes.DATEONLY,
     inscripcion: DataTypes.DATEONLY,
-    // La llave foránea clubId se crea automática al hacer la relación,
-    // pero es buena práctica declararla explícitamente para validaciones.
     clubId: {
         type: DataTypes.INTEGER,
         allowNull: false
     }
 }, {
     tableName: 'jugadores',
-    timestamps: false
+    timestamps: false,
+    // Aseguramos que la tabla completa use este collation por defecto
+    charset: 'utf8mb4',
+    collate: 'utf8mb4_unicode_ci' 
 });
 
 module.exports = Jugador;
