@@ -90,7 +90,7 @@ export function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }: PaseM
                     <DialogDescription>
                         Estás gestionando el pase de <strong>{jugador.nombres} {jugador.paterno}</strong>.
                         <br />
-                        Su ROL ({jugador.rol}) se mantendrá intacto.
+                        Su ROL ({jugador.folio}) se mantendrá intacto.
                     </DialogDescription>
                 </DialogHeader>
 
