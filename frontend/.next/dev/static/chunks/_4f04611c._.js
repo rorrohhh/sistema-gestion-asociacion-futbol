@@ -161,8 +161,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/users.js [app-client] (ecmascript) <export default as Users>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$settings$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Settings$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/settings.js [app-client] (ecmascript) <export default as Settings>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trophy$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trophy$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/trophy.js [app-client] (ecmascript) <export default as Trophy>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$log$2d$out$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__LogOut$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/log-out.js [app-client] (ecmascript) <export default as LogOut>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2d$days$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CalendarDays$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/calendar-days.js [app-client] (ecmascript) <export default as CalendarDays>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/utils.ts [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
@@ -178,12 +176,11 @@ const sidebarItems = [
         href: "/",
         icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$layout$2d$dashboard$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__LayoutDashboard$3e$__["LayoutDashboard"]
     },
-    {
-        title: "Torneo",
-        // --- NUEVA PESTAÑA ---
-        href: "/torneo",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2d$days$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CalendarDays$3e$__["CalendarDays"] // Usamos un calendario para diferenciarlo del logo (o usa Trophy)
-    },
+    // {
+    //     title: "Torneo", // --- NUEVA PESTAÑA ---
+    //     href: "/torneo",
+    //     icon: CalendarDays, // Usamos un calendario para diferenciarlo del logo (o usa Trophy)
+    // },
     {
         title: "Jugadores",
         href: "/jugadores",
@@ -197,12 +194,12 @@ const sidebarItems = [
 ];
 function Sidebar() {
     _s();
-    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(9);
-    if ($[0] !== "9ce13192deb9680077afc587047a13eec00f73ea218f565c7033c391013c851c") {
-        for(let $i = 0; $i < 9; $i += 1){
+    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(6);
+    if ($[0] !== "1120150e08e330926a4a99372998a6887663374c3fb155caded2e159e1f3da42") {
+        for(let $i = 0; $i < 6; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "9ce13192deb9680077afc587047a13eec00f73ea218f565c7033c391013c851c";
+        $[0] = "1120150e08e330926a4a99372998a6887663374c3fb155caded2e159e1f3da42";
     }
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"])();
     let t0;
@@ -214,21 +211,21 @@ function Sidebar() {
                     className: "h-6 w-6 text-blue-500 mr-2"
                 }, void 0, false, {
                     fileName: "[project]/components/sidebar.tsx",
-                    lineNumber: 37,
+                    lineNumber: 38,
                     columnNumber: 81
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                     className: "text-lg font-bold",
-                    children: "Gestión Fútbol"
+                    children: "AFESA"
                 }, void 0, false, {
                     fileName: "[project]/components/sidebar.tsx",
-                    lineNumber: 37,
+                    lineNumber: 38,
                     columnNumber: 130
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/sidebar.tsx",
-            lineNumber: 37,
+            lineNumber: 38,
             columnNumber: 10
         }, this);
         $[1] = t0;
@@ -248,14 +245,14 @@ function Sidebar() {
                             className: "mr-3 h-5 w-5"
                         }, void 0, false, {
                             fileName: "[project]/components/sidebar.tsx",
-                            lineNumber: 47,
+                            lineNumber: 48,
                             columnNumber: 242
                         }, this),
                         item.title
                     ]
                 }, item.href, true, {
                     fileName: "[project]/components/sidebar.tsx",
-                    lineNumber: 47,
+                    lineNumber: 48,
                     columnNumber: 16
                 }, this);
             }
@@ -268,18 +265,28 @@ function Sidebar() {
     let t2;
     if ($[4] !== t1) {
         t2 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "flex-1 overflow-y-auto py-4",
-            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
-                className: "space-y-1 px-2",
-                children: t1
-            }, void 0, false, {
-                fileName: "[project]/components/sidebar.tsx",
-                lineNumber: 57,
-                columnNumber: 55
-            }, this)
-        }, void 0, false, {
+            className: "flex h-screen w-64 flex-col bg-slate-950 text-white border-r border-slate-800 flex-shrink-0",
+            children: [
+                t0,
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "flex-1 overflow-y-auto py-4",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
+                        className: "space-y-1 px-2",
+                        children: t1
+                    }, void 0, false, {
+                        fileName: "[project]/components/sidebar.tsx",
+                        lineNumber: 58,
+                        columnNumber: 168
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/components/sidebar.tsx",
+                    lineNumber: 58,
+                    columnNumber: 123
+                }, this)
+            ]
+        }, void 0, true, {
             fileName: "[project]/components/sidebar.tsx",
-            lineNumber: 57,
+            lineNumber: 58,
             columnNumber: 10
         }, this);
         $[4] = t1;
@@ -287,56 +294,7 @@ function Sidebar() {
     } else {
         t2 = $[5];
     }
-    let t3;
-    if ($[6] === Symbol.for("react.memo_cache_sentinel")) {
-        t3 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "p-4 border-t border-slate-800",
-            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                className: "flex w-full items-center px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$log$2d$out$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__LogOut$3e$__["LogOut"], {
-                        className: "mr-3 h-5 w-5"
-                    }, void 0, false, {
-                        fileName: "[project]/components/sidebar.tsx",
-                        lineNumber: 65,
-                        columnNumber: 182
-                    }, this),
-                    "Cerrar Sesión"
-                ]
-            }, void 0, true, {
-                fileName: "[project]/components/sidebar.tsx",
-                lineNumber: 65,
-                columnNumber: 57
-            }, this)
-        }, void 0, false, {
-            fileName: "[project]/components/sidebar.tsx",
-            lineNumber: 65,
-            columnNumber: 10
-        }, this);
-        $[6] = t3;
-    } else {
-        t3 = $[6];
-    }
-    let t4;
-    if ($[7] !== t2) {
-        t4 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "flex h-screen w-64 flex-col bg-slate-950 text-white border-r border-slate-800 flex-shrink-0",
-            children: [
-                t0,
-                t2,
-                t3
-            ]
-        }, void 0, true, {
-            fileName: "[project]/components/sidebar.tsx",
-            lineNumber: 72,
-            columnNumber: 10
-        }, this);
-        $[7] = t2;
-        $[8] = t4;
-    } else {
-        t4 = $[8];
-    }
-    return t4;
+    return t2;
 }
 _s(Sidebar, "xbyQPtUVMO7MNj7WjJlpdWqRcTo=", false, function() {
     return [

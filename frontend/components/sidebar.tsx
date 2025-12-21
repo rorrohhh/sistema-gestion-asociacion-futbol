@@ -10,11 +10,11 @@ const sidebarItems = [
         href: "/",
         icon: LayoutDashboard,
     },
-    {
-        title: "Torneo", // --- NUEVA PESTAÑA ---
-        href: "/torneo",
-        icon: CalendarDays, // Usamos un calendario para diferenciarlo del logo (o usa Trophy)
-    },
+    // {
+    //     title: "Torneo", // --- NUEVA PESTAÑA ---
+    //     href: "/torneo",
+    //     icon: CalendarDays, // Usamos un calendario para diferenciarlo del logo (o usa Trophy)
+    // },
     {
         title: "Jugadores",
         href: "/jugadores",
@@ -34,7 +34,7 @@ export function Sidebar() {
             {/* Header del Sidebar */}
             <div className="flex h-16 items-center px-6 border-b border-slate-800">
                 <Trophy className="h-6 w-6 text-blue-500 mr-2" />
-                <span className="text-lg font-bold">Gestión Fútbol</span>
+                <span className="text-lg font-bold">AFESA</span>
             </div>
 
             {/* Lista de Navegación */}
@@ -66,12 +66,12 @@ export function Sidebar() {
             </div>
 
             {/* Footer / Cerrar Sesión */}
-            <div className="p-4 border-t border-slate-800">
+            {/* <div className="p-4 border-t border-slate-800">
                 <button className="flex w-full items-center px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">
                     <LogOut className="mr-3 h-5 w-5" />
                     Cerrar Sesión
                 </button>
-            </div>
+            </div> */}
         </div>
     );
 }

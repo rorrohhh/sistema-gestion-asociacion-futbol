@@ -58,29 +58,24 @@ export default function JugadoresPage() {
     const loadJugadores = useCallback(async () => {
         setIsLoading(true);
         try {
-            // 1. Clonamos los filtros
+
             const filtersToSend: any = { ...debouncedFilters };
 
-            console.log("Enviando filtros al backend:", filtersToSend);
-
-            // 2. Simplificación: Solo quitamos puntos visuales si es RUT.
-            // No separamos nada más. El backend hará el trabajo pesado.
             if (filtersToSend.identificacion) {
-                // Solo quitamos puntos para enviar "12345678-9" o "123456789"
+
                 filtersToSend.identificacion = filtersToSend.identificacion.replace(/\./g, '');
             }
 
-            // 3. Enviamos la petición
+
             const data = await api.getJugadores(filtersToSend, currentPage, pageSize);
 
-            console.log("Datos recibidos del backend:", data);
 
             setJugadores(data.jugadores || []);
             setTotalItems(data.totalItems || 0);
             setTotalPages(data.totalPages || 0);
 
         } catch (error) {
-            console.error('Error cargando jugadores:', error);
+
             toast.error('Error al cargar jugadores');
             setJugadores([]);
         } finally {
@@ -157,18 +152,12 @@ export default function JugadoresPage() {
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 {/* Sidebar Filters */}
                 <div className="lg:col-span-1 space-y-6">
-                    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-5 sticky top-24">
-                        <div className="flex items-center gap-2 mb-6 text-slate-800 dark:text-slate-200 font-semibold">
-                            <Filter className="h-5 w-5" />
-                            <h2>Filtros de Búsqueda</h2>
-                        </div>
-                        <Filtros
-                            clubes={clubes}
-                            filters={filters}
-                            onFilterChange={handleFilterChange}
-                            onClear={handleClearFilters}
-                        />
-                    </div>
+                    <Filtros
+                        clubes={clubes}
+                        filters={filters}
+                        onFilterChange={handleFilterChange}
+                        onClear={handleClearFilters}
+                    />
                 </div>
 
                 {/* Main Content Table */}

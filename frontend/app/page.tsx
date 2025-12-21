@@ -17,28 +17,24 @@ export default function DashboardPage() {
   useEffect(() => {
     async function loadData() {
       try {
-        console.log("Cargando datos...");
 
-        // --- 1. PROCESAR JUGADORES ---
         const resJugadores = await api.getJugadores();
 
-        // TRUCO: Convertimos a 'any' para que TypeScript no se queje
-        // al buscar 'totalItems', pero mantenemos la seguridad en ejecución.
         const jugadoresAny = resJugadores as any;
 
         if (jugadoresAny && jugadoresAny.totalItems !== undefined) {
-          // Caso: Respuesta Paginada
+
           setTotalJugadores(jugadoresAny.totalItems.toString());
         }
         else if (Array.isArray(resJugadores)) {
-          // Caso: Array Simple
+
           setTotalJugadores(resJugadores.length.toString());
         }
         else {
           setTotalJugadores('0');
         }
 
-        // --- 2. PROCESAR CLUBES ---
+
         const resClubes = await api.getClubes();
         const clubesAny = resClubes as any; // Bypass de TypeScript
 
@@ -52,7 +48,6 @@ export default function DashboardPage() {
           setTotalClubes('0');
         }
 
-        // Si llegamos aquí, hubo conexión exitosa
         setSystemOnline(true);
 
       } catch (error) {

@@ -274,7 +274,7 @@ export default function DetalleJugadorPage() {
                                             <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1">Delegado</p>
                                             <div className="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-200">
                                                 <UserCheck className="h-4 w-4 text-slate-400" />
-                                                <span className="capitalize">{jugador.delegadoInscripcion || 'Sistema'}</span>
+                                                <span className="capitalize">{jugador.delegadoInscripcion || 'No especificado'}</span>
                                             </div>
                                         </div>
                                     </div>
