@@ -1,4 +1,8 @@
 {
+  "/clubes/nuevo/page": "app/clubes/nuevo/page.js",
+  "/clubes/page": "app/clubes/page.js",
+  "/jugadores/[id]/page": "app/jugadores/[id]/page.js",
+  "/jugadores/nuevo/page": "app/jugadores/nuevo/page.js",
   "/jugadores/page": "app/jugadores/page.js",
   "/page": "app/page.js"
 }

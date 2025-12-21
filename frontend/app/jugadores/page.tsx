@@ -14,7 +14,6 @@ import { toast } from 'sonner';
 import {
     Users,
     UserPlus,
-    Filter,
     ChevronLeft,
     ChevronRight,
 } from 'lucide-react';
@@ -26,56 +25,45 @@ export default function JugadoresPage() {
     const [filters, setFilters] = useState<FilterParams>({});
     const [isLoading, setIsLoading] = useState(true);
 
-    // --- ESTADOS PARA PAGINACIÓN ---
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [totalItems, setTotalItems] = useState(0);
     const pageSize = 10;
-    // -------------------------------
 
-    // --- ESTADOS PARA EL PASE (TRANSFERENCIA) ---
     const [isPaseModalOpen, setIsPaseModalOpen] = useState(false);
     const [selectedJugador, setSelectedJugador] = useState<Jugador | null>(null);
-    // -------------------------------------------
 
     const debouncedFilters = useDebounce(filters, 300);
 
-    // Cargar clubes al montar (necesarios para el filtro y el modal de pases)
     useEffect(() => {
         async function loadClubes() {
             try {
                 const data = await api.getClubes();
                 setClubes(data);
             } catch (error) {
-                console.error('Error cargando clubes:', error);
+                console.error(error);
                 toast.error('Error al cargar clubes');
             }
         }
         loadClubes();
     }, []);
 
-    // Cargar jugadores cuando cambian los filtros
     const loadJugadores = useCallback(async () => {
         setIsLoading(true);
         try {
-
             const filtersToSend: any = { ...debouncedFilters };
 
             if (filtersToSend.identificacion) {
-
                 filtersToSend.identificacion = filtersToSend.identificacion.replace(/\./g, '');
             }
 
-
             const data = await api.getJugadores(filtersToSend, currentPage, pageSize);
-
 
             setJugadores(data.jugadores || []);
             setTotalItems(data.totalItems || 0);
             setTotalPages(data.totalPages || 0);
 
         } catch (error) {
-
             toast.error('Error al cargar jugadores');
             setJugadores([]);
         } finally {
@@ -83,7 +71,6 @@ export default function JugadoresPage() {
         }
     }, [debouncedFilters, currentPage]);
 
-    // Resetear página al filtrar
     useEffect(() => {
         setCurrentPage(0);
     }, [debouncedFilters]);
@@ -108,18 +95,15 @@ export default function JugadoresPage() {
         router.push(`/jugadores/editar/${jugadorId}`);
     };
 
-    // --- LÓGICA DEL PASE ---
     const handleTransferirJugador = (jugador: Jugador) => {
         setSelectedJugador(jugador);
         setIsPaseModalOpen(true);
     };
 
     const handlePaseSuccess = () => {
-        // Al terminar el pase, recargamos la lista para ver al jugador en su nuevo club
         loadJugadores();
         setSelectedJugador(null);
     };
-    // -----------------------
 
     const handleFilterChange = (newFilters: FilterParams) => {
         setFilters(newFilters);
@@ -130,17 +114,15 @@ export default function JugadoresPage() {
     };
 
     return (
-        <div className="p-8 space-y-8">
-            {/* Header Section */}
-            <div className="flex items-center justify-between">
+        <div className="p-4 md:p-8 space-y-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold text-slate-900 daark:text-white">Jugadores</h1>
                     <p className="text-slate-500 dark:text-slate-400">Administra los jugadores de la asociación.</p>
                 </div>
-                <div className="flex items-center gap-4">
-                    {/* Botón Inscribir Jugador */}
-                    <Link href="/jugadores/nuevo">
-                        <Button className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all">
+                <div className="flex items-center gap-4 w-full sm:w-auto">
+                    <Link href="/jugadores/nuevo" className="w-full sm:w-auto">
+                        <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all">
                             <UserPlus className="mr-2 h-4 w-4" />
                             Inscribir Jugador
                         </Button>
@@ -148,10 +130,8 @@ export default function JugadoresPage() {
                 </div>
             </div>
 
-            {/* Main Content: Filters and Table */}
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                {/* Sidebar Filters */}
-                <div className="lg:col-span-1 space-y-6">
+                <div className="lg:col-span-1">
                     <Filtros
                         clubes={clubes}
                         filters={filters}
@@ -160,7 +140,6 @@ export default function JugadoresPage() {
                     />
                 </div>
 
-                {/* Main Content Table */}
                 <div className="lg:col-span-3 space-y-4">
                     <div className="flex items-center justify-between bg-white dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
                         <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2">
@@ -173,15 +152,16 @@ export default function JugadoresPage() {
                     </div>
 
                     <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
-                        <JugadoresTable
-                            jugadores={jugadores}
-                            isLoading={isLoading}
-                            onEliminar={handleEliminarJugador}
-                            onEditar={handleEditarJugador}
-                            onTransferir={handleTransferirJugador} // <--- Conectamos la acción
-                        />
+                        <div className="overflow-x-auto">
+                            <JugadoresTable
+                                jugadores={jugadores}
+                                isLoading={isLoading}
+                                onEliminar={handleEliminarJugador}
+                                onEditar={handleEditarJugador}
+                                onTransferir={handleTransferirJugador}
+                            />
+                        </div>
 
-                        {/* --- CONTROLES DE PAGINACIÓN (NUEVO) --- */}
                         <div className="flex items-center justify-between px-4 py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
                             <div className="text-sm text-slate-500">
                                 Página {currentPage + 1} de {totalPages || 1}
@@ -207,13 +187,10 @@ export default function JugadoresPage() {
                                 </Button>
                             </div>
                         </div>
-                        {/* ----------------------------------------- */}
-
                     </div>
                 </div>
             </div>
 
-            {/* Renderizamos el Modal de Pases */}
             <PaseModal
                 isOpen={isPaseModalOpen}
                 onClose={() => setIsPaseModalOpen(false)}

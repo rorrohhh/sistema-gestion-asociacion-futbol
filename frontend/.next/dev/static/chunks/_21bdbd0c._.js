@@ -1262,10 +1262,10 @@ function ClubesTable() {
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].info(`Generando nómina para ${clubNombre}...`);
         try {
             // 1. Obtener jugadores filtrados por este club
-            const jugadores = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getJugadores({
+            const respuesta = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["api"].getJugadores({
                 club: clubId.toString()
             });
-            if (jugadores.length === 0) {
+            if (respuesta.jugadores.length === 0) {
                 __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].warning(`El club ${clubNombre} no tiene jugadores inscritos.`);
                 setGeneratingPdf(null);
                 return;
@@ -1277,10 +1277,10 @@ function ClubesTable() {
             doc.text(`Nómina de Jugadores - ${clubNombre}`, 14, 20);
             doc.setFontSize(10);
             doc.text(`Fecha de emisión: ${new Date().toLocaleDateString('es-CL')}`, 14, 28);
-            doc.text(`Total jugadores: ${jugadores.length}`, 14, 34);
+            doc.text(`Total jugadores: ${respuesta.jugadores.length}`, 14, 34);
             // 3. Preparar datos para la tabla
-            const tableData = jugadores.map((j)=>[
-                    j.rol,
+            const tableData = respuesta.jugadores.map((j)=>[
+                    j.folio,
                     // ROL
                     `${j.nombres} ${j.paterno} ${j.materno || ''}`,
                     // Nombre Completo
@@ -1288,9 +1288,7 @@ function ClubesTable() {
                     // Identificación
                     j.nacionalidad || '-',
                     // Nacionalidad
-                    new Date(j.nacimiento).toLocaleDateString('es-CL'),
-                    // F. Nacimiento
-                    j.numero || '-' // Camiseta
+                    new Date(j.nacimiento).toLocaleDateString('es-CL')
                 ]);
             // 4. Generar tabla con autoTable
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$jspdf$2d$autotable$2f$dist$2f$jspdf$2e$plugin$2e$autotable$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])(doc, {
@@ -1340,14 +1338,14 @@ function ClubesTable() {
                                 className: "h-5 w-5 text-slate-500"
                             }, void 0, false, {
                                 fileName: "[project]/components/clubes-table.tsx",
-                                lineNumber: 125,
+                                lineNumber: 122,
                                 columnNumber: 21
                             }, this),
                             "Listado de Clubes"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/clubes-table.tsx",
-                        lineNumber: 124,
+                        lineNumber: 121,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1355,13 +1353,13 @@ function ClubesTable() {
                         children: loading ? 'Cargando...' : `${clubes.length} resultados`
                     }, void 0, false, {
                         fileName: "[project]/components/clubes-table.tsx",
-                        lineNumber: 128,
+                        lineNumber: 125,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/clubes-table.tsx",
-                lineNumber: 123,
+                lineNumber: 120,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1377,14 +1375,14 @@ function ClubesTable() {
                                         children: "ID"
                                     }, void 0, false, {
                                         fileName: "[project]/components/clubes-table.tsx",
-                                        lineNumber: 137,
+                                        lineNumber: 134,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
                                         children: "Nombre"
                                     }, void 0, false, {
                                         fileName: "[project]/components/clubes-table.tsx",
-                                        lineNumber: 138,
+                                        lineNumber: 135,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -1392,18 +1390,18 @@ function ClubesTable() {
                                         children: "Acciones"
                                     }, void 0, false, {
                                         fileName: "[project]/components/clubes-table.tsx",
-                                        lineNumber: 139,
+                                        lineNumber: 136,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/clubes-table.tsx",
-                                lineNumber: 136,
+                                lineNumber: 133,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/clubes-table.tsx",
-                            lineNumber: 135,
+                            lineNumber: 132,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableBody"], {
@@ -1417,12 +1415,12 @@ function ClubesTable() {
                                                 className: "h-4 w-12"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/clubes-table.tsx",
-                                                lineNumber: 146,
+                                                lineNumber: 143,
                                                 columnNumber: 48
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/clubes-table.tsx",
-                                            lineNumber: 146,
+                                            lineNumber: 143,
                                             columnNumber: 37
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1430,12 +1428,12 @@ function ClubesTable() {
                                                 className: "h-4 w-40"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/clubes-table.tsx",
-                                                lineNumber: 147,
+                                                lineNumber: 144,
                                                 columnNumber: 48
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/clubes-table.tsx",
-                                            lineNumber: 147,
+                                            lineNumber: 144,
                                             columnNumber: 37
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1444,18 +1442,18 @@ function ClubesTable() {
                                                 className: "h-8 w-16 float-right"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/clubes-table.tsx",
-                                                lineNumber: 148,
+                                                lineNumber: 145,
                                                 columnNumber: 71
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/clubes-table.tsx",
-                                            lineNumber: 148,
+                                            lineNumber: 145,
                                             columnNumber: 37
                                         }, this)
                                     ]
                                 }, i, true, {
                                     fileName: "[project]/components/clubes-table.tsx",
-                                    lineNumber: 145,
+                                    lineNumber: 142,
                                     columnNumber: 28
                                 }, this)) : clubes.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableRow"], {
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1464,12 +1462,12 @@ function ClubesTable() {
                                     children: "No hay clubes registrados."
                                 }, void 0, false, {
                                     fileName: "[project]/components/clubes-table.tsx",
-                                    lineNumber: 150,
+                                    lineNumber: 147,
                                     columnNumber: 33
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/clubes-table.tsx",
-                                lineNumber: 149,
+                                lineNumber: 146,
                                 columnNumber: 70
                             }, this) : clubes.map((club)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableRow"], {
                                     children: [
@@ -1478,14 +1476,14 @@ function ClubesTable() {
                                             children: club.id
                                         }, void 0, false, {
                                             fileName: "[project]/components/clubes-table.tsx",
-                                            lineNumber: 154,
+                                            lineNumber: 151,
                                             columnNumber: 37
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
                                             children: club.nombre
                                         }, void 0, false, {
                                             fileName: "[project]/components/clubes-table.tsx",
-                                            lineNumber: 155,
+                                            lineNumber: 152,
                                             columnNumber: 37
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1504,18 +1502,18 @@ function ClubesTable() {
                                                             className: "h-4 w-4 animate-spin"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/clubes-table.tsx",
-                                                            lineNumber: 160,
+                                                            lineNumber: 157,
                                                             columnNumber: 78
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$text$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FileText$3e$__["FileText"], {
                                                             className: "h-4 w-4"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/clubes-table.tsx",
-                                                            lineNumber: 160,
+                                                            lineNumber: 157,
                                                             columnNumber: 125
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/clubes-table.tsx",
-                                                        lineNumber: 159,
+                                                        lineNumber: 156,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1527,12 +1525,12 @@ function ClubesTable() {
                                                             className: "h-4 w-4"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/clubes-table.tsx",
-                                                            lineNumber: 164,
+                                                            lineNumber: 161,
                                                             columnNumber: 49
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/clubes-table.tsx",
-                                                        lineNumber: 163,
+                                                        lineNumber: 160,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1544,51 +1542,51 @@ function ClubesTable() {
                                                             className: "h-4 w-4"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/clubes-table.tsx",
-                                                            lineNumber: 168,
+                                                            lineNumber: 165,
                                                             columnNumber: 49
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/clubes-table.tsx",
-                                                        lineNumber: 167,
+                                                        lineNumber: 164,
                                                         columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/clubes-table.tsx",
-                                                lineNumber: 157,
+                                                lineNumber: 154,
                                                 columnNumber: 41
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/clubes-table.tsx",
-                                            lineNumber: 156,
+                                            lineNumber: 153,
                                             columnNumber: 37
                                         }, this)
                                     ]
                                 }, club.id, true, {
                                     fileName: "[project]/components/clubes-table.tsx",
-                                    lineNumber: 153,
+                                    lineNumber: 150,
                                     columnNumber: 62
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/components/clubes-table.tsx",
-                            lineNumber: 142,
+                            lineNumber: 139,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/clubes-table.tsx",
-                    lineNumber: 134,
+                    lineNumber: 131,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/clubes-table.tsx",
-                lineNumber: 133,
+                lineNumber: 130,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/clubes-table.tsx",
-        lineNumber: 122,
+        lineNumber: 119,
         columnNumber: 10
     }, this);
 }

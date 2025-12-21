@@ -10,7 +10,6 @@ import {
     Search,
     CreditCard,
     Hash,
-    X,
     Building2,
     Globe,
     ListFilter,
@@ -18,7 +17,6 @@ import {
 } from 'lucide-react';
 import type { Club, FilterParams } from '@/types';
 
-// Función auxiliar para formatear RUT visualmente
 const formatRut = (rut: string) => {
     const clean = rut.replace(/[^0-9kK]/g, '');
     if (clean.length <= 1) return clean;
@@ -28,7 +26,6 @@ const formatRut = (rut: string) => {
     return `${formattedBody}-${dv}`;
 };
 
-// Función para detectar si es Pasaporte
 const isPassport = (val: string) => {
     return /[a-jA-J l-zL-Z]/.test(val);
 };
@@ -50,24 +47,18 @@ export function Filtros({ clubes, filters, onFilterChange, onClear }: FiltrosPro
     };
 
     const hasFilters = Object.values(filters).some(value => value !== undefined && value !== '');
-
-    // Determinamos qué icono mostrar para identificación
     const showPassportIcon = filters.identificacion && isPassport(filters.identificacion);
 
     return (
-        <Card className="border-slate-200 dark:border-slate-800 shadow-sm sticky top-6 h-fit bg-white dark:bg-slate-900 overflow-hidden">
-            {/* Encabezado del Panel */}
-            <CardHeader className="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800 py-4">
-                <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-2">
-                    <ListFilter className="h-4 w-4 text-blue-600" />
+        <Card className="border-slate-200 dark:border-slate-800 shadow-sm h-fit bg-white dark:bg-slate-900 overflow-hidden relative lg:sticky lg:top-6">
+            <CardHeader className="bg-slate-50/50 dark:bg-slate-800/50 px-4 py-2 border-b border-slate-100 dark:border-slate-800">
+                <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                    <ListFilter className="h-3 w-3 text-blue-600" />
                     Filtros de Búsqueda
                 </CardTitle>
             </CardHeader>
-
-            <CardContent className="p-5 space-y-6">
-
-                {/* 1. Filtro por Club */}
-                <div className="space-y-2">
+            <CardContent className="px-4 pb-4 pt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+                <div className="space-y-2 sm:col-span-2 lg:col-span-1">
                     <Label htmlFor="club" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                         Institución / Club
                     </Label>
@@ -78,11 +69,11 @@ export function Filtros({ clubes, filters, onFilterChange, onClear }: FiltrosPro
                             onValueChange={(value) => handleChange('club', value)}
                         >
                             <SelectTrigger id="club" className="pl-9 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 focus:ring-blue-500 text-sm">
-                                <SelectValue placeholder="Todos los clubes" />
+                                <SelectValue placeholder="TODOS" />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="todos" className="font-semibold text-slate-500">
-                                    Todos los clubes
+                                    TODOS
                                 </SelectItem>
                                 {clubes.map((club) => (
                                     <SelectItem key={club.id} value={club.id.toString()}>
@@ -94,10 +85,9 @@ export function Filtros({ clubes, filters, onFilterChange, onClear }: FiltrosPro
                     </div>
                 </div>
 
-                <Separator className="bg-slate-100 dark:bg-slate-800" />
+                <Separator className="bg-slate-100 dark:bg-slate-800 sm:col-span-2 lg:col-span-1" />
 
-                {/* 2. Filtro por Nombre */}
-                <div className="space-y-2">
+                <div className="space-y-2 col-span-1">
                     <Label htmlFor="nombre" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                         Búsqueda por Nombre
                     </Label>
@@ -114,8 +104,7 @@ export function Filtros({ clubes, filters, onFilterChange, onClear }: FiltrosPro
                     </div>
                 </div>
 
-                {/* 3. Filtro Identificación */}
-                <div className="space-y-2">
+                <div className="space-y-2 col-span-1">
                     <Label htmlFor="identificacion" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                         Documento (RUT / Pasaporte)
                     </Label>
@@ -149,8 +138,7 @@ export function Filtros({ clubes, filters, onFilterChange, onClear }: FiltrosPro
                     </div>
                 </div>
 
-                {/* 4. Filtro Folio */}
-                <div className="space-y-2">
+                <div className="space-y-2 sm:col-span-2 lg:col-span-1">
                     <Label htmlFor="folio" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                         Número de Folio
                     </Label>
@@ -167,9 +155,8 @@ export function Filtros({ clubes, filters, onFilterChange, onClear }: FiltrosPro
                     </div>
                 </div>
 
-                {/* Botón Limpiar */}
                 {hasFilters && (
-                    <div className="pt-2 animate-in slide-in-from-top-2 fade-in">
+                    <div className="pt-2 animate-in slide-in-from-top-2 fade-in sm:col-span-2 lg:col-span-1">
                         <Button
                             variant="outline"
                             onClick={onClear}
