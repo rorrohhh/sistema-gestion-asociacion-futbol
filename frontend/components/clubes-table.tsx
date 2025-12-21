@@ -77,9 +77,9 @@ export function ClubesTable() {
 
         try {
             // 1. Obtener jugadores filtrados por este club
-            const jugadores = await api.getJugadores({ club: clubId.toString() });
+            const respuesta = await api.getJugadores({ club: clubId.toString() });
 
-            if (jugadores.length === 0) {
+            if (respuesta.jugadores.length === 0) {
                 toast.warning(`El club ${clubNombre} no tiene jugadores inscritos.`);
                 setGeneratingPdf(null);
                 return;
@@ -94,16 +94,15 @@ export function ClubesTable() {
 
             doc.setFontSize(10);
             doc.text(`Fecha de emisión: ${new Date().toLocaleDateString('es-CL')}`, 14, 28);
-            doc.text(`Total jugadores: ${jugadores.length}`, 14, 34);
+            doc.text(`Total jugadores: ${respuesta.jugadores.length}`, 14, 34);
 
             // 3. Preparar datos para la tabla
-            const tableData = jugadores.map((j) => [
-                j.rol,                                  // ROL
+            const tableData = respuesta.jugadores.map((j) => [
+                j.folio,                                  // ROL
                 `${j.nombres} ${j.paterno} ${j.materno || ''}`, // Nombre Completo
                 j.tipoIdentificacion === 'PASSPORT' ? j.pasaporte : formatRut(j.rut, j.dv), // Identificación
                 j.nacionalidad || '-',                  // Nacionalidad
-                new Date(j.nacimiento).toLocaleDateString('es-CL'), // F. Nacimiento
-                j.numero || '-'                         // Camiseta
+                new Date(j.nacimiento).toLocaleDateString('es-CL')
             ]);
 
             // 4. Generar tabla con autoTable
