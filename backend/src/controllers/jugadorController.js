@@ -42,27 +42,26 @@ controller.listar = async (req, res) => {
 
         let where = {};
 
-        
+        // Acumular TODAS las condiciones AND
+        const andConditions = [];
+
+        // 1. Filtro Club
         if (club && club !== 'undefined') where.clubId = club;
 
-        
+        // 2. Filtro Folio
         if (folio) {
             where.folio = { [Op.like]: `%${folio}%` };
         }
 
-       
+        // 3. Filtro Identificación
         if (identificacion) {
- 
             const termino = identificacion.trim().replace(/\./g, '');
-            
             const condicionesIdentificacion = [];
 
-   
             condicionesIdentificacion.push({
                 pasaporte: { [Op.like]: `%${termino}%` }
             });
 
-        
             if (termino.length > 0) {
                 condicionesIdentificacion.push(
                     sequelize.literal(`
@@ -72,32 +71,40 @@ controller.listar = async (req, res) => {
                     `)
                 );
             }
-
-            where[Op.and] = [
-                { [Op.or]: condicionesIdentificacion }
-            ];
+            
+            andConditions.push({ [Op.or]: condicionesIdentificacion });
         }
 
-        // 4. Filtro Nombre
+        // 4. Filtro Nombre (CORREGIDO)
         if (nombre) {
-            const nombreLimpio = nombre.trim();
-            where[Op.and] = [
-                sequelize.where(
-                    sequelize.literal(`
-                        CONCAT(
-                            IFNULL(nombres, ''), ' ', 
-                            IFNULL(paterno, ''), ' ', 
-                            IFNULL(materno, '')
-                        ) COLLATE utf8mb4_unicode_ci
-                    `),
-                    { [Op.like]: `%${nombreLimpio}%` }
-                )
-            ];
+            // Separamos el texto buscado por espacios en blanco para obtener cada palabra
+            const palabras = nombre.trim().split(/\s+/);
+
+            // Por cada palabra, agregamos una condición obligatoria (AND)
+            palabras.forEach(palabra => {
+                andConditions.push(
+                    sequelize.where(
+                        sequelize.literal(`
+                            CONCAT(
+                                IFNULL(nombres, ''), ' ', 
+                                IFNULL(paterno, ''), ' ', 
+                                IFNULL(materno, '')
+                            ) COLLATE utf8mb4_unicode_ci
+                        `),
+                        { [Op.like]: `%${palabra}%` }
+                    )
+                );
+            });
+        }
+
+        // Si hay condiciones acumuladas, las asignamos al where principal
+        if (andConditions.length > 0) {
+            where[Op.and] = andConditions;
         }
 
         const data = await Jugador.findAndCountAll({
             where: where,
-            include: [{ model: Club }], 
+            include: [{ model: Club }],
             order: [['paterno', 'ASC']],
             limit: limit,
             offset: offset
