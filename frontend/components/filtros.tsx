@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import {
     Search,
     CreditCard,
@@ -50,15 +49,19 @@ export function Filtros({ clubes, filters, onFilterChange, onClear }: FiltrosPro
     const showPassportIcon = filters.identificacion && isPassport(filters.identificacion);
 
     return (
-        <Card className="border-slate-200 dark:border-slate-800 shadow-sm h-fit bg-white dark:bg-slate-900 overflow-hidden relative lg:sticky lg:top-6">
-            <CardHeader className="bg-slate-50/50 dark:bg-slate-800/50 px-4 py-2 border-b border-slate-100 dark:border-slate-800">
-                <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                    <ListFilter className="h-3 w-3 text-blue-600" />
+        <Card className="border-slate-200 dark:border-slate-800 shadow-sm h-fit bg-white dark:bg-slate-900 overflow-visible relative lg:sticky lg:top-6">
+            {/* Header muy compacto: py-2 */}
+            <CardHeader className="px-4 border-slate-100 dark:border-slate-800">
+                <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-2 m-0 p-0">
+                    <ListFilter className="h-3.5 w-3.5 text-blue-600" />
                     Filtros de Búsqueda
                 </CardTitle>
             </CardHeader>
-            <CardContent className="px-4 pb-4 pt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
-                <div className="space-y-2 sm:col-span-2 lg:col-span-1">
+
+            {/* Content con padding top muy reducido: pt-2 */}
+            <CardContent className="px-4 pb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+
+                <div className="space-y-1.5 col-span-1">
                     <Label htmlFor="club" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                         Institución / Club
                     </Label>
@@ -68,7 +71,7 @@ export function Filtros({ clubes, filters, onFilterChange, onClear }: FiltrosPro
                             value={filters.club || undefined}
                             onValueChange={(value) => handleChange('club', value)}
                         >
-                            <SelectTrigger id="club" className="pl-9 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 focus:ring-blue-500 text-sm">
+                            <SelectTrigger id="club" className="pl-9 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 focus:ring-blue-500 text-sm h-9">
                                 <SelectValue placeholder="TODOS" />
                             </SelectTrigger>
                             <SelectContent>
@@ -85,9 +88,7 @@ export function Filtros({ clubes, filters, onFilterChange, onClear }: FiltrosPro
                     </div>
                 </div>
 
-                <Separator className="bg-slate-100 dark:bg-slate-800 sm:col-span-2 lg:col-span-1" />
-
-                <div className="space-y-2 col-span-1">
+                <div className="space-y-1.5 col-span-1">
                     <Label htmlFor="nombre" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                         Búsqueda por Nombre
                     </Label>
@@ -97,14 +98,14 @@ export function Filtros({ clubes, filters, onFilterChange, onClear }: FiltrosPro
                             id="nombre"
                             type="text"
                             placeholder="Ej: Juan Pérez"
-                            className="pl-9 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 focus-visible:ring-blue-500 text-sm"
+                            className="pl-9 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 focus-visible:ring-blue-500 text-sm h-9"
                             value={filters.nombre || ''}
                             onChange={(e) => handleChange('nombre', e.target.value)}
                         />
                     </div>
                 </div>
 
-                <div className="space-y-2 col-span-1">
+                <div className="space-y-1.5 col-span-1">
                     <Label htmlFor="identificacion" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                         Documento (RUT / Pasaporte)
                     </Label>
@@ -119,7 +120,7 @@ export function Filtros({ clubes, filters, onFilterChange, onClear }: FiltrosPro
                             id="identificacion"
                             type="text"
                             placeholder="12.345.678-9"
-                            className="pl-9 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 focus-visible:ring-blue-500 font-mono text-sm"
+                            className="pl-9 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 focus-visible:ring-blue-500 font-mono text-sm h-9"
                             value={
                                 filters.identificacion && isPassport(filters.identificacion)
                                     ? filters.identificacion
@@ -138,7 +139,7 @@ export function Filtros({ clubes, filters, onFilterChange, onClear }: FiltrosPro
                     </div>
                 </div>
 
-                <div className="space-y-2 sm:col-span-2 lg:col-span-1">
+                <div className="space-y-1.5 col-span-1">
                     <Label htmlFor="folio" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                         Número de Folio
                     </Label>
@@ -148,7 +149,7 @@ export function Filtros({ clubes, filters, onFilterChange, onClear }: FiltrosPro
                             id="folio"
                             type="text"
                             placeholder="000123"
-                            className="pl-9 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 focus-visible:ring-blue-500 font-mono text-sm"
+                            className="pl-9 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 focus-visible:ring-blue-500 font-mono text-sm h-9"
                             value={filters.folio || ''}
                             onChange={(e) => handleChange('folio', e.target.value)}
                         />
@@ -156,11 +157,11 @@ export function Filtros({ clubes, filters, onFilterChange, onClear }: FiltrosPro
                 </div>
 
                 {hasFilters && (
-                    <div className="pt-2 animate-in slide-in-from-top-2 fade-in sm:col-span-2 lg:col-span-1">
+                    <div className="pt-1 animate-in slide-in-from-top-2 fade-in sm:col-span-2 lg:col-span-1">
                         <Button
                             variant="outline"
                             onClick={onClear}
-                            className="w-full border-dashed border-slate-300 dark:border-slate-700 text-slate-500 hover:text-red-600 hover:border-red-200 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all text-xs uppercase tracking-wide"
+                            className="w-full border-dashed border-slate-300 dark:border-slate-700 text-slate-500 hover:text-red-600 hover:border-red-200 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all text-xs uppercase tracking-wide h-8"
                             size="sm"
                         >
                             <Eraser className="mr-2 h-3.5 w-3.5" />

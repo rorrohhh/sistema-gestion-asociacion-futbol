@@ -1,159 +1,90 @@
-[00:00:02.508] Server  LOG      ✓ Ready in 1786ms
-[00:04:14.804] Server  LOG      ○ Compiling / ...
-[00:04:16.198] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:04:18.713] Browser ERROR   Error en Dashboard: {"code":"ERR_NETWORK","config":{"adapter":["xhr","http","fetch"],"allowAbsoluteUrls":true,"baseURL":"http://localhost:4000","env":{},"headers":{"Accept":"application/json, text/plain, */*","Content-Type":"application/json"},"maxBodyLength":-1,"maxContentLength":-1,"method":"get","timeout":0,"transformRequest":[null],"transformResponse":[null],"transitional":{"clarifyTimeoutError":false,"forcedJSONParsing":true,"silentJSONParsing":true},"url":"/api/jugadores?page=0&size=10","xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN"},"message":"Network Error","name":"AxiosError","stack":"handleError@http://localhost:3000/_next/static/chunks/node_modules_b396e691._.js:4040:25\n"}
-[00:04:24.054] Browser ERROR   {"code":"ERR_NETWORK","config":{"adapter":["xhr","http","fetch"],"allowAbsoluteUrls":true,"baseURL":"http://localhost:4000","env":{},"headers":{"Accept":"application/json, text/plain, */*","Content-Type":"application/json"},"maxBodyLength":-1,"maxContentLength":-1,"method":"get","timeout":0,"transformRequest":[null],"transformResponse":[null],"transitional":{"clarifyTimeoutError":false,"forcedJSONParsing":true,"silentJSONParsing":true},"url":"/api/clubes","xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN"},"message":"Network Error","name":"AxiosError","stack":"handleError@http://localhost:3000/_next/static/chunks/node_modules_b396e691._.js:4040:25\n"}
-[00:04:24.054] Browser ERROR   {"code":"ERR_NETWORK","config":{"adapter":["xhr","http","fetch"],"allowAbsoluteUrls":true,"baseURL":"http://localhost:4000","env":{},"headers":{"Accept":"application/json, text/plain, */*","Content-Type":"application/json"},"maxBodyLength":-1,"maxContentLength":-1,"method":"get","timeout":0,"transformRequest":[null],"transformResponse":[null],"transitional":{"clarifyTimeoutError":false,"forcedJSONParsing":true,"silentJSONParsing":true},"url":"/api/clubes","xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN"},"message":"Network Error","name":"AxiosError","stack":"handleError@http://localhost:3000/_next/static/chunks/node_modules_b396e691._.js:4040:25\n"}
-[00:08:15.424] Server  LOG      ✓ Compiled in 116ms
-[00:09:11.631] Server  LOG      ✓ Compiled in 214ms
-[00:09:16.785] Server  LOG      ✓ Compiled in 87ms
-[00:09:25.410] Server  LOG      ✓ Compiled in 168ms
-[00:09:31.001] Server  LOG      ✓ Compiled in 136ms
-[00:09:43.138] Server  LOG      ✓ Compiled in 88ms
-[00:09:47.556] Server  LOG      ✓ Compiled in 124ms
-[00:09:55.522] Server  LOG      ✓ Compiled in 135ms
-[00:09:58.832] Server  LOG      ✓ Compiled in 127ms
-[00:10:05.982] Server  LOG      ✓ Compiled in 130ms
-[00:10:12.160] Server  LOG      ✓ Compiled in 76ms
-[00:10:42.002] Server  LOG      ✓ Compiled in 119ms
-[00:10:48.245] Server  LOG      ✓ Compiled in 75ms
-[00:10:54.715] Server  LOG      ✓ Compiled in 124ms
-[00:11:54.835] Server  LOG      ✓ Compiled in 110ms
-[00:11:57.982] Server  LOG      ✓ Compiled in 109ms
-[00:12:02.416] Server  LOG      ✓ Compiled in 63ms
-[00:12:04.228] Server  LOG      ✓ Compiled in 109ms
-[00:12:17.909] Server  LOG      ✓ Compiled in 107ms
-[00:12:21.098] Server  LOG      ✓ Compiled in 63ms
-[00:12:34.556] Server  LOG      ✓ Compiled in 64ms
-[00:12:46.654] Server  LOG      ✓ Compiled in 110ms
-[00:12:50.051] Server  LOG      ✓ Compiled in 72ms
-[00:13:08.470] Server  LOG      ✓ Compiled in 101ms
-[00:13:12.747] Server  LOG      ✓ Compiled in 119ms
-[00:13:36.496] Server  LOG      ✓ Compiled in 147ms
-[00:13:41.047] Server  LOG      ✓ Compiled in 104ms
-[00:13:51.035] Server  LOG      ✓ Compiled in 75ms
-[00:13:55.455] Server  LOG      ✓ Compiled in 136ms
-[00:13:59.633] Server  LOG      ✓ Compiled in 96ms
-[00:14:04.222] Server  LOG      ✓ Compiled in 66ms
-[00:14:06.463] Server  LOG      ✓ Compiled in 104ms
-[00:14:17.909] Server  LOG      ✓ Compiled in 155ms
-[00:14:24.277] Server  LOG      ✓ Compiled in 107ms
-[00:16:29.300] Server  LOG      ✓ Compiled in 119ms
-[00:16:58.986] Server  LOG      ✓ Compiled in 212ms
-[00:19:01.576] Server  ERROR   D:\workspace\nodejs\futbol\frontend\.next\dev\server\chunks\ssr\[root-of-the-server]__7f6b6b73._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:19:01.580] Server  ERROR    ⨯ ReferenceError: MobileNavbar is not defined
-[00:19:01.616] Server  ERROR   D:\workspace\nodejs\futbol\frontend\.next\dev\server\chunks\ssr\[root-of-the-server]__7f6b6b73._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:19:01.616] Server  ERROR    ⨯ ReferenceError: MobileNavbar is not defined
-[00:19:02.512] Browser ERROR   uncaughtError: ReferenceError: MobileNavbar is not defined
-[00:19:06.333] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:19:12.389] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:21:17.700] Server  LOG      ✓ Compiled in 90ms
-[00:23:05.091] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:23:05.995] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:23:10.236] Server  LOG      ✓ Compiled in 57ms
-[00:24:56.562] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:28:22.358] Server  LOG      ✓ Compiled in 201ms
-[00:28:26.565] Server  LOG      ✓ Compiled in 139ms
-[00:28:29.652] Server  LOG      ✓ Compiled in 159ms
-[00:28:39.739] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:30:16.751] Server  LOG      ✓ Compiled in 69ms
-[00:30:22.810] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:31:24.271] Server  LOG      ✓ Compiled in 121ms
-[00:31:51.216] Server  LOG      ✓ Compiled in 64ms
-[00:31:58.101] Server  LOG      ✓ Compiled in 64ms
-[00:32:00.988] Server  LOG      ✓ Compiled in 69ms
-[00:32:04.054] Server  LOG      ✓ Compiled in 60ms
-[00:32:18.125] Server  LOG      ✓ Compiled in 64ms
-[00:32:20.153] Server  LOG      ✓ Compiled in 59ms
-[00:32:29.118] Server  LOG      ✓ Compiled in 59ms
-[00:32:31.802] Server  LOG      ✓ Compiled in 69ms
-[00:33:55.622] Server  LOG      ✓ Compiled in 156ms
-[00:34:16.445] Server  LOG      ✓ Compiled in 146ms
-[00:34:59.856] Server  LOG      ✓ Compiled in 174ms
-[00:35:20.611] Server  LOG      ✓ Compiled in 133ms
-[00:35:24.002] Server  LOG      ✓ Compiled in 133ms
-[00:35:46.258] Server  LOG      ✓ Compiled in 110ms
-[00:35:49.709] Server  LOG      ✓ Compiled in 136ms
-[00:35:53.288] Server  LOG      ✓ Compiled in 123ms
-[00:36:20.991] Server  LOG      ✓ Compiled in 157ms
-[00:38:17.017] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:38:53.136] Server  LOG      ✓ Compiled in 250ms
-[00:39:33.937] Server  LOG      ✓ Compiled in 86ms
-[00:42:10.867] Browser WARN    Select is changing from uncontrolled to controlled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:42:13.152] Browser WARN    Select is changing from controlled to uncontrolled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:42:14.422] Browser WARN    Select is changing from uncontrolled to controlled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:42:16.041] Browser WARN    Select is changing from controlled to uncontrolled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:42:29.626] Server  LOG      ✓ Compiled in 199ms
-[00:42:31.847] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:42:32.907] Browser WARN    Select is changing from uncontrolled to controlled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:42:34.010] Browser WARN    Select is changing from controlled to uncontrolled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:42:37.054] Browser WARN    Select is changing from uncontrolled to controlled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:42:38.940] Browser WARN    Select is changing from controlled to uncontrolled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:42:41.552] Browser WARN    Select is changing from uncontrolled to controlled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:42:43.074] Browser WARN    Select is changing from controlled to uncontrolled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:42:47.633] Browser WARN    Select is changing from uncontrolled to controlled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:42:50.164] Browser WARN    Select is changing from controlled to uncontrolled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:42:54.058] Browser WARN    Select is changing from uncontrolled to controlled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:42:54.999] Browser WARN    Select is changing from controlled to uncontrolled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:42:56.912] Browser WARN    Select is changing from uncontrolled to controlled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:42:57.890] Browser WARN    Select is changing from controlled to uncontrolled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
-[00:43:45.297] Server  LOG      ✓ Compiled in 272ms
-[00:43:53.706] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:46:59.327] Server  LOG      ✓ Compiled in 396ms
-[00:48:21.881] Server  LOG      ✓ Compiled in 250ms
-[00:48:29.397] Server  LOG      ✓ Compiled in 257ms
-[00:50:59.329] Server  LOG      ✓ Compiled in 309ms
-[00:51:08.029] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:52:13.056] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:52:53.747] Server  LOG      ✓ Compiled in 297ms
-[00:55:27.078] Server  LOG      ✓ Compiled in 260ms
-[00:55:30.206] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:00:08.560] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:00:24.196] Server  LOG      ✓ Compiled in 372ms
-[01:00:30.300] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:01:32.206] Server  LOG      ✓ Compiled in 304ms
-[01:01:32.994] Browser ERROR   In HTML, whitespace text nodes cannot be a child of <%s>. Make sure you don't have any extra whitespace between tags on each line of your source code.
-This will cause a hydration error.%s tr 
-
-  ...
-    <ClientPageRoot Component={function JugadoresPage} serverProvidedParams={{...}}>
-      <JugadoresPage params={Promise} searchParams={Promise}>
-        <div className="p-4 md:p-8...">
-          <div>
-          <div className="grid grid-...">
-            <div>
-            <div className="lg:col-spa...">
-              <div>
-              <div className="bg-white d...">
-                <div className="overflow-x...">
-                  <JugadoresTable jugadores={[...]} isLoading={false} onEliminar={function handleEliminarJugador} ...>
-                    <div className="rounded-xl...">
-                      <Table>
-                        <div data-slot="table-cont..." className="relative w...">
-                          <table data-slot="table" className="w-full cap...">
-                            <TableHeader className="bg-slate-5...">
-                              <thead data-slot="table-header" className={"[&_tr]:b..."}>
-                                <TableRow className="hover:bg-t...">
->                                 <tr
->                                   data-slot="table-row"
->                                   className="data-[state=selected]:bg-muted border-b transition-colors hover:bg-tran..."
->                                 >
-                                    <TableHead>
-                                    <TableHead>
-                                    <TableHead>
-                                    <TableHead>
->                                   {" "}
-                                    ...
-                            ...
-                ...
-          ...
-
-[01:01:47.881] Server  LOG      ✓ Compiled in 128ms
-[01:01:56.324] Server  LOG      ✓ Compiled in 271ms
-[01:02:03.091] Server  LOG      ✓ Compiled in 114ms
-[01:02:06.934] Server  LOG      ✓ Compiled in 103ms
-[01:02:13.993] Server  LOG      ✓ Compiled in 120ms
-[01:02:18.255] Server  LOG      ✓ Compiled in 113ms
-[01:02:22.899] Server  LOG      ✓ Compiled in 128ms
-[01:02:33.100] Server  LOG      ✓ Compiled in 143ms
-[01:02:47.465] Server  LOG      ✓ Compiled in 196ms
+[00:00:01.970] Server  LOG      ✓ Ready in 1337ms
+[00:00:05.029] Server  LOG      ○ Compiling /jugadores ...
+[00:00:07.935] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:51.140] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:52.988] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:54.023] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:55.344] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:56.502] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:16.017] Server  LOG      ✓ Compiled in 106ms
+[00:02:23.687] Server  LOG      ✓ Compiled in 141ms
+[00:02:29.815] Server  LOG      ✓ Compiled in 145ms
+[00:02:43.931] Server  LOG      ✓ Compiled in 79ms
+[00:07:56.701] Server  LOG      ✓ Compiled in 112ms
+[00:08:50.789] Server  LOG      ✓ Compiled in 67ms
+[00:09:15.229] Server  LOG      ✓ Compiled in 73ms
+[00:09:24.731] Server  LOG      ✓ Compiled in 62ms
+[00:15:34.016] Server  LOG      ✓ Compiled in 112ms
+[00:15:38.345] Server  LOG      ✓ Compiled in 98ms
+[00:15:45.639] Server  LOG      ✓ Compiled in 105ms
+[00:20:53.009] Server  LOG      ✓ Compiled in 102ms
+[00:22:54.681] Server  LOG      ✓ Compiled in 63ms
+[00:23:00.533] Server  LOG      ✓ Compiled in 67ms
+[00:23:51.890] Server  LOG      ✓ Compiled in 62ms
+[00:28:59.159] Server  LOG      ✓ Compiled in 171ms
+[00:31:23.352] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:35:08.168] Server  LOG      ✓ Compiled in 80ms
+[00:35:08.322] Browser ERROR   uncaughtError: ReferenceError: Building2 is not defined
+[00:35:16.008] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:35:16.037] Server  LOG      ✓ Compiled in 72ms
+[00:35:38.765] Server  LOG      ✓ Compiled in 89ms
+[00:35:43.844] Server  LOG      ✓ Compiled in 73ms
+[00:35:47.978] Server  LOG      ✓ Compiled in 107ms
+[00:35:51.985] Server  LOG      ✓ Compiled in 93ms
+[00:36:09.675] Server  LOG      ✓ Compiled in 94ms
+[00:36:33.232] Server  LOG      ✓ Compiled in 103ms
+[00:36:33.384] Browser ERROR   uncaughtError: ReferenceError: Building2 is not defined
+[00:36:51.623] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:36:51.651] Server  LOG      ✓ Compiled in 88ms
+[00:37:11.790] Server  LOG      ✓ Compiled in 79ms
+[00:37:20.593] Server  LOG      ✓ Compiled in 99ms
+[00:37:41.953] Server  LOG      ✓ Compiled in 115ms
+[00:37:42.102] Browser ERROR   uncaughtError: ReferenceError: Building2 is not defined
+[00:37:46.562] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:37:46.590] Server  LOG      ✓ Compiled in 80ms
+[00:38:05.413] Server  LOG      ✓ Compiled in 81ms
+[00:38:12.706] Server  LOG      ✓ Compiled in 69ms
+[00:38:24.650] Server  LOG      ✓ Compiled in 88ms
+[00:38:32.164] Server  LOG      ✓ Compiled in 96ms
+[00:38:37.347] Server  LOG      ✓ Compiled in 83ms
+[00:38:42.946] Server  LOG      ✓ Compiled in 82ms
+[00:39:29.055] Server  LOG      ✓ Compiled in 83ms
+[00:39:29.198] Browser ERROR   uncaughtError: ReferenceError: Building2 is not defined
+[00:39:41.865] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:39:41.893] Server  LOG      ✓ Compiled in 72ms
+[00:40:10.570] Server  LOG      ✓ Compiled in 75ms
+[00:40:18.592] Server  LOG      ✓ Compiled in 77ms
+[00:40:22.974] Server  LOG      ✓ Compiled in 69ms
+[00:40:32.030] Server  LOG      ✓ Compiled in 89ms
+[00:40:37.214] Server  LOG      ✓ Compiled in 77ms
+[00:40:43.695] Server  LOG      ✓ Compiled in 70ms
+[00:40:55.808] Server  LOG      ✓ Compiled in 90ms
+[00:40:58.713] Server  LOG      ✓ Compiled in 84ms
+[00:41:13.408] Server  LOG      ✓ Compiled in 78ms
+[00:41:35.327] Server  LOG      ✓ Compiled in 82ms
+[00:41:46.420] Server  LOG      ✓ Compiled in 71ms
+[00:41:48.351] Server  LOG      ✓ Compiled in 68ms
+[00:41:53.409] Server  LOG      ✓ Compiled in 82ms
+[00:41:57.081] Server  LOG      ✓ Compiled in 71ms
+[00:42:22.530] Server  LOG      ✓ Compiled in 69ms
+[00:43:57.951] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:44:00.084] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:44:02.065] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:44:07.725] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:44:50.344] Server  LOG      ✓ Compiled in 85ms
+[00:46:54.786] Server  LOG      ✓ Compiled in 115ms
+[00:46:57.220] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:49:41.662] Server  LOG      ✓ Compiled in 228ms
+[00:49:49.758] Server  LOG      ✓ Compiled in 71ms
+[00:52:35.218] Server  LOG      ✓ Compiled in 323ms
+[00:54:03.436] Server  LOG      ✓ Compiled in 260ms
+[00:59:08.486] Server  LOG      ✓ Compiled in 168ms
+[01:00:46.992] Server  LOG      ✓ Compiled in 193ms
+[01:01:33.386] Server  LOG      ✓ Compiled in 83ms
+[01:01:45.235] Server  LOG      ✓ Compiled in 68ms
+[01:01:52.889] Server  LOG      ✓ Compiled in 69ms
+[01:01:55.170] Server  LOG      ✓ Compiled in 134ms
+[01:02:07.382] Server  LOG      ✓ Compiled in 67ms
+[01:02:22.897] Server  LOG      ✓ Compiled in 74ms
+[01:02:30.106] Server  LOG      ✓ Compiled in 69ms
+[01:05:13.491] Server  LOG      ✓ Compiled in 135ms

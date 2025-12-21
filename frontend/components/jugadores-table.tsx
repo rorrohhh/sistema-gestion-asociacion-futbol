@@ -29,7 +29,8 @@ import {
     ChevronDown,
     ChevronUp,
     Calendar,
-    Flag
+    Flag,
+    Hash // Importamos el icono Hash para el folio
 } from 'lucide-react';
 import { Button } from './ui/button';
 import Link from 'next/link';
@@ -92,42 +93,51 @@ const JugadorRow = ({ jugador, onEliminar, onEditar, onTransferir }: { jugador: 
     const tieneClub = !!jugador.Club?.nombre;
     const isActivo = (jugador as any).activo !== false;
 
+    const handleRowClick = () => {
+        setIsExpanded(!isExpanded);
+    };
+
     return (
         <>
-            <TableRow className={`group hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors border-slate-100 dark:border-slate-800 ${isExpanded ? 'bg-slate-50/50 dark:bg-slate-800/30' : ''}`}>
+            <TableRow
+                onClick={handleRowClick}
+                className={`group hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors border-slate-100 dark:border-slate-800 cursor-pointer ${isExpanded ? 'bg-slate-50/50 dark:bg-slate-800/30' : ''}`}
+            >
 
                 <TableCell className="pl-4 py-3">
                     <div className="flex items-center gap-3">
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-6 w-6 md:hidden text-slate-400"
-                            onClick={() => setIsExpanded(!isExpanded)}
-                        >
-                            {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                        </Button>
 
                         <div className="hidden md:block">
                             <PlayerAvatar nombre={jugador.nombres} paterno={jugador.paterno} foto={(jugador as any).foto} activo={isActivo} />
                         </div>
 
-                        <div className="flex flex-col">
-                            <span className="font-semibold text-sm text-slate-800 dark:text-slate-200 group-hover:text-blue-700 transition-colors">
+                        <div className="flex flex-col gap-0.5"> {/* gap reducido para agrupar mejor */}
+                            <span className="font-semibold text-xs md:text-sm text-slate-800 dark:text-slate-200 group-hover:text-blue-700 transition-colors truncate max-w-[160px] sm:max-w-[250px] md:max-w-none block">
                                 {nombreCompleto}
                             </span>
 
-                            <span className="text-xs text-slate-500 md:hidden flex items-center gap-1">
-                                {tieneClub ? (
-                                    <>
-                                        <ShieldHalf className="h-3 w-3 text-blue-500" />
-                                        <span className="font-medium text-blue-600 dark:text-blue-400">
-                                            {jugador.Club?.nombre}
-                                        </span>
-                                    </>
-                                ) : (
-                                    <span className="italic text-slate-400">Sin Club</span>
-                                )}
-                            </span>
+                            {/* VISTA MÓVIL: Folio + Club */}
+                            <div className="flex flex-col items-start gap-1 md:hidden">
+                                {/* Folio pequeño */}
+                                <span className="text-[10px] font-mono text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700 inline-flex items-center">
+                                    <Hash className="h-2.5 w-2.5 mr-0.5" />
+                                    {jugador.folio}
+                                </span>
+
+                                {/* Club */}
+                                <span className="text-xs text-slate-500 flex items-center gap-1">
+                                    {tieneClub ? (
+                                        <>
+                                            <ShieldHalf className="h-3 w-3 text-blue-500 flex-shrink-0" />
+                                            <span className="font-medium text-blue-600 dark:text-blue-400 truncate max-w-[140px]">
+                                                {jugador.Club?.nombre}
+                                            </span>
+                                        </>
+                                    ) : (
+                                        <span className="italic text-slate-400">Sin Club</span>
+                                    )}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </TableCell>
@@ -189,7 +199,12 @@ const JugadorRow = ({ jugador, onEliminar, onEditar, onTransferir }: { jugador: 
                 <TableCell className="text-right pr-4">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-blue-600">
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 text-slate-400 hover:text-blue-600"
+                                onClick={(e) => e.stopPropagation()}
+                            >
                                 <MoreHorizontal className="h-4 w-4" />
                             </Button>
                         </DropdownMenuTrigger>
@@ -275,7 +290,7 @@ export function JugadoresTable({ jugadores, isLoading = false, onEliminar, onEdi
                         <TableHead className="text-xs uppercase tracking-wider font-semibold text-slate-500 pl-4 py-4">Deportista</TableHead>
                         <TableHead className="hidden md:table-cell text-xs uppercase tracking-wider font-semibold text-slate-500">Documento</TableHead>
                         <TableHead className="hidden md:table-cell text-xs uppercase tracking-wider font-semibold text-slate-500">País</TableHead>
-                        <TableHead className="hidden md:table-cell">Club</TableHead> {/* Oculto título Club en movil porque va bajo el nombre */}
+                        <TableHead className="hidden md:table-cell text-xs uppercase tracking-wider font-semibold text-slate-500">Club</TableHead>
                         <TableHead className="hidden md:table-cell text-xs uppercase tracking-wider font-semibold text-slate-500">Edad</TableHead>
                         <TableHead className="hidden md:table-cell text-xs uppercase tracking-wider font-semibold text-slate-500">Fecha Reg.</TableHead>
                         <TableHead className="hidden md:table-cell text-xs uppercase tracking-wider font-semibold text-slate-500">N° Folio</TableHead>

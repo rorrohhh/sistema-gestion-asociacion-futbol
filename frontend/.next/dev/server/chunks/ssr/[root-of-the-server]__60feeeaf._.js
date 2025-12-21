@@ -143,7 +143,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$clubes$2d$tabl
 ;
 function ClubesPage() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "p-8 space-y-8",
+        className: "p-4 space-y-8",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex items-center justify-between",
@@ -151,7 +151,7 @@ function ClubesPage() {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                             className: "text-3xl font-bold text-slate-900 dark:text-white",
-                            children: "Gestión de Clubes"
+                            children: "Clubes"
                         }, void 0, false, {
                             fileName: "[project]/app/clubes/page.tsx",
                             lineNumber: 15,
@@ -159,7 +159,7 @@ function ClubesPage() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "text-slate-500 dark:text-slate-400",
-                            children: "Administra los clubes inscritos en la asociación."
+                            children: "Administra los clubes inscritos."
                         }, void 0, false, {
                             fileName: "[project]/app/clubes/page.tsx",
                             lineNumber: 16,
@@ -191,74 +191,74 @@ function ClubesPage() {
                                             className: "h-5 w-5"
                                         }, void 0, false, {
                                             fileName: "[project]/app/clubes/page.tsx",
-                                            lineNumber: 26,
+                                            lineNumber: 24,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                            children: "Acciones de Clubes"
+                                            children: "Acciones"
                                         }, void 0, false, {
                                             fileName: "[project]/app/clubes/page.tsx",
-                                            lineNumber: 27,
+                                            lineNumber: 25,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/clubes/page.tsx",
-                                    lineNumber: 25,
+                                    lineNumber: 23,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
                                     href: "/clubes/nuevo",
                                     className: "w-full",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Button"], {
-                                        className: "w-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition-all",
+                                        className: "w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$plus$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__PlusCircle$3e$__["PlusCircle"], {
                                                 className: "mr-2 h-4 w-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/clubes/page.tsx",
-                                                lineNumber: 33,
+                                                lineNumber: 31,
                                                 columnNumber: 33
                                             }, this),
                                             "Agregar Equipo"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/clubes/page.tsx",
-                                        lineNumber: 32,
+                                        lineNumber: 30,
                                         columnNumber: 29
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/clubes/page.tsx",
-                                    lineNumber: 31,
+                                    lineNumber: 29,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/clubes/page.tsx",
-                            lineNumber: 24,
+                            lineNumber: 22,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/clubes/page.tsx",
-                        lineNumber: 23,
+                        lineNumber: 21,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "lg:col-span-3 space-y-4",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$clubes$2d$table$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ClubesTable"], {}, void 0, false, {
                             fileName: "[project]/app/clubes/page.tsx",
-                            lineNumber: 42,
+                            lineNumber: 40,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/clubes/page.tsx",
-                        lineNumber: 41,
+                        lineNumber: 39,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/clubes/page.tsx",
-                lineNumber: 21,
+                lineNumber: 20,
                 columnNumber: 13
             }, this)
         ]

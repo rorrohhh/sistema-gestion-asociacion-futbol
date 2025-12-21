@@ -48,7 +48,7 @@ export default function RootLayout({
              - overflow-y-auto: Permite scroll SOLO dentro del contenido, no en toda la página.
              - h-full: Asegura que use la altura disponible.
           */}
-          <main className="flex-1 overflow-y-auto h-full p-4 md:p-6">
+          <main className="flex-1 overflow-y-auto h-full">
             {children}
           </main>
         </div>

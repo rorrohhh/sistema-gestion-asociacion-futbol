@@ -16,7 +16,6 @@ import {
     XCircle
 } from 'lucide-react';
 
-// UI Components
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -34,13 +33,11 @@ import {
     FormDescription
 } from '@/components/ui/form';
 
-// Lógica y Tipos
 import { jugadorSchema } from '@/lib/validations';
 import { api } from '@/lib/api';
 import type { Club } from '@/types';
 import * as z from 'zod';
 
-// Función auxiliar para formatear RUT visualmente
 const formatRut = (rut: string) => {
     const clean = rut.replace(/[^0-9kK]/g, '');
     if (clean.length <= 1) return clean;
@@ -49,7 +46,6 @@ const formatRut = (rut: string) => {
     return `${body.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}-${dv}`;
 };
 
-// Extracción de ID de la URL
 const extractIdFromPath = (pathname: string): string | null => {
     const parts = pathname.split('/');
     return parts[parts.length - 1] || null;
@@ -64,11 +60,9 @@ export default function EditarJugadorPage() {
     const [isLoadingData, setIsLoadingData] = useState(true);
     const [folio, setFolio] = useState<string>('');
 
-    // Estado para la foto
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // 1. Configuración del Formulario
     const form = useForm({
         resolver: zodResolver(jugadorSchema),
         defaultValues: {
@@ -91,7 +85,6 @@ export default function EditarJugadorPage() {
     const { handleSubmit, setValue, watch, formState: { isSubmitting } } = form;
     const tipoIdentificacion = watch('tipo_identificacion');
 
-    // 2. Cargar datos
     useEffect(() => {
         async function loadData() {
             if (!jugadorId) {
@@ -111,12 +104,10 @@ export default function EditarJugadorPage() {
                 const data: any = jugadorData;
                 setFolio(data.folio);
 
-                // Si el jugador ya tiene foto (URL), la mostramos en el preview
                 if (data.fotoUrl) {
                     setPreviewUrl(data.fotoUrl);
                 }
 
-                // Pre-llenar formulario
                 form.reset({
                     nombres: data.nombres,
                     paterno: data.paterno,
@@ -124,7 +115,7 @@ export default function EditarJugadorPage() {
                     club_id: data.clubId ? data.clubId.toString() : (data.club_id ? data.club_id.toString() : ''),
                     nacionalidad: data.nacionalidad || '',
                     delegado: data.delegadoInscripcion || '',
-                    activo: data.activo, // Boolean
+                    activo: data.activo,
                     nacimiento: data.nacimiento ? String(data.nacimiento).split('T')[0] : '',
                     inscripcion: data.inscripcion ? String(data.inscripcion).split('T')[0] : '',
                     tipo_identificacion: (data.tipoIdentificacion === 'PASSPORT' ? 'PASSPORT' : 'RUT'),
@@ -142,13 +133,12 @@ export default function EditarJugadorPage() {
         loadData();
     }, [jugadorId, form]);
 
-    // 3. Manejo de Imagen
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
             const url = URL.createObjectURL(file);
             setPreviewUrl(url);
-            form.setValue('foto', file); // Actualizamos el formulario con el archivo
+            form.setValue('foto', file);
         }
     };
 
@@ -156,7 +146,6 @@ export default function EditarJugadorPage() {
         fileInputRef.current?.click();
     };
 
-    // 4. Enviar datos (Submit)
     const onSubmit = async (data: z.infer<typeof jugadorSchema>) => {
         if (!jugadorId) return;
 
@@ -170,7 +159,7 @@ export default function EditarJugadorPage() {
                 tipo_identificacion_input: data.tipo_identificacion,
                 passport_input: data.passport,
                 activo: data.activo,
-                foto: data.foto // Enviamos la foto si se seleccionó una nueva
+                foto: data.foto
             };
 
             await api.updateJugador(jugadorId, payload);
@@ -194,18 +183,17 @@ export default function EditarJugadorPage() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50/50 dark:bg-slate-950 py-8 px-4">
+        <div className="min-h-screen bg-slate-50/50 dark:bg-slate-950 py-4 md:py-8 px-3 md:px-4">
             <div className="max-w-5xl mx-auto space-y-6">
 
-                {/* Header Simple */}
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <Button variant="ghost" size="icon" onClick={() => router.back()} className="rounded-full hover:bg-slate-200">
-                            <ArrowLeft className="h-6 w-6 text-slate-600" />
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div className="flex items-center gap-3 md:gap-4 w-full">
+                        <Button variant="ghost" size="icon" onClick={() => router.back()} className="rounded-full hover:bg-slate-200 shrink-0">
+                            <ArrowLeft className="h-5 w-5 md:h-6 md:w-6 text-slate-600" />
                         </Button>
-                        <div>
-                            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Editar Jugador</h1>
-                            <p className="text-slate-500 text-sm flex items-center gap-2">
+                        <div className="min-w-0">
+                            <h1 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white truncate">Editar Jugador</h1>
+                            <p className="text-slate-500 text-xs md:text-sm flex items-center gap-2">
                                 Editando folio: <span className="font-mono bg-slate-200 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-800 dark:text-slate-200 font-medium">#{folio}</span>
                             </p>
                         </div>
@@ -215,22 +203,18 @@ export default function EditarJugadorPage() {
                 <Form {...form}>
                     <form onSubmit={handleSubmit(onSubmit)}>
 
-                        {/* TARJETA PRINCIPAL TIPO "FICHA" */}
                         <Card className="border-slate-200 shadow-sm overflow-hidden bg-white dark:bg-slate-900">
 
-                            {/* BARRA SUPERIOR AZUL */}
                             <div className="h-2 w-full bg-blue-600"></div>
 
-                            <CardContent className="p-8">
-                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                            <CardContent className="p-4 md:p-8">
+                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
 
-                                    {/* COLUMNA IZQUIERDA: FOTO Y ESTADO (Ancho 4/12) */}
-                                    <div className="lg:col-span-4 space-y-8">
+                                    <div className="lg:col-span-4 space-y-6 md:space-y-8">
 
-                                        {/* SECCIÓN FOTO */}
                                         <div className="flex flex-col items-center space-y-4">
                                             <div
-                                                className="relative group h-48 w-48 rounded-full border-4 border-slate-100 shadow-inner overflow-hidden bg-slate-50 flex items-center justify-center cursor-pointer"
+                                                className="relative group h-40 w-40 md:h-48 md:w-48 rounded-full border-4 border-slate-100 shadow-inner overflow-hidden bg-slate-50 flex items-center justify-center cursor-pointer"
                                                 onClick={triggerFileInput}
                                             >
                                                 {previewUrl ? (
@@ -240,16 +224,14 @@ export default function EditarJugadorPage() {
                                                         className="h-full w-full object-cover"
                                                     />
                                                 ) : (
-                                                    <User className="h-20 w-20 text-slate-300" />
+                                                    <User className="h-16 w-16 md:h-20 md:w-20 text-slate-300" />
                                                 )}
 
-                                                {/* Overlay al pasar el mouse */}
                                                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                                     <Camera className="h-8 w-8 text-white" />
                                                 </div>
                                             </div>
 
-                                            {/* Input oculto real */}
                                             <input
                                                 type="file"
                                                 ref={fileInputRef}
@@ -263,16 +245,15 @@ export default function EditarJugadorPage() {
                                                 variant="outline"
                                                 size="sm"
                                                 onClick={triggerFileInput}
-                                                className="flex gap-2 text-blue-700 border-blue-200 hover:bg-blue-50"
+                                                className="flex gap-2 text-blue-700 border-blue-200 hover:bg-blue-50 w-full md:w-auto"
                                             >
                                                 <Upload className="h-4 w-4" />
                                                 Cambiar Fotografía
                                             </Button>
                                         </div>
 
-                                        <Separator />
+                                        <Separator className="block md:hidden lg:block" />
 
-                                        {/* SECCIÓN ESTADO (VERDE/ROJO) */}
                                         <FormField
                                             control={form.control}
                                             name="activo"
@@ -282,15 +263,13 @@ export default function EditarJugadorPage() {
                                                     <FormControl>
                                                         <RadioGroup
                                                             onValueChange={(val) => field.onChange(val === 'true')}
-                                                            // Convertimos el booleano a string para el RadioGroup
                                                             defaultValue={field.value ? 'true' : 'false'}
                                                             className="grid grid-cols-1 gap-3"
                                                         >
-                                                            {/* OPCIÓN: HABILITADO (VERDE) */}
                                                             <Label
                                                                 htmlFor="status-active"
                                                                 className={`
-                                                                    flex items-center justify-between p-4 rounded-lg border-2 cursor-pointer transition-all
+                                                                    flex items-center justify-between p-3 md:p-4 rounded-lg border-2 cursor-pointer transition-all
                                                                     ${field.value
                                                                         ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
                                                                         : 'border-slate-200 hover:border-green-200'}
@@ -308,11 +287,10 @@ export default function EditarJugadorPage() {
                                                                 <RadioGroupItem value="true" id="status-active" className="sr-only" />
                                                             </Label>
 
-                                                            {/* OPCIÓN: SUSPENDIDO (ROJO) */}
                                                             <Label
                                                                 htmlFor="status-inactive"
                                                                 className={`
-                                                                    flex items-center justify-between p-4 rounded-lg border-2 cursor-pointer transition-all
+                                                                    flex items-center justify-between p-3 md:p-4 rounded-lg border-2 cursor-pointer transition-all
                                                                     ${!field.value
                                                                         ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
                                                                         : 'border-slate-200 hover:border-red-200'}
@@ -336,16 +314,14 @@ export default function EditarJugadorPage() {
                                         />
                                     </div>
 
-                                    {/* COLUMNA DERECHA: DATOS DEL JUGADOR (Ancho 8/12) */}
-                                    <div className="lg:col-span-8 space-y-8">
+                                    <div className="lg:col-span-8 space-y-6 md:space-y-8">
 
-                                        {/* 1. Identificación */}
                                         <div className="space-y-4">
-                                            <h3 className="text-lg font-semibold text-blue-900 border-b border-slate-100 pb-2">
+                                            <h3 className="text-base md:text-lg font-semibold text-blue-900 border-b border-slate-100 pb-2">
                                                 1. Identificación Personal
                                             </h3>
 
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                                 <FormField
                                                     control={form.control}
                                                     name="tipo_identificacion"
@@ -406,7 +382,7 @@ export default function EditarJugadorPage() {
                                                 )}
                                             </div>
 
-                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                                                 <FormField
                                                     control={form.control}
                                                     name="nombres"
@@ -448,7 +424,7 @@ export default function EditarJugadorPage() {
                                                 />
                                             </div>
 
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                                 <FormField
                                                     control={form.control}
                                                     name="nacimiento"
@@ -478,13 +454,12 @@ export default function EditarJugadorPage() {
                                             </div>
                                         </div>
 
-                                        {/* 2. Datos Deportivos */}
                                         <div className="space-y-4 pt-4">
-                                            <h3 className="text-lg font-semibold text-blue-900 border-b border-slate-100 pb-2">
+                                            <h3 className="text-base md:text-lg font-semibold text-blue-900 border-b border-slate-100 pb-2">
                                                 2. Datos Institucionales
                                             </h3>
 
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                                 <FormField
                                                     control={form.control}
                                                     name="club_id"
@@ -540,14 +515,18 @@ export default function EditarJugadorPage() {
                                             />
                                         </div>
 
-                                        {/* Botones de Acción */}
-                                        <div className="pt-6 flex items-center justify-end gap-4">
-                                            <Button type="button" variant="ghost" onClick={() => router.back()}>
+                                        <div className="pt-6 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 sm:gap-4">
+                                            <Button
+                                                type="button"
+                                                variant="ghost"
+                                                onClick={() => router.back()}
+                                                className="w-full sm:w-auto"
+                                            >
                                                 Cancelar Edición
                                             </Button>
                                             <Button
                                                 type="submit"
-                                                className="bg-blue-600 hover:bg-blue-700 min-w-[150px]"
+                                                className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto min-w-[150px]"
                                                 disabled={isSubmitting}
                                             >
                                                 {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

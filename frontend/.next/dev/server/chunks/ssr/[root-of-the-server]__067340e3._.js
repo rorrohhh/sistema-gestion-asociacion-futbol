@@ -1066,7 +1066,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$upload$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Upload$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/upload.js [app-ssr] (ecmascript) <export default as Upload>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-check.js [app-ssr] (ecmascript) <export default as CheckCircle2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$x$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__XCircle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-x.js [app-ssr] (ecmascript) <export default as XCircle>");
-// UI Components
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/input.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/label.tsx [app-ssr] (ecmascript)");
@@ -1075,7 +1074,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$radio$2d
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/card.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$separator$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/separator.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/form.tsx [app-ssr] (ecmascript)");
-// Lógica y Tipos
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$validations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/validations.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/api.ts [app-ssr] (ecmascript)");
 'use client';
@@ -1096,7 +1094,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d
 ;
 ;
 ;
-// Función auxiliar para formatear RUT visualmente
 const formatRut = (rut)=>{
     const clean = rut.replace(/[^0-9kK]/g, '');
     if (clean.length <= 1) return clean;
@@ -1104,7 +1101,6 @@ const formatRut = (rut)=>{
     const dv = clean.slice(-1).toUpperCase();
     return `${body.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}-${dv}`;
 };
-// Extracción de ID de la URL
 const extractIdFromPath = (pathname)=>{
     const parts = pathname.split('/');
     return parts[parts.length - 1] || null;
@@ -1116,10 +1112,8 @@ function EditarJugadorPage() {
     const [clubes, setClubes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [isLoadingData, setIsLoadingData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
     const [folio, setFolio] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
-    // Estado para la foto
     const [previewUrl, setPreviewUrl] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const fileInputRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
-    // 1. Configuración del Formulario
     const form = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hook$2d$form$2f$dist$2f$index$2e$esm$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useForm"])({
         resolver: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$hookform$2f$resolvers$2f$zod$2f$dist$2f$zod$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["zodResolver"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$validations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jugadorSchema"]),
         defaultValues: {
@@ -1140,7 +1134,6 @@ function EditarJugadorPage() {
     });
     const { handleSubmit, setValue, watch, formState: { isSubmitting } } = form;
     const tipoIdentificacion = watch('tipo_identificacion');
-    // 2. Cargar datos
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         async function loadData() {
             if (!jugadorId) {
@@ -1156,11 +1149,9 @@ function EditarJugadorPage() {
                 setClubes(clubesData);
                 const data = jugadorData;
                 setFolio(data.folio);
-                // Si el jugador ya tiene foto (URL), la mostramos en el preview
                 if (data.fotoUrl) {
                     setPreviewUrl(data.fotoUrl);
                 }
-                // Pre-llenar formulario
                 form.reset({
                     nombres: data.nombres,
                     paterno: data.paterno,
@@ -1187,19 +1178,17 @@ function EditarJugadorPage() {
         jugadorId,
         form
     ]);
-    // 3. Manejo de Imagen
     const handleImageChange = (e)=>{
         const file = e.target.files?.[0];
         if (file) {
             const url = URL.createObjectURL(file);
             setPreviewUrl(url);
-            form.setValue('foto', file); // Actualizamos el formulario con el archivo
+            form.setValue('foto', file);
         }
     };
     const triggerFileInput = ()=>{
         fileInputRef.current?.click();
     };
-    // 4. Enviar datos (Submit)
     const onSubmit = async (data)=>{
         if (!jugadorId) return;
         try {
@@ -1212,7 +1201,7 @@ function EditarJugadorPage() {
                 tipo_identificacion_input: data.tipo_identificacion,
                 passport_input: data.passport,
                 activo: data.activo,
-                foto: data.foto // Enviamos la foto si se seleccionó una nueva
+                foto: data.foto
             };
             await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["api"].updateJugador(jugadorId, payload);
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toast"].success('Jugador actualizado exitosamente');
@@ -1230,7 +1219,7 @@ function EditarJugadorPage() {
                     className: "h-8 w-8 animate-spin text-blue-600"
                 }, void 0, false, {
                     fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                    lineNumber: 190,
+                    lineNumber: 179,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1238,55 +1227,56 @@ function EditarJugadorPage() {
                     children: "Cargando ficha del jugador..."
                 }, void 0, false, {
                     fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                    lineNumber: 191,
+                    lineNumber: 180,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-            lineNumber: 189,
+            lineNumber: 178,
             columnNumber: 13
         }, this);
     }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "min-h-screen bg-slate-50/50 dark:bg-slate-950 py-8 px-4",
+        className: "min-h-screen bg-slate-50/50 dark:bg-slate-950 py-4 md:py-8 px-3 md:px-4",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "max-w-5xl mx-auto space-y-6",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex items-center justify-between",
+                    className: "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex items-center gap-4",
+                        className: "flex items-center gap-3 md:gap-4 w-full",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
                                 variant: "ghost",
                                 size: "icon",
                                 onClick: ()=>router.back(),
-                                className: "rounded-full hover:bg-slate-200",
+                                className: "rounded-full hover:bg-slate-200 shrink-0",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$left$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowLeft$3e$__["ArrowLeft"], {
-                                    className: "h-6 w-6 text-slate-600"
+                                    className: "h-5 w-5 md:h-6 md:w-6 text-slate-600"
                                 }, void 0, false, {
                                     fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                    lineNumber: 204,
+                                    lineNumber: 192,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                lineNumber: 203,
+                                lineNumber: 191,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "min-w-0",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                        className: "text-2xl font-bold text-slate-900 dark:text-white",
+                                        className: "text-xl md:text-2xl font-bold text-slate-900 dark:text-white truncate",
                                         children: "Editar Jugador"
                                     }, void 0, false, {
                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                        lineNumber: 207,
+                                        lineNumber: 195,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-slate-500 text-sm flex items-center gap-2",
+                                        className: "text-slate-500 text-xs md:text-sm flex items-center gap-2",
                                         children: [
                                             "Editando folio: ",
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1297,30 +1287,30 @@ function EditarJugadorPage() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                lineNumber: 209,
+                                                lineNumber: 197,
                                                 columnNumber: 49
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                        lineNumber: 208,
+                                        lineNumber: 196,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                lineNumber: 206,
+                                lineNumber: 194,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                        lineNumber: 202,
+                        lineNumber: 190,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                    lineNumber: 201,
+                    lineNumber: 189,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Form"], {
@@ -1334,22 +1324,22 @@ function EditarJugadorPage() {
                                     className: "h-2 w-full bg-blue-600"
                                 }, void 0, false, {
                                     fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                    lineNumber: 222,
+                                    lineNumber: 208,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
-                                    className: "p-8",
+                                    className: "p-4 md:p-8",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "grid grid-cols-1 lg:grid-cols-12 gap-10",
+                                        className: "grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "lg:col-span-4 space-y-8",
+                                                className: "lg:col-span-4 space-y-6 md:space-y-8",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "flex flex-col items-center space-y-4",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "relative group h-48 w-48 rounded-full border-4 border-slate-100 shadow-inner overflow-hidden bg-slate-50 flex items-center justify-center cursor-pointer",
+                                                                className: "relative group h-40 w-40 md:h-48 md:w-48 rounded-full border-4 border-slate-100 shadow-inner overflow-hidden bg-slate-50 flex items-center justify-center cursor-pointer",
                                                                 onClick: triggerFileInput,
                                                                 children: [
                                                                     previewUrl ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
@@ -1358,13 +1348,13 @@ function EditarJugadorPage() {
                                                                         className: "h-full w-full object-cover"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 237,
+                                                                        lineNumber: 221,
                                                                         columnNumber: 53
                                                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"], {
-                                                                        className: "h-20 w-20 text-slate-300"
+                                                                        className: "h-16 w-16 md:h-20 md:w-20 text-slate-300"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 243,
+                                                                        lineNumber: 227,
                                                                         columnNumber: 53
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1373,18 +1363,18 @@ function EditarJugadorPage() {
                                                                             className: "h-8 w-8 text-white"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                            lineNumber: 248,
+                                                                            lineNumber: 231,
                                                                             columnNumber: 53
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 247,
+                                                                        lineNumber: 230,
                                                                         columnNumber: 49
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                lineNumber: 232,
+                                                                lineNumber: 216,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1395,7 +1385,7 @@ function EditarJugadorPage() {
                                                                 onChange: handleImageChange
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                lineNumber: 253,
+                                                                lineNumber: 235,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -1403,31 +1393,33 @@ function EditarJugadorPage() {
                                                                 variant: "outline",
                                                                 size: "sm",
                                                                 onClick: triggerFileInput,
-                                                                className: "flex gap-2 text-blue-700 border-blue-200 hover:bg-blue-50",
+                                                                className: "flex gap-2 text-blue-700 border-blue-200 hover:bg-blue-50 w-full md:w-auto",
                                                                 children: [
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$upload$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Upload$3e$__["Upload"], {
                                                                         className: "h-4 w-4"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 268,
+                                                                        lineNumber: 250,
                                                                         columnNumber: 49
                                                                     }, this),
                                                                     "Cambiar Fotografía"
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                lineNumber: 261,
+                                                                lineNumber: 243,
                                                                 columnNumber: 45
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                        lineNumber: 231,
+                                                        lineNumber: 215,
                                                         columnNumber: 41
                                                     }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$separator$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Separator"], {}, void 0, false, {
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$separator$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Separator"], {
+                                                        className: "block md:hidden lg:block"
+                                                    }, void 0, false, {
                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                        lineNumber: 273,
+                                                        lineNumber: 255,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormField"], {
@@ -1441,20 +1433,19 @@ function EditarJugadorPage() {
                                                                         children: "Estado Actual"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 281,
+                                                                        lineNumber: 262,
                                                                         columnNumber: 53
                                                                     }, void 0),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormControl"], {
                                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$radio$2d$group$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["RadioGroup"], {
                                                                             onValueChange: (val)=>field.onChange(val === 'true'),
-                                                                            // Convertimos el booleano a string para el RadioGroup
                                                                             defaultValue: field.value ? 'true' : 'false',
                                                                             className: "grid grid-cols-1 gap-3",
                                                                             children: [
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
                                                                                     htmlFor: "status-active",
                                                                                     className: `
-                                                                    flex items-center justify-between p-4 rounded-lg border-2 cursor-pointer transition-all
+                                                                    flex items-center justify-between p-3 md:p-4 rounded-lg border-2 cursor-pointer transition-all
                                                                     ${field.value ? 'border-green-500 bg-green-50 dark:bg-green-900/20' : 'border-slate-200 hover:border-green-200'}
                                                                 `,
                                                                                     children: [
@@ -1464,6 +1455,76 @@ function EditarJugadorPage() {
                                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                                                     className: `p-2 rounded-full ${field.value ? 'bg-green-500 text-white' : 'bg-slate-100 text-slate-400'}`,
                                                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
+                                                                                                        className: "h-5 w-5"
+                                                                                                    }, void 0, false, {
+                                                                                                        fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
+                                                                                                        lineNumber: 280,
+                                                                                                        columnNumber: 73
+                                                                                                    }, void 0)
+                                                                                                }, void 0, false, {
+                                                                                                    fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
+                                                                                                    lineNumber: 279,
+                                                                                                    columnNumber: 69
+                                                                                                }, void 0),
+                                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                                    className: "flex flex-col",
+                                                                                                    children: [
+                                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                                            className: `font-bold ${field.value ? 'text-green-800' : 'text-slate-700'}`,
+                                                                                                            children: "Habilitado"
+                                                                                                        }, void 0, false, {
+                                                                                                            fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
+                                                                                                            lineNumber: 283,
+                                                                                                            columnNumber: 73
+                                                                                                        }, void 0),
+                                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                                            className: "text-xs text-slate-500",
+                                                                                                            children: "Puede jugar partidos"
+                                                                                                        }, void 0, false, {
+                                                                                                            fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
+                                                                                                            lineNumber: 284,
+                                                                                                            columnNumber: 73
+                                                                                                        }, void 0)
+                                                                                                    ]
+                                                                                                }, void 0, true, {
+                                                                                                    fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
+                                                                                                    lineNumber: 282,
+                                                                                                    columnNumber: 69
+                                                                                                }, void 0)
+                                                                                            ]
+                                                                                        }, void 0, true, {
+                                                                                            fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
+                                                                                            lineNumber: 278,
+                                                                                            columnNumber: 65
+                                                                                        }, void 0),
+                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$radio$2d$group$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["RadioGroupItem"], {
+                                                                                            value: "true",
+                                                                                            id: "status-active",
+                                                                                            className: "sr-only"
+                                                                                        }, void 0, false, {
+                                                                                            fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
+                                                                                            lineNumber: 287,
+                                                                                            columnNumber: 65
+                                                                                        }, void 0)
+                                                                                    ]
+                                                                                }, void 0, true, {
+                                                                                    fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
+                                                                                    lineNumber: 269,
+                                                                                    columnNumber: 61
+                                                                                }, void 0),
+                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
+                                                                                    htmlFor: "status-inactive",
+                                                                                    className: `
+                                                                    flex items-center justify-between p-3 md:p-4 rounded-lg border-2 cursor-pointer transition-all
+                                                                    ${!field.value ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-slate-200 hover:border-red-200'}
+                                                                `,
+                                                                                    children: [
+                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                            className: "flex items-center gap-3",
+                                                                                            children: [
+                                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                                    className: `p-2 rounded-full ${!field.value ? 'bg-red-500 text-white' : 'bg-slate-100 text-slate-400'}`,
+                                                                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$x$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__XCircle$3e$__["XCircle"], {
                                                                                                         className: "h-5 w-5"
                                                                                                     }, void 0, false, {
                                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
@@ -1479,8 +1540,8 @@ function EditarJugadorPage() {
                                                                                                     className: "flex flex-col",
                                                                                                     children: [
                                                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                                            className: `font-bold ${field.value ? 'text-green-800' : 'text-slate-700'}`,
-                                                                                                            children: "Habilitado"
+                                                                                                            className: `font-bold ${!field.value ? 'text-red-800' : 'text-slate-700'}`,
+                                                                                                            children: "Suspendido"
                                                                                                         }, void 0, false, {
                                                                                                             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
                                                                                                             lineNumber: 304,
@@ -1488,7 +1549,7 @@ function EditarJugadorPage() {
                                                                                                         }, void 0),
                                                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                                                             className: "text-xs text-slate-500",
-                                                                                                            children: "Puede jugar partidos"
+                                                                                                            children: "No puede ser alineado"
                                                                                                         }, void 0, false, {
                                                                                                             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
                                                                                                             lineNumber: 305,
@@ -1507,8 +1568,8 @@ function EditarJugadorPage() {
                                                                                             columnNumber: 65
                                                                                         }, void 0),
                                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$radio$2d$group$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["RadioGroupItem"], {
-                                                                                            value: "true",
-                                                                                            id: "status-active",
+                                                                                            value: "false",
+                                                                                            id: "status-inactive",
                                                                                             className: "sr-only"
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
@@ -1520,121 +1581,51 @@ function EditarJugadorPage() {
                                                                                     fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
                                                                                     lineNumber: 290,
                                                                                     columnNumber: 61
-                                                                                }, void 0),
-                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                                                    htmlFor: "status-inactive",
-                                                                                    className: `
-                                                                    flex items-center justify-between p-4 rounded-lg border-2 cursor-pointer transition-all
-                                                                    ${!field.value ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-slate-200 hover:border-red-200'}
-                                                                `,
-                                                                                    children: [
-                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                            className: "flex items-center gap-3",
-                                                                                            children: [
-                                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                                    className: `p-2 rounded-full ${!field.value ? 'bg-red-500 text-white' : 'bg-slate-100 text-slate-400'}`,
-                                                                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$x$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__XCircle$3e$__["XCircle"], {
-                                                                                                        className: "h-5 w-5"
-                                                                                                    }, void 0, false, {
-                                                                                                        fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                        lineNumber: 323,
-                                                                                                        columnNumber: 73
-                                                                                                    }, void 0)
-                                                                                                }, void 0, false, {
-                                                                                                    fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                    lineNumber: 322,
-                                                                                                    columnNumber: 69
-                                                                                                }, void 0),
-                                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                                    className: "flex flex-col",
-                                                                                                    children: [
-                                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                                            className: `font-bold ${!field.value ? 'text-red-800' : 'text-slate-700'}`,
-                                                                                                            children: "Suspendido"
-                                                                                                        }, void 0, false, {
-                                                                                                            fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                            lineNumber: 326,
-                                                                                                            columnNumber: 73
-                                                                                                        }, void 0),
-                                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                                            className: "text-xs text-slate-500",
-                                                                                                            children: "No puede ser alineado"
-                                                                                                        }, void 0, false, {
-                                                                                                            fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                            lineNumber: 327,
-                                                                                                            columnNumber: 73
-                                                                                                        }, void 0)
-                                                                                                    ]
-                                                                                                }, void 0, true, {
-                                                                                                    fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                    lineNumber: 325,
-                                                                                                    columnNumber: 69
-                                                                                                }, void 0)
-                                                                                            ]
-                                                                                        }, void 0, true, {
-                                                                                            fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                            lineNumber: 321,
-                                                                                            columnNumber: 65
-                                                                                        }, void 0),
-                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$radio$2d$group$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["RadioGroupItem"], {
-                                                                                            value: "false",
-                                                                                            id: "status-inactive",
-                                                                                            className: "sr-only"
-                                                                                        }, void 0, false, {
-                                                                                            fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                            lineNumber: 330,
-                                                                                            columnNumber: 65
-                                                                                        }, void 0)
-                                                                                    ]
-                                                                                }, void 0, true, {
-                                                                                    fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                    lineNumber: 312,
-                                                                                    columnNumber: 61
                                                                                 }, void 0)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                            lineNumber: 283,
+                                                                            lineNumber: 264,
                                                                             columnNumber: 57
                                                                         }, void 0)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 282,
+                                                                        lineNumber: 263,
                                                                         columnNumber: 53
                                                                     }, void 0)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                lineNumber: 280,
+                                                                lineNumber: 261,
                                                                 columnNumber: 49
                                                             }, void 0)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                        lineNumber: 276,
+                                                        lineNumber: 257,
                                                         columnNumber: 41
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                lineNumber: 228,
+                                                lineNumber: 213,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "lg:col-span-8 space-y-8",
+                                                className: "lg:col-span-8 space-y-6 md:space-y-8",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "space-y-4",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                                className: "text-lg font-semibold text-blue-900 border-b border-slate-100 pb-2",
+                                                                className: "text-base md:text-lg font-semibold text-blue-900 border-b border-slate-100 pb-2",
                                                                 children: "1. Identificación Personal"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                lineNumber: 344,
+                                                                lineNumber: 320,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "grid grid-cols-1 md:grid-cols-2 gap-6",
+                                                                className: "grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6",
                                                                 children: [
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormField"], {
                                                                         control: form.control,
@@ -1645,7 +1636,7 @@ function EditarJugadorPage() {
                                                                                         children: "Tipo de Documento"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 354,
+                                                                                        lineNumber: 330,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Select"], {
@@ -1658,17 +1649,17 @@ function EditarJugadorPage() {
                                                                                                         placeholder: "Seleccione tipo"
                                                                                                     }, void 0, false, {
                                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                        lineNumber: 358,
+                                                                                                        lineNumber: 334,
                                                                                                         columnNumber: 73
                                                                                                     }, void 0)
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                    lineNumber: 357,
+                                                                                                    lineNumber: 333,
                                                                                                     columnNumber: 69
                                                                                                 }, void 0)
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                lineNumber: 356,
+                                                                                                lineNumber: 332,
                                                                                                 columnNumber: 65
                                                                                             }, void 0),
                                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -1678,7 +1669,7 @@ function EditarJugadorPage() {
                                                                                                         children: "RUT (Cédula Chilena)"
                                                                                                     }, void 0, false, {
                                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                        lineNumber: 362,
+                                                                                                        lineNumber: 338,
                                                                                                         columnNumber: 69
                                                                                                     }, void 0),
                                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -1686,35 +1677,35 @@ function EditarJugadorPage() {
                                                                                                         children: "Pasaporte Extranjero"
                                                                                                     }, void 0, false, {
                                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                        lineNumber: 363,
+                                                                                                        lineNumber: 339,
                                                                                                         columnNumber: 69
                                                                                                     }, void 0)
                                                                                                 ]
                                                                                             }, void 0, true, {
                                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                lineNumber: 361,
+                                                                                                lineNumber: 337,
                                                                                                 columnNumber: 65
                                                                                             }, void 0)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 355,
+                                                                                        lineNumber: 331,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 366,
+                                                                                        lineNumber: 342,
                                                                                         columnNumber: 61
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                lineNumber: 353,
+                                                                                lineNumber: 329,
                                                                                 columnNumber: 57
                                                                             }, void 0)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 349,
+                                                                        lineNumber: 325,
                                                                         columnNumber: 49
                                                                     }, this),
                                                                     tipoIdentificacion === 'RUT' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormField"], {
@@ -1726,7 +1717,7 @@ function EditarJugadorPage() {
                                                                                         children: "Número de RUT"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 377,
+                                                                                        lineNumber: 353,
                                                                                         columnNumber: 65
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -1739,28 +1730,28 @@ function EditarJugadorPage() {
                                                                                             }
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                            lineNumber: 379,
+                                                                                            lineNumber: 355,
                                                                                             columnNumber: 69
                                                                                         }, void 0)
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 378,
+                                                                                        lineNumber: 354,
                                                                                         columnNumber: 65
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 388,
+                                                                                        lineNumber: 364,
                                                                                         columnNumber: 65
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                lineNumber: 376,
+                                                                                lineNumber: 352,
                                                                                 columnNumber: 61
                                                                             }, void 0)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 372,
+                                                                        lineNumber: 348,
                                                                         columnNumber: 53
                                                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormField"], {
                                                                         control: form.control,
@@ -1771,7 +1762,7 @@ function EditarJugadorPage() {
                                                                                         children: "Número de Pasaporte"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 398,
+                                                                                        lineNumber: 374,
                                                                                         columnNumber: 65
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -1780,38 +1771,38 @@ function EditarJugadorPage() {
                                                                                             ...field
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                            lineNumber: 400,
+                                                                                            lineNumber: 376,
                                                                                             columnNumber: 69
                                                                                         }, void 0)
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 399,
+                                                                                        lineNumber: 375,
                                                                                         columnNumber: 65
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 402,
+                                                                                        lineNumber: 378,
                                                                                         columnNumber: 65
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                lineNumber: 397,
+                                                                                lineNumber: 373,
                                                                                 columnNumber: 61
                                                                             }, void 0)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 393,
+                                                                        lineNumber: 369,
                                                                         columnNumber: 53
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                lineNumber: 348,
+                                                                lineNumber: 324,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "grid grid-cols-1 md:grid-cols-3 gap-6",
+                                                                className: "grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6",
                                                                 children: [
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormField"], {
                                                                         control: form.control,
@@ -1822,7 +1813,7 @@ function EditarJugadorPage() {
                                                                                         children: "Nombres"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 415,
+                                                                                        lineNumber: 391,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -1831,28 +1822,28 @@ function EditarJugadorPage() {
                                                                                             ...field
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                            lineNumber: 417,
+                                                                                            lineNumber: 393,
                                                                                             columnNumber: 65
                                                                                         }, void 0)
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 416,
+                                                                                        lineNumber: 392,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 419,
+                                                                                        lineNumber: 395,
                                                                                         columnNumber: 61
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                lineNumber: 414,
+                                                                                lineNumber: 390,
                                                                                 columnNumber: 57
                                                                             }, void 0)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 410,
+                                                                        lineNumber: 386,
                                                                         columnNumber: 49
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormField"], {
@@ -1864,7 +1855,7 @@ function EditarJugadorPage() {
                                                                                         children: "Apellido Paterno"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 428,
+                                                                                        lineNumber: 404,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -1873,28 +1864,28 @@ function EditarJugadorPage() {
                                                                                             ...field
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                            lineNumber: 430,
+                                                                                            lineNumber: 406,
                                                                                             columnNumber: 65
                                                                                         }, void 0)
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 429,
+                                                                                        lineNumber: 405,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 432,
+                                                                                        lineNumber: 408,
                                                                                         columnNumber: 61
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                lineNumber: 427,
+                                                                                lineNumber: 403,
                                                                                 columnNumber: 57
                                                                             }, void 0)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 423,
+                                                                        lineNumber: 399,
                                                                         columnNumber: 49
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormField"], {
@@ -1906,7 +1897,7 @@ function EditarJugadorPage() {
                                                                                         children: "Apellido Materno"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 441,
+                                                                                        lineNumber: 417,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -1915,38 +1906,38 @@ function EditarJugadorPage() {
                                                                                             ...field
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                            lineNumber: 443,
+                                                                                            lineNumber: 419,
                                                                                             columnNumber: 65
                                                                                         }, void 0)
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 442,
+                                                                                        lineNumber: 418,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 445,
+                                                                                        lineNumber: 421,
                                                                                         columnNumber: 61
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                lineNumber: 440,
+                                                                                lineNumber: 416,
                                                                                 columnNumber: 57
                                                                             }, void 0)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 436,
+                                                                        lineNumber: 412,
                                                                         columnNumber: 49
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                lineNumber: 409,
+                                                                lineNumber: 385,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "grid grid-cols-1 md:grid-cols-2 gap-6",
+                                                                className: "grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6",
                                                                 children: [
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormField"], {
                                                                         control: form.control,
@@ -1957,7 +1948,7 @@ function EditarJugadorPage() {
                                                                                         children: "Fecha de Nacimiento"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 457,
+                                                                                        lineNumber: 433,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -1966,28 +1957,28 @@ function EditarJugadorPage() {
                                                                                             ...field
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                            lineNumber: 459,
+                                                                                            lineNumber: 435,
                                                                                             columnNumber: 65
                                                                                         }, void 0)
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 458,
+                                                                                        lineNumber: 434,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 461,
+                                                                                        lineNumber: 437,
                                                                                         columnNumber: 61
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                lineNumber: 456,
+                                                                                lineNumber: 432,
                                                                                 columnNumber: 57
                                                                             }, void 0)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 452,
+                                                                        lineNumber: 428,
                                                                         columnNumber: 49
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormField"], {
@@ -1999,7 +1990,7 @@ function EditarJugadorPage() {
                                                                                         children: "Nacionalidad"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 470,
+                                                                                        lineNumber: 446,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -2008,55 +1999,55 @@ function EditarJugadorPage() {
                                                                                             ...field
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                            lineNumber: 472,
+                                                                                            lineNumber: 448,
                                                                                             columnNumber: 65
                                                                                         }, void 0)
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 471,
+                                                                                        lineNumber: 447,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 474,
+                                                                                        lineNumber: 450,
                                                                                         columnNumber: 61
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                lineNumber: 469,
+                                                                                lineNumber: 445,
                                                                                 columnNumber: 57
                                                                             }, void 0)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 465,
+                                                                        lineNumber: 441,
                                                                         columnNumber: 49
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                lineNumber: 451,
+                                                                lineNumber: 427,
                                                                 columnNumber: 45
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                        lineNumber: 343,
+                                                        lineNumber: 319,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "space-y-4 pt-4",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                                className: "text-lg font-semibold text-blue-900 border-b border-slate-100 pb-2",
+                                                                className: "text-base md:text-lg font-semibold text-blue-900 border-b border-slate-100 pb-2",
                                                                 children: "2. Datos Institucionales"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                lineNumber: 483,
+                                                                lineNumber: 458,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "grid grid-cols-1 md:grid-cols-2 gap-6",
+                                                                className: "grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6",
                                                                 children: [
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormField"], {
                                                                         control: form.control,
@@ -2067,7 +2058,7 @@ function EditarJugadorPage() {
                                                                                         children: "Club de Pertenencia"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 493,
+                                                                                        lineNumber: 468,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Select"], {
@@ -2080,17 +2071,17 @@ function EditarJugadorPage() {
                                                                                                         placeholder: isLoadingData ? "Cargando..." : "Seleccionar Club"
                                                                                                     }, void 0, false, {
                                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                        lineNumber: 497,
+                                                                                                        lineNumber: 472,
                                                                                                         columnNumber: 73
                                                                                                     }, void 0)
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                    lineNumber: 496,
+                                                                                                    lineNumber: 471,
                                                                                                     columnNumber: 69
                                                                                                 }, void 0)
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                lineNumber: 495,
+                                                                                                lineNumber: 470,
                                                                                                 columnNumber: 65
                                                                                             }, void 0),
                                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -2099,34 +2090,34 @@ function EditarJugadorPage() {
                                                                                                         children: club.nombre
                                                                                                     }, club.id, false, {
                                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                        lineNumber: 502,
+                                                                                                        lineNumber: 477,
                                                                                                         columnNumber: 73
                                                                                                     }, void 0))
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                                lineNumber: 500,
+                                                                                                lineNumber: 475,
                                                                                                 columnNumber: 65
                                                                                             }, void 0)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 494,
+                                                                                        lineNumber: 469,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 508,
+                                                                                        lineNumber: 483,
                                                                                         columnNumber: 61
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                lineNumber: 492,
+                                                                                lineNumber: 467,
                                                                                 columnNumber: 57
                                                                             }, void 0)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 488,
+                                                                        lineNumber: 463,
                                                                         columnNumber: 49
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormField"], {
@@ -2138,7 +2129,7 @@ function EditarJugadorPage() {
                                                                                         children: "Fecha de Inscripción"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 517,
+                                                                                        lineNumber: 492,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -2147,34 +2138,34 @@ function EditarJugadorPage() {
                                                                                             ...field
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                            lineNumber: 519,
+                                                                                            lineNumber: 494,
                                                                                             columnNumber: 65
                                                                                         }, void 0)
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 518,
+                                                                                        lineNumber: 493,
                                                                                         columnNumber: 61
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                        lineNumber: 521,
+                                                                                        lineNumber: 496,
                                                                                         columnNumber: 61
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                lineNumber: 516,
+                                                                                lineNumber: 491,
                                                                                 columnNumber: 57
                                                                             }, void 0)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 512,
+                                                                        lineNumber: 487,
                                                                         columnNumber: 49
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                lineNumber: 487,
+                                                                lineNumber: 462,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormField"], {
@@ -2186,7 +2177,7 @@ function EditarJugadorPage() {
                                                                                 children: "Delegado Responsable"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                lineNumber: 532,
+                                                                                lineNumber: 507,
                                                                                 columnNumber: 57
                                                                             }, void 0),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -2195,33 +2186,79 @@ function EditarJugadorPage() {
                                                                                     ...field
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                    lineNumber: 534,
+                                                                                    lineNumber: 509,
                                                                                     columnNumber: 61
                                                                                 }, void 0)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                lineNumber: 533,
+                                                                                lineNumber: 508,
                                                                                 columnNumber: 57
                                                                             }, void 0),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormDescription"], {
                                                                                 children: "Puede actualizar el nombre del oficial que inscribe."
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                lineNumber: 536,
+                                                                                lineNumber: 511,
                                                                                 columnNumber: 57
                                                                             }, void 0),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                                lineNumber: 537,
+                                                                                lineNumber: 512,
                                                                                 columnNumber: 57
                                                                             }, void 0)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 531,
+                                                                        lineNumber: 506,
                                                                         columnNumber: 53
                                                                     }, void 0)
                                                             }, void 0, false, {
+                                                                fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
+                                                                lineNumber: 502,
+                                                                columnNumber: 45
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
+                                                        lineNumber: 457,
+                                                        columnNumber: 41
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "pt-6 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 sm:gap-4",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                                                                type: "button",
+                                                                variant: "ghost",
+                                                                onClick: ()=>router.back(),
+                                                                className: "w-full sm:w-auto",
+                                                                children: "Cancelar Edición"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
+                                                                lineNumber: 519,
+                                                                columnNumber: 45
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                                                                type: "submit",
+                                                                className: "bg-blue-600 hover:bg-blue-700 w-full sm:w-auto min-w-[150px]",
+                                                                disabled: isSubmitting,
+                                                                children: [
+                                                                    isSubmitting && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                                                                        className: "mr-2 h-4 w-4 animate-spin"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
+                                                                        lineNumber: 532,
+                                                                        columnNumber: 66
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$save$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Save$3e$__["Save"], {
+                                                                        className: "mr-2 h-4 w-4"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
+                                                                        lineNumber: 533,
+                                                                        columnNumber: 49
+                                                                    }, this),
+                                                                    "Guardar Cambios"
+                                                                ]
+                                                            }, void 0, true, {
                                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
                                                                 lineNumber: 527,
                                                                 columnNumber: 45
@@ -2229,96 +2266,51 @@ function EditarJugadorPage() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                        lineNumber: 482,
-                                                        columnNumber: 41
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "pt-6 flex items-center justify-end gap-4",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
-                                                                type: "button",
-                                                                variant: "ghost",
-                                                                onClick: ()=>router.back(),
-                                                                children: "Cancelar Edición"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                lineNumber: 545,
-                                                                columnNumber: 45
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
-                                                                type: "submit",
-                                                                className: "bg-blue-600 hover:bg-blue-700 min-w-[150px]",
-                                                                disabled: isSubmitting,
-                                                                children: [
-                                                                    isSubmitting && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
-                                                                        className: "mr-2 h-4 w-4 animate-spin"
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 553,
-                                                                        columnNumber: 66
-                                                                    }, this),
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$save$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Save$3e$__["Save"], {
-                                                                        className: "mr-2 h-4 w-4"
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                        lineNumber: 554,
-                                                                        columnNumber: 49
-                                                                    }, this),
-                                                                    "Guardar Cambios"
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                                lineNumber: 548,
-                                                                columnNumber: 45
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                        lineNumber: 544,
+                                                        lineNumber: 518,
                                                         columnNumber: 41
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                                lineNumber: 340,
+                                                lineNumber: 317,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                        lineNumber: 225,
+                                        lineNumber: 211,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                                    lineNumber: 224,
+                                    lineNumber: 210,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                            lineNumber: 219,
+                            lineNumber: 206,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                        lineNumber: 216,
+                        lineNumber: 204,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-                    lineNumber: 215,
+                    lineNumber: 203,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-            lineNumber: 198,
+            lineNumber: 187,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/jugadores/editar/[id]/page.tsx",
-        lineNumber: 197,
+        lineNumber: 186,
         columnNumber: 9
     }, this);
 }

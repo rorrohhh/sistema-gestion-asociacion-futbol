@@ -151,8 +151,8 @@ export default function NuevoJugadorPage() {
                             <ArrowLeft className="h-6 w-6 text-slate-600" />
                         </Button>
                         <div>
-                            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Nueva Ficha de Jugador</h1>
-                            <p className="text-slate-500 text-sm">Formulario oficial de inscripción de la asociación.</p>
+                            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Nuevo jugador</h1>
+                            <p className="text-slate-500 text-sm">Agrega un jugador a la lista</p>
                         </div>
                     </div>
                 </div>

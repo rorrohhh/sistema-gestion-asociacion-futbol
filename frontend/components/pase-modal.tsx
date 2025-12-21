@@ -20,12 +20,10 @@ import { Label } from '@/components/ui/label';
 import { api } from '@/lib/api';
 import type { Jugador, Club } from '@/types';
 
-// Esquema de validación para el pase
 const paseSchema = z.object({
     club_destino_id: z.string().min(1, "Debe seleccionar un club de destino"),
     fecha: z.string().min(1, "La fecha es obligatoria"),
     comentario: z.string().optional(),
-    // NUEVO CAMPO
     delegado: z.string().min(2, "Debes indicar el delegado responsable"),
 });
 
@@ -46,7 +44,7 @@ export function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }: PaseM
             club_destino_id: '',
             fecha: format(new Date(), 'yyyy-MM-dd'),
             comentario: '',
-            delegado: '', // <--- NUEVO DEFAULT
+            delegado: '',
         },
     });
 
@@ -64,7 +62,7 @@ export function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }: PaseM
                 clubDestinoId: data.club_destino_id,
                 fecha: data.fecha,
                 comentario: data.comentario || '',
-                delegado: data.delegado // <--- SE ENVÍA AQUÍ
+                delegado: data.delegado
             });
 
             toast.success(`Pase realizado correctamente. ${jugador.nombres} ha sido transferido.`);
@@ -81,28 +79,32 @@ export function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }: PaseM
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-[500px]">
+            {/* CAMBIOS RESPONSIVE AQUI:
+               1. w-[95vw]: Ocupa 95% del ancho en móviles.
+               2. max-h-[90vh] y overflow-y-auto: Permite scroll si el contenido es muy alto o el teclado tapa.
+               3. p-4 sm:p-6: Menos padding interno en móvil para ganar espacio.
+            */}
+            <DialogContent className="w-[95vw] max-w-[500px] max-h-[90vh] overflow-y-auto p-4 sm:p-6 rounded-lg">
                 <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2">
-                        <ArrowRightLeft className="h-5 w-5 text-blue-600" />
-                        Realizar Pase / Transferencia
+                    <DialogTitle className="flex items-start sm:items-center gap-2 text-lg sm:text-xl">
+                        <ArrowRightLeft className="h-5 w-5 text-blue-600 mt-1 sm:mt-0 flex-shrink-0" />
+                        <span>Realizar Pase</span>
                     </DialogTitle>
-                    <DialogDescription>
-                        Estás gestionando el pase de <strong>{jugador.nombres} {jugador.paterno}</strong>.
-                        <br />
-                        Su ROL ({jugador.folio}) se mantendrá intacto.
+                    <DialogDescription className="text-sm">
+                        Gestionando pase de <strong className="text-slate-900 dark:text-slate-100">{jugador.nombres} {jugador.paterno}</strong>.
+                        <span className="block mt-1">Su ROL ({jugador.folio}) se mantendrá intacto.</span>
                     </DialogDescription>
                 </DialogHeader>
 
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-2">
 
                         {/* Club Actual */}
                         <div className="p-3 bg-slate-50 dark:bg-slate-900 rounded-md border border-slate-200 dark:border-slate-800">
                             <Label className="text-xs text-slate-500 uppercase font-bold">Club de Origen</Label>
-                            <div className="flex items-center gap-2 mt-1 text-slate-700 dark:text-slate-300 font-medium">
+                            <div className="flex items-center gap-2 mt-1 text-slate-700 dark:text-slate-300 font-medium text-sm sm:text-base">
                                 <Building2 className="h-4 w-4 text-slate-400" />
-                                {clubActualNombre}
+                                <span className="truncate">{clubActualNombre}</span>
                             </div>
                         </div>
 
@@ -115,8 +117,8 @@ export function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }: PaseM
                                     <FormLabel>Club de Destino</FormLabel>
                                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                                         <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Seleccione el nuevo equipo" />
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Seleccione equipo" />
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
@@ -132,7 +134,7 @@ export function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }: PaseM
                             )}
                         />
 
-                        {/* NUEVO CAMPO: DELEGADO */}
+                        {/* Delegado */}
                         <FormField
                             control={form.control}
                             name="delegado"
@@ -140,7 +142,7 @@ export function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }: PaseM
                                 <FormItem>
                                     <FormLabel>Delegado Responsable</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Nombre del delegado que gestiona el pase" {...field} />
+                                        <Input placeholder="Nombre del delegado" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -157,7 +159,7 @@ export function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }: PaseM
                                     <FormControl>
                                         <div className="relative">
                                             <CalendarIcon className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
-                                            <Input type="date" className="pl-9" {...field} />
+                                            <Input type="date" className="pl-9 w-full block" {...field} />
                                         </div>
                                     </FormControl>
                                     <FormMessage />
@@ -171,11 +173,11 @@ export function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }: PaseM
                             name="comentario"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Comentario / Motivo (Opcional)</FormLabel>
+                                    <FormLabel>Comentario (Opcional)</FormLabel>
                                     <FormControl>
                                         <Textarea
-                                            placeholder="Ej: Préstamo por temporada, Venta definitiva, etc."
-                                            className="resize-none"
+                                            placeholder="Motivo del pase..."
+                                            className="resize-none min-h-[80px]"
                                             {...field}
                                         />
                                     </FormControl>
@@ -184,11 +186,22 @@ export function PaseModal({ isOpen, onClose, jugador, clubes, onSuccess }: PaseM
                             )}
                         />
 
-                        <DialogFooter className="pt-4">
-                            <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
+                        {/* Footer: gap-2 para separar botones en móvil */}
+                        <DialogFooter className="pt-4 gap-2 sm:gap-0">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={onClose}
+                                disabled={isSubmitting}
+                                className="w-full sm:w-auto"
+                            >
                                 Cancelar
                             </Button>
-                            <Button type="submit" disabled={isSubmitting} className="bg-blue-600 hover:bg-blue-700 text-white">
+                            <Button
+                                type="submit"
+                                disabled={isSubmitting}
+                                className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto"
+                            >
                                 {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                                 Confirmar Pase
                             </Button>
